@@ -1,4 +1,7 @@
+import subprocess
 import xml.etree.ElementTree as ET
+from configuration.configuration import BRAINVISA
+
 
 def modify_template_bvproc(path_template_bv_proc, old, subject, path_bvproc_subject):
     '''
@@ -21,3 +24,15 @@ def modify_template_bvproc(path_template_bv_proc, old, subject, path_bvproc_subj
             new_value = init_value.replace(old, subject)
             tag.text = new_value
     template_bvproc.write(path_bvproc_subject, encoding='utf-8', xml_declaration=True)
+    pass
+
+
+def compute_surfacic_curvature(path_mesh, path_curvature_tex, bv_instance=BRAINVISA):
+    """
+    :param path_mesh:
+    :param path_curvature_tex:
+    :return:
+    """
+    cmd = bv_instance + '/bin/AimsMeshCurvature ' + ' -i ' + path_mesh + ' -o ' + path_curvature_tex + ' -m fem'
+    subprocess.run(cmd)
+    pass

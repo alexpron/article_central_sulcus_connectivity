@@ -1,19 +1,21 @@
 """
-Module that regroups HCP metadata management (import, sort, merge databases) and criteria used
-to select Human Connectome Project subjects included in this study.
+HCP metadata (.csv) management functions (import, sort, merge databases) and criteria used
+to select subjects from the Human Connectome Project (HCP).
 """
+
 import os
 import numpy as np
 import pandas as pd
+import scipy.stats as stat
 from libs.tools.usual import get_subdirectories
 from copy import copy
+
 
 def create_disk_index():
     """
     S900 release of the  subjects are stored onto 8 physical hard drives.
     Till the whole S900 release has not been copied onto a dedicated storage place, subjects of interest must be selected
     and copied on the INT HCP Cluster
-
     :return: Information about first and last subject on a given HCP hard drive
     :rtype: List of dictionnaries
     """
@@ -49,6 +51,7 @@ def add_drive_index(metadata):
 def merge_metadata(path_data1, path_data2, merge_var='Subject'):
     """
     Merge two HCP metadata dataframes into one dataframe. Merge is don by default on subject ID key
+
     :param path_data1: path of the unrestricted metadata  csv file
     :param path_data2: path of the unrestricted metadata  csv file
     :return: the dataframe containing all HCP metadata
@@ -170,6 +173,52 @@ def update_subjects_list(dataset_directory, path_subjects_list):
     subjects_list = np.array(subjects_list, dtype=int)
     np.savetxt(path_subjects_list, subjects_list)
     return subjects_list
+
+
+def sample_subjects(metadata, nb_subjects=50,alpha=0.01):
+    """
+    Sample at random men and female subjects such as the two groups are well balanced (same number of subjects in each
+    group) and that the distribution of Age_in_Yrs in statistically non different between the two groups
+    :param metadata: dataframe containing the potential subjects of interest and the whole metadata
+    :return: selected subjects HCP ids
+    """
+    male = metadata.loc(metadata['Gender'] == 'M')
+    female = metadata.loc(metadata['Gender'] == 'F')
+    p = 0.0
+    while p < alpha:
+        s_female = female.sample(nb_subjects)
+        s_male = male.sample(nb_subjects)
+
+        dist_male = np.array(s_male['Age_in_Yrs'])
+        dist_female = np.array(s_female['Age_in_Yrs'])
+        #testing statistically that the two distributions are identical
+        t, p = stat.wilcoxon(dist_male, dist_female)
+
+    index_f = np.array(s_female['Subjects'])
+    index_m = np.array(s_male['Subjects'])
+    index = np.concatenate((index_m, index_f))
+    selected_subjects = np.sort(index)
+
+    return selected_subjects
+
+def add_selection_index(metadata, subjects_selected):
+    """
+     Add an index to specify which subjects were selected (by any criterion)
+    :param metadata:
+    :param subjects_selected:
+    :return:
+    """
+    selected = np.zeros(metadata.shape[0], dtype=bool)
+    metadata['Selected'] = selected
+    metadata['Selected'][metadata.Subject.isin(subjects_selected.tolist())] = True
+    return metadata
+
+
+def export_sampled_subjects(metadata):
+
+    sampled_subjects = metadata.loc[metadata['Selected' == True],:]
+    return sampled_subjects
+
 
 
 def select_identical_subjects(d1,d2):
