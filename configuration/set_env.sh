@@ -6,6 +6,7 @@
 # on the cluster and avoid copy of variables
 # This script need to be sourced prior to any computation, e,g consider adding
 # a source path/to/this/script.sh in your bash_personal ou bashrc
+#TODO: move the content of this file to .json file
 
 #Directory where the preprocessed data selected from HCP disks are copied
 HCP_DATASET='/envau/work/meca/data/HCP/data/HCP_dataset'
@@ -52,19 +53,15 @@ export DIR_SCRIPTS
 DIR_BVPROC_TEMPLATES="${DIR_SCRIPTS}/bv_proc_templates"
 export DIR_BVPROC_TEMPLATES
 
-#source with absolute path
-source "${DIR_SCRIPTS}/tools/tools.sh"
+#source with relative path
+source "../libs/tools/tools.sh"
 
 create_dir ${DIR_CLUSTER}
 create_dir ${DIR_BVPROC}
 
-#Both Brainvisa instances
-BRAINVISA_COMP='/hpc/meca/softs/brainvisa-4.5/bin/brainvisa'
-export BRAINVISA_COMP
-BRAINVISA_DIFF='/hpc/meca/softs/brainvisa_compil_clust/build/bug_fix/bin/brainvisa'
-export BRAINVISA_DIFF
-DEFAULT_BRAINVISA=${BRAINVISA_COMP}
-export DEFAULT_BRAINVISA
+#Brainvisa
+BRAINVISA='/hpc/meca/users/pron.a/softs/brainvisa-4.6.1'
+export BRAINVISA
 #Mrtrix binary
 MRTRIX='/hpc/meca/softs/mrtrix/bin'
 export MRTRIX
