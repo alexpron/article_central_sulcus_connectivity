@@ -5,27 +5,19 @@ Depth Potential Function computed with default parameter. The script preload the
 
 """
 
-import os
 import anatomist.api as anatomist
-from configuration import DIR_DATA, SUBJ_LIST, SIDES, MESH
+from configuration.configuration import MESHES, DPFS
 
 
 
+path_mesh = MESHES[subject, side]
+path_dpf = DPFS[subject, side]
 
-#path of white meshes (left and right) were to draw the objects extremities
-path_meshes = [os.path.join(DIR_DATA,'input', subject + '_' + side + MESH + '.gii') for \
-        subject in
-               SUBJ_LIST for side in SIDES]
-path_dpfs = [os.path.join(DIR_DATA,'input', subject + '_' + side + MESH + '_DPF.gii') for \
-        subject in SUBJ_LIST for side in SIDES]
-#launching anatomist
 a = anatomist.Anatomist()
 w = a.createWindow('3D')
-#the index of the hemisphere to draw (change this to get an other hemisphere)
-hemisphere_index = 0
-mesh = a.loadObject(path_meshes[hemisphere_index])
+mesh = a.loadObject(path_mesh)
+dpf = a.loadObject(path_dpf)
 mesh.setMaterial(polygon_mode='outline')
-dpf = a.loadObject(path_dpfs[hemisphere_index])
 dpf.setPalette('Purple-Red + Stripes', minVal=0, maxVal=-1.6, absoluteMode=True)
 fusion = a.fusionObjects(objects=[mesh, dpf], method='FusionTexSurfMethod')
 w.addObjects(fusion)

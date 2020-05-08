@@ -7,12 +7,6 @@ from configuration import DIR_IN, DIR_OUT, SUBJ_LIST, SIDES
 
 if __name__ == '__main__':
 
-    # SUBJ_LIST = ['144125', '346137', '196346', '598568', '147030','432332', '129129', '285345', '571144',
-    #               '156637', '583858', '132017','189450']
-
-
-
-
     for subject in SUBJ_LIST:
         for side in SIDES:
             path_fundus = os.path.join(DIR_OUT,'sulci', 'fundus', subject + '_' + side + '_' + 'central_sulcus.npy')

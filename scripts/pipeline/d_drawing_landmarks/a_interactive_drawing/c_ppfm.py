@@ -13,46 +13,7 @@ import os
 import numpy as np
 from soma import aims
 import anatomist.api as anatomist
-from configuration import DIR_IN,DIR_OUT,SUBJ_LIST, SIDES, MESH
-
-
-pof_L = {'boundingbox_max': [92.6499633789062, 69.6908569335938, 74.3419876098633],
- 'boundingbox_min': [-88.2990188598633, -68.4405364990234, -78.5397796630859],
- 'geometry': [0, 0, 1130, 970],
- 'group': 0,
- 'objects': [0, 5],
- 'observer_position': [133.888809204102, 123.401985168457, 109.267555236816],
- 'position': [134.719116210938, 108.979286193848, 116.38053894043, 0],
- 'referential': 4,
- 'selected': 0,
- 'slice_quaternion': [0, 0, 0, 1],
- 'type': 'AWindow',
- 'view_quaternion': [0.301455736160278,
-  0.105759382247925,
-  0.920065522193909,
-  0.226757511496544],
- 'view_size': [1095, 886],
- 'windowType': '3D',
- 'zoom': 1.22140288352966}
-
-pof_R = {'boundingbox_max': [90.2352752685547, 103.127212524414, 76.1187057495117],
- 'boundingbox_min': [-99.5151138305664, -68.4468841552734, -122.21297454834],
- 'geometry': [0, 0, 1130, 970],
- 'group': 0,
- 'objects': [0, 5],
- 'observer_position': [103.698524475098, 108.235321044922, 131.373916625977],
- 'position': [79.0391998291016, 107.622947692871, 117.274536132812, 0],
- 'referential': 4,
- 'selected': 0,
- 'slice_quaternion': [0, 0, 0, 1],
- 'type': 'AWindow',
- 'view_quaternion': [0.303208589553833,
-  -0.0535858757793903,
-  -0.868557989597321,
-  0.388329952955246],
- 'view_size': [1095, 886],
- 'windowType': '3D',
- 'zoom': 2.22554111480713}
+from configuration import MESHES, DPFS, CURVS
 
 
 #Paths
