@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source
+source ../../../../configuration/set_env.sh
 
 dwi=$1
 bvecs=$2
