@@ -1,6 +1,7 @@
 import subprocess
 import xml.etree.ElementTree as ET
-from configuration.configuration import BRAINVISA
+from libs.tools.cluster import launch_subject_cmd
+from configuration.configuration import BRAINVISA, BRAINVISA_PYTHON
 
 
 def modify_template_bvproc(path_template_bv_proc, old, subject, path_bvproc_subject):
@@ -35,4 +36,25 @@ def compute_surfacic_curvature(path_mesh, path_curvature_tex, bv_instance=BRAINV
     """
     cmd = bv_instance + '/bin/AimsMeshCurvature ' + ' -i ' + path_mesh + ' -o ' + path_curvature_tex + ' -m fem'
     subprocess.run(cmd)
+    pass
+
+
+def compute_geodesic_distance(path_mesh,path_texture, path_distance,bv_instance=BRAINVISA):
+    '''
+    Wrapper for the Aims geodesic distance command
+    :param path_mesh: path of the mesh
+    :param path_texture: path of the object definition texture. Distance is calculated from the object
+    :param path_distance: path of the geodesic distance texture
+    :return: None
+    '''
+    cmd = bv_instance + '/bin/AimsMeshDistance' + ' -i ' + path_mesh + ' -o ' + path_distance + ' -t ' + path_texture
+    subprocess.run(cmd)
+    pass
+
+
+def launch_subject_bvproc(subject_bvproc, subject, dir_cluster, python=BRAINVISA_PYTHON,
+                          core=1):
+
+    cmd = python + ' -m   brainvisa.axon.runprocess  --enabledb ' + subject_bvproc
+    launch_subject_cmd(cmd, subject, dir_cluster, core)
     pass

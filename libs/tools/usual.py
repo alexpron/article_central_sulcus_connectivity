@@ -1,5 +1,5 @@
 """
-
+A collection of basic python functions useful to simplify life.
 """
 
 import os
