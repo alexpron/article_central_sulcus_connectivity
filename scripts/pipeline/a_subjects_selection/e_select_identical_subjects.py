@@ -6,12 +6,13 @@ was done in the study.
 """
 
 
-
 if __name__ == '__main__':
+
     import pandas as pd
     from libs.subjects_selection.subjects_selection import select_identical_subjects
+    from configuration.configuration import BAD_SUBJECTS, POTENTIALS
 
-    subj_with_qc_issues = pd.read_csv('/envau/work/meca/data/HCP/phenotype/output/subjects_to_reprocess.csv')
-    potentials_subjects_2_reprocess = pd.read_csv('/envau/work/meca/data/HCP/phenotype/output/subjects_potentials_for_reprocessing.csv')
-    new_subjects = select_identical_subjects(d1,d2)
+    subj_with_qc_issues = pd.read_csv(BAD_SUBJECTS)
+    potentials_subjects = pd.read_csv(POTENTIALS)
+    new_subjects = select_identical_subjects(subj_with_qc_issues, potentials_subjects)
 
