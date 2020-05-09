@@ -6,6 +6,7 @@ TODO: move the content of this file and of the set_env.sh file to an unique .jso
 
 import os
 import numpy as np
+from libs.tools.usual import merge_dicts
 
 
 def read_subjects_list(path_list):
@@ -43,6 +44,7 @@ PATH_SUBJ_LIST = os.path.join(os.getcwd(), 'subjects_list.txt')
 SUBJ_LIST = read_subjects_list(PATH_SUBJ_LIST)
 
 SIDES = {'L': 'Left', 'R': 'Right'}
+SULCUS = 'CS' #this study focus on the central sulcus
 #Adjacent gyri of the central sulcus
 GYRI = ['precentral', 'postcentral']
 
@@ -62,8 +64,10 @@ DTI_MODEL = 'Mrtrix'
 FIT_INSTANCE = 'brain_fit'
 
 DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
-SULCUS = 'CS'
-DIR_SULCUS = os.path.join(DATA, 'sulci',SULCUS)
+
+
+
+DIR_SULCUS = os.path.join(DATA, 'sulci', SULCUS)
 DIR_LANDMARKS = os.path.join(DIR_SULCUS, 'landmarks')
 
 MESHES = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
@@ -73,9 +77,19 @@ CURVATURES = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '
 
 STATUS = ['drawn', 'cleaned']
 EXTENSIONS = {'array': '.npy', 'mesh': '.mesh', 'texture': '.gii'} #valid only for lines (fundus or crests)
-
-EXTREMITIES = {(subject, side): os.path.join(DIR_LANDMARKS, subject + '_' + side + '_' + SULCUS + '_' + 'extremities'
+EXTREMITIES = {(subject, side): os.path.join(DIR_LANDMARKS, 'extremities', subject + '_' + side + '_' + SULCUS + '_' + 'extremities'
                                                                                                         '.gii') for
                subject in SUBJ_LIST for side in SIDES.keys()}
-GYRAL_CRESTS = {(subject, side, gyrus, status, nature): os.path.join(DIR_LANDMARKS, subject + '_' + side + '_' + gyrus + status + EXTENSIONS[nature] ) for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in GYRI for status in STATUS for nature in EXTENSIONS}
-SULCUS_FUNDI = {(subject, side, status, nature) : os.path.join(DIR_LANDMARKS, subject + '_' + side + '_' + SULCUS + '_' + status + EXTENSIONS[nature]) for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in GYRI for status in STATUS for nature in EXTENSIONS}
+
+GYRAL_CRESTS = {(subject, side, gyrus, status, nature): os.path.join(DIR_LANDMARKS,'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + status + EXTENSIONS[nature]) for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in GYRI for status in STATUS for nature in EXTENSIONS}
+SULCUS_FUNDI = {(subject, side, SULCUS, status, nature): os.path.join(DIR_LANDMARKS,'fundi', subject + '_' + side + '_' + SULCUS + '_' + status + EXTENSIONS[nature]) for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in GYRI for status in STATUS for nature in EXTENSIONS}
+LINES = merge_dicts(GYRAL_CRESTS, SULCUS_FUNDI)
+PARAMETRISATIONS = ['iso', 'global_mean','mean_by_hemi']
+
+GYRAL_PARAMETRISATIONS = {(subject, side, gyrus, status, nature, param): os.path.join(DIR_LANDMARKS,'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + status + '_' + param + '_param' + EXTENSIONS[nature]) for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in GYRI for status in STATUS for nature in EXTENSIONS for param in PARAMETRISATIONS}
+FUNDI_PARAMETRISATIONS = {(subject, side, SULCUS, status, nature, param): os.path.join(DIR_LANDMARKS,'fundi', subject + '_' + side + '_' + gyrus + '_' + status + '_' + param + '_param' + EXTENSIONS[nature]) for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in GYRI for status in STATUS for nature in EXTENSIONS for param in PARAMETRISATIONS}
+LINE_PARAMETRISATIONS = merge_dicts(GYRAL_PARAMETRISATIONS, FUNDI_PARAMETRISATIONS)
+
+TABLES = ['draw_attribution', 'mesh_index', 'cs_coord', 'gyri_index', 'gyri_coord','final']
+PPFM_TABLES = {t: os.path.join(DIR_LANDMARKS, 'ppfm','ppfm' + '_' + t + '.csv') for t in TABLES}
+
