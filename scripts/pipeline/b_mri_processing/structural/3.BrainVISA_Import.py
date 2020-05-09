@@ -1,11 +1,14 @@
 import os
-import numpy as np
+
 
 
 
 if __name__ == '__main__':
 
-    from tools import subjects_list, modify_template_bvproc, launch_subject_bvproc
+    from libs.tools.brainvisa import modify_template_bvproc, launch_subject_bvproc
+    from configuration.configuration import SUBJ_LIST
+
+
     #Instanciating meta-variables retrieved from bash environnement
     dir_templates = os.environ["DIR_BVPROC_TEMPLATES"]
     sequence = 'import_T1_from_freesurfer'
@@ -20,9 +23,9 @@ if __name__ == '__main__':
     #the pattern (subject_test id to replace in the bvproc#
 
     subject_test = os.environ["SUBJECT_TEST"]
-    subjects_list = read_subjects_list(os.environ["SUBJ_LIST"])
 
-    for i, sub in enumerate(subjects_list[:-1]):
+
+    for i, sub in enumerate(SUBJ_LIST):
         path_bvproc_subject = os.path.join(dir_bvproc, sub + '.bvproc')
         # #create a new bvproc corresponding to the processed subject
         modify_template_bvproc(path_template,subject_test,sub, path_bvproc_subject)
