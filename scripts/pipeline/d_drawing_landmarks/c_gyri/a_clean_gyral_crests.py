@@ -29,7 +29,7 @@ if __name__ == '__main__':
                 aims.write(gyrus_mesh, GYRAL_CRESTS[(subject, side, gyrus, 'cleaned', 'mesh')])
                 #computing normalized curv absciss param
                 gyrus_param = normalized_curv_parametrisation(gyrus_vertices)
-                np.save(GYRAL_PARAMETRISATIONS[(subject, side, gyrus, 'cleaned', )], gyrus_param)
+                np.save(GYRAL_PARAMETRISATIONS[(subject, side, gyrus, 'cleaned','array','iso')], gyrus_param)
                 #save it also as a texture
                 gyrus_param_tex = aims.TimeTexture(gyrus_param.astype(np.float32))
-                aims.write(gyrus_param_tex, path_cleaned_gyrus_iso_param_tex)
+                aims.write(gyrus_param_tex, GYRAL_PARAMETRISATIONS[(subject, side, gyrus, 'cleaned','texture','iso')])
