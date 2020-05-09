@@ -2,16 +2,16 @@
 
 These points are drawn in each extremity of the central sulcus based on the grey/white interface mesh (geometry) and the
 Depth Potential Function computed with default parameter. The script preload the fusion of the mesh and the dpf. Script is supposed to be launched into iPython
-
 """
 
 import anatomist.api as anatomist
-from configuration.configuration import MESHES, DPFS
+from configuration.configuration import MESHES, DPFS, SUBJ_LIST, SIDES
 
+subject = SUBJ_LIST[0] #to be modified (0-99)
+side = SIDES.keys()[0] #to be modified (0-1)
 
-
-path_mesh = MESHES[subject, side]
-path_dpf = DPFS[subject, side]
+path_mesh = MESHES[(subject, side)]
+path_dpf = DPFS[(subject, side)]
 
 a = anatomist.Anatomist()
 w = a.createWindow('3D')
