@@ -1,104 +1,40 @@
 """
-The pli de passage position along the central sulcus fundus is normally detected automatically using the
-geodesic depth profile of the central sulcus. However some depth profiles does not allow to retrieve reliably
-the PP position. For this case a manual drawing of the PP is performed using this script.
-
-How to use this script ?
-
-
-
+Helper to localise the pli de passage fronto-pariétal moyen (PPFM) of the central sulcus
+ + the PPFM must be located along the central sulcus fundus line
+ + the local elevation of the sulcal floor is spotted thanks to DPF and curvature surface maps.
 """
-from __future__ import print_function
-import os
-import numpy as np
-from soma import aims
 import anatomist.api as anatomist
-from configuration import MESHES, DPFS, CURVS
+from configuration.configuration import MESHES, DPFS, CURVATURES, SULCUS_FUNDI, SUBJ_LIST, SIDES
 
 
-#Paths
-wm_meshes = [os.path.join(DIR_IN, sub + '_' + side + MESH +'.gii') for sub in SUBJ_LIST for side in SIDES]
-dpfs = [os.path.join(DIR_IN, sub + '_' + side + MESH +'_DPF.gii') for sub in SUBJ_LIST for side in SIDES]
-curvatures = [os.path.join(DIR_IN, sub + '_' + side + '_' + MESH + '_curvature'
-                                                                  '.gii') for sub in SUBJ_LIST for side in SIDES]
-depths = [os.path.join(DIR_IN, sub + '_' + side + MESH +'_depth.gii') for sub in SUBJ_LIST for side in SIDES]
+subject = SUBJ_LIST[0] # to be modified (0-99)
+side = SIDES.keys()[0] # to be modified (0-1)
 
-sulci = [os.path.join(DIR_OUT,'sulci','fundus', sub + '_' + side + '_' + 'central_sulcus.mesh') for sub in SUBJ_LIST
-         for side in SIDES]
-sulci_param = [os.path.join(DIR_OUT,'sulci', 'fundus', sub + '_' + side + '_' +
-                                      'central_sulcus_iso_param.gii') for sub in SUBJ_LIST
-         for side in SIDES]
-pps = [os.path.join(DIR_OUT,'pli_passage', 'textures', sub + '_' + side + '_' +
-                                      'pli_passage.gii') for sub in SUBJ_LIST
-         for side in SIDES]
-subs = [sub for sub in SUBJ_LIST for side in SIDES]
-sides = [side for sub in SUBJ_LIST for side in SIDES]
-
-
+blue = [0, 0, 1, 1]
+default = [0.8, 0.8, 0.8, 1]
 
 a = anatomist.Anatomist()
 
+windows = [a.createWindow('3D') for i in range(3)]
 
-w3d = a.createWindow('3D',geometry=pof_L['geometry'])
-w3d2 = a.createWindow('3D',geometry=pof_L['geometry'])
-w3d3 = a.createWindow('3D',geometry=pof_L['geometry'])
-#w3d4 = a.createWindow('3D',geometry=pof_L['geometry'])
-
-#INDEX A MODIFIER POUR LANCER LE SCRIPT SUR UN AUTRE SUJET
-##########################################################
-i = 156
-##########################################################
-w = wm_meshes[i]
-dpf = dpfs[i]
-curv = curvatures[i]
-sulcus = sulci[i]
-param = sulci_param[i]
-pp = pps[i]
-
-amesh = a.loadObject(w)
-
-adpf = a.loadObject(dpf)
-asulcus = a.loadObject(sulcus)
-acurvature = a.loadObject(curv)
-aparam = a.loadObject(param)
-
+mesh = a.loadObject(MESHES[(subject, side)])
+dpf = a.loadObject(DPFS[(subject, side)])
+curvature = a.loadObject(CURVATURES[(subject, side)])
+sulcus_fundus = a.loadObject(SULCUS_FUNDI[(subject, side, 'cleaned', 'texture')])
 
 #display output
-amesh.setMaterial(diffuse=[0.8, 0.8, 0.8, 1], polygon_mode='outline')
-asulcus.setMaterial(diffuse=[1,0,0,1],line_width=15)
-adpf.setPalette('Blue-Red',minVal=0.80, maxVal=1.80,absoluteMode=True)
+mesh.setMaterial(diffuse=default, polygon_mode='outline')
+dpf.setPalette('Blue-Red', minVal=0.80, maxVal=1.80, absoluteMode=True)
+curvature.setPalette('Blue-Red-fusion', maxVal=0, absoluteMode=True)
+sulcus_fundus.setPalette('Blue-fusion', minVal=99, maxVal=100, absoluteMode=True)
 
-fusion = a.fusionObjects(objects=[asulcus,aparam], method='FusionTexSurfMethod')
-fusion_dpf = a.fusionObjects(objects=[amesh,adpf],method='FusionTexSurfMethod')
-fusion_curvature = a.fusionObjects(objects=[amesh,acurvature], method='FusionTexSurfMethod')
+fusion_dpf = a.fusionObjects(objects=[mesh, dpf], method='FusionTexSurfMethod')
+fusion_curvature = a.fusionObjects(objects=[mesh, curvature], method='FusionTexSurfMethod')
+fusion_fundus = a.fusionObjects(objects=[mesh, sulcus_fundus], method='FusionTexSurfMethod')
 
-if sides[i] == 'L':
-   pof = pof_L
-else:
-    pof = pof_R
-w1_objects = [amesh, asulcus]
-
-if os.path.exists(pp):
-    mesh = a.toAimsObject(amesh)
-    vertices = np.array(mesh.vertex())
-    pp_tex = aims.read(pp)
-    pp_a = np.array(pp_tex[0])
-    pp_ind = np.where(pp_a!=0)[0]
-    v = vertices[pp_ind][0].tolist()
-    pp_sphere = aims.SurfaceGenerator.sphere(v, 0.5, 200)
-    a_pp = a.toAObject(pp_sphere)
-    pp_material = a.Material(diffuse=[0,0,1,1]) #blue in RGB
-    a_pp.setMaterial(pp_material)
-    w1_objects.append(a_pp)
-
-w3d.addObjects(w1_objects)
-w3d2.addObjects([fusion_dpf])
-w3d3.addObjects([fusion_curvature])
-w3d.camera( view_quaternion=pof['view_quaternion'], zoom=pof['zoom'],slice_quaternion=pof['slice_quaternion'], observer_position=pof['observer_position'])
-w3d2.camera( view_quaternion=pof['view_quaternion'], zoom=pof['zoom'],slice_quaternion=pof['slice_quaternion'],
-             observer_position=pof['observer_position'])
-w3d3.camera( view_quaternion=pof['view_quaternion'], zoom=pof['zoom'],slice_quaternion=pof['slice_quaternion'],
-             observer_position=pof['observer_position'])
+windows[0].addObjects([fusion_dpf])
+windows[1].addObjects([fusion_curvature])
+windows[2].addObjects([fusion_fundus])
 
 
 

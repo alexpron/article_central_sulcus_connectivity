@@ -6,22 +6,22 @@ triangular meshes. This script should be launched into ipython interactive termi
 
 import os
 import anatomist.api as anatomist
-from configuration.configuration import MESHES, EXTREMITIES, GYRAL_CRESTS, GYRI
+from configuration.configuration import MESHES, EXTREMITIES, GYRAL_CRESTS, GYRI, SUBJ_LIST, SIDES
 
+subject = SUBJ_LIST[0] # to be modified (0-99)
+side = SIDES.keys()[0] # to be modified (0-1)
 
+path_mesh = MESHES[(subject, side)]
+path_extremities = EXTREMITIES[(subject, side)]
 
-path_mesh = MESHES[subject, side]
-path_extremities = EXTREMITIES[subject, side]
-#to handle the cas of modifications of existing lines
-path_precentral = GYRAL_CRESTS[subject, side, GYRI[0]]
-path_postcentral = GYRAL_CRESTS[subject, side, GYRI[0]]
+# to handle the case of modification of existing lines
+path_precentral = GYRAL_CRESTS[(subject, side, GYRI[0], 'drawn','texture')]
+path_postcentral = GYRAL_CRESTS[(subject, side, GYRI[0], 'drawn', 'texture')]
 
-
-#launching anatomist
-a = anatomist.Anatomist()
 if os.path.exists(path_precentral) and os.path.exists(path_postcentral):
-    print("Gyral crests are already drawn do you want to redo it ?")
+    print(" Gyral crests are already drawn do you want to redo it ?")
 else:
+    a = anatomist.Anatomist()
     mesh = a.loadObject(path_mesh)
     mesh.setMaterial(polygon_mode='outline')
     ext = a.loadObject(path_extremities)
