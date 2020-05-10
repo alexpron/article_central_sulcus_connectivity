@@ -9,6 +9,6 @@ if __name__ == '__main__':
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
-            compute_surfacic_curvature(MESHES[(subject, side)], CURVATURES[(subject, side)])
+            compute_surfacic_curvature(MESHES[(subject, side,'white')], CURVATURES[(subject, side,'white')])
 
 
