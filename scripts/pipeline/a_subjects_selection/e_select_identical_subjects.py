@@ -9,7 +9,7 @@ was done in the study.
 if __name__ == '__main__':
 
     import pandas as pd
-    from libs.subjects_selection.subjects_selection import select_identical_subjects
+    from libs.subjects_selection import select_identical_subjects
     from configuration.configuration import BAD_SUBJECTS, POTENTIALS
 
     subj_with_qc_issues = pd.read_csv(BAD_SUBJECTS)

@@ -24,12 +24,15 @@ def read_subjects_list(path_list):
 BRAINVISA = '/hpc/meca/users/pron.a/softs/brainvisa-4.6.1'
 BRAINVISA_PYTHON = os.path.join(BRAINVISA, 'bin', 'python')
 
+#storage directory of the preprocessed HCP S900 release dataset
+HCP_DATASET = '/envau/work/meca/data/HCP/data/HCP_dataset'
 
 #Data organisation (outside BrainVISA)
 DATA = '/hpc/meca/users/pron.a/data'
+DIR_SUBJECTS = os.path.join(DATA, 'subjects')
+DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
 
 #Subjects selection related variables
-DIR_SUBJECTS = os.path.join(DATA, 'subjects')
 RELEASE = '07_30_2018_S900_release'
 RESTRICTED = os.path.join(DIR_SUBJECTS, 'RESTRICTED' + '_' + RELEASE + '.csv')
 UNRESTRICTED = os.path.join(DIR_SUBJECTS, 'unrestricted' + '_' + RELEASE + '.csv')
@@ -48,6 +51,8 @@ SULCUS = 'CS' #this study focus on the central sulcus
 GYRI = ['precentral', 'postcentral']
 #Adjacent gyri of the central sulcus
 ADJACENT_GYRI = {SULCUS: GYRI}
+DIR_SULCUS = os.path.join(DATA, 'sulci', SULCUS)
+DIR_LANDMARKS = os.path.join(DIR_SULCUS, 'landmarks')
 
 
 #BrainVISA database structure and associated variables
@@ -65,12 +70,14 @@ CSD_MODEL = 'MSMT'
 DTI_MODEL = 'Mrtrix'
 FIT_INSTANCE = 'brain_fit'
 
-DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
+
+BVALS = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'bvals') for subject in SUBJ_LIST}
+BVECS = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'bvecs') for subject in SUBJ_LIST}
+DIR_DWI = {subject: os.path.join(BRAINVISA_DB,CENTER,subject,DWI,DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
+COMMIT_META = {subject: os.path.join(DIR_DWI[subject], 'commit_metada.txt') for subject in SUBJ_LIST}
 
 
 
-DIR_SULCUS = os.path.join(DATA, 'sulci', SULCUS)
-DIR_LANDMARKS = os.path.join(DIR_SULCUS, 'landmarks')
 
 MESHES = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
 DEPTHS = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_depth.gii') for subject in SUBJ_LIST for side in SIDES.keys()}

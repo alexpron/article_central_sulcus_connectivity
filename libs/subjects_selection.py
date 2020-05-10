@@ -11,7 +11,7 @@ from libs.tools.usual import get_subdirectories
 from copy import copy
 
 
-def create_disk_index():
+def create_diskindex():
     """
     S900 release of the  subjects are stored onto 8 physical hard drives.
     Till the whole S900 release has not been copied onto a dedicated storage place, subjects of interest must be selected

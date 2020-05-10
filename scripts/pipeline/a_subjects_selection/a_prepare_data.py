@@ -7,7 +7,7 @@ First step of the subject selection process used for this study :
 
 if __name__ == '__main__':
 
-    from libs.subjects_selection.subjects_selection import complete_data, exclude_subjects_with_QC_issues, \
+    from libs.subjects_selection import complete_data, exclude_subjects_with_QC_issues, \
         extract_valid_subjects
     from configuration.configuration import RESTRICTED, UNRESTRICTED, FULL, CLEAN, POTENTIALS
 
