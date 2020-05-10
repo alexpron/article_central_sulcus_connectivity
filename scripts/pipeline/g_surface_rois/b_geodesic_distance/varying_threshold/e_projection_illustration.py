@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
                 roi_t = aims.TimeTexture(partition_correct_index)
 
-                aims.write(roi_t, os.path.join(DIR_OUT,'geodesic_distances','projection',subject + '_' + side + '_' + gyri + '.gii'))
+                aims.write(roi_t, os.path.join(DIR_OUT,'geodesic_distances','f_projection',subject + '_' + side + '_' + gyri + '.gii'))
 
 
 

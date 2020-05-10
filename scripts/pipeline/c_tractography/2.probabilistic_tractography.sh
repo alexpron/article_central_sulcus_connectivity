@@ -17,7 +17,7 @@ cutoff='0.1'
 for subj in $(cat ${SUBJ_LIST})
 do
         echo ${subj}
-        processing_dir="${BV_DB}/${subj}/dmri/${DWI_ACQ}/${DWI_PROC}"
+        processing_dir="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}"
         seeding_dir="${processing_dir}/seeds"
         tractography_dir="${processing_dir}/tractography"
         create_dir ${seeding_dir}
