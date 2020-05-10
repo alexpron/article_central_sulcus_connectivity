@@ -17,7 +17,7 @@ if __name__ == '__main__':
     dir_bvproc = os.path.join(os.environ["DIR_BVPROC"], sequence)
     dir_cluster = os.path.join(os.environ["DIR_CLUSTER"], sequence)
 
-    #create
+    #create a directory for modified bvproc
     if not os.path.exists(dir_bvproc):
         os.makedirs(dir_bvproc)
     #the pattern (subject_test id to replace in the bvproc#
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         modify_template_bvproc(path_template,subject_test,sub, path_bvproc_subject)
         #check if the bvproc can be executed on the cluster (when several steps are passive
         #output files may not exist
-        launch_subject_bvproc(path_bvproc_subject,sub,dir_cluster, core=1)
+        launch_subject_bvproc(path_bvproc_subject, sub, dir_cluster, core=1)
 
 
 
