@@ -1,10 +1,9 @@
-import nibabel as nib
-import numpy as np
-import pickle
 import sys
+import numpy as np
+import nibabel as nib
 
 
-def extract_sub_tractogram(path_trk, path_results,path_trk_filtered):
+def extract_sub_tractogram(path_trk, path_results, path_trk_filtered):
 	'''
 	:param path_trk:
 	:param path_results:

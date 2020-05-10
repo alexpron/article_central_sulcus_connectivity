@@ -20,7 +20,7 @@ if __name__ == '__main__':
         #path_tck = os.path.join(BV_db, sub, 'dmri', dwi_acq, dwi_proc, 'tractography', 'tracks.tck')
         path_trk = os.path.join(BV_db, sub, 'dmri', dwi_acq, dwi_proc, 'tractography', 'tracks.trk')
         path_trk_filtered = os.path.join(BV_db, sub, 'dmri', dwi_acq, dwi_proc, 'tractography', 'filtered_tracks.trk')
-        path_commit_weight = os.path.join(BV_db, sub, 'dmri', dwi_acq, dwi_proc, 'commit', 'Results_StickZeppelinBall','results.pickle')
+        path_commit_weight = os.path.join(BV_db, sub, 'dmri', dwi_acq, dwi_proc, 'a_commit', 'Results_StickZeppelinBall','results.pickle')
 
         if os.path.exists(path_trk) and os.path.exists(path_commit_weight) and not os.path.exists(path_trk_filtered):
             #print "ok"
