@@ -13,7 +13,7 @@ do
     echo "Processing HCP subject: ${subj}\n"
     #
     dir_dataset_subj_in="${HCP_DATASET}/${subj}/T1w/Diffusion"
-    dir_BV_subj_in="${BV_DB}/${subj}/dmri/default_acquisition/HCP_pipeline"
+    dir_BV_subj_in="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}"
     dir_subj_out="${dir_BV_subj_in}/csd/MSMT"
    
     create_dir ${dir_subj_out}
@@ -24,7 +24,7 @@ do
     bvecs="${dir_dataset_subj_in}/bvecs"
     tissues="${dir_BV_subj_in}/5tt.mif"
 
-    cmd="${DIR_SCRIPTS}/DWI_processing/cmds/${sequence}.sh  ${dwi} ${bvecs} ${bvals} ${tissues} ${mask} ${dir_subj_out}"
+    cmd="${DIR_LIBS}/mri_processing/dwi/${sequence}.sh  ${dwi} ${bvecs} ${bvals} ${tissues} ${mask} ${dir_subj_out}"
     launch_subject_cmd "${cmd}" ${subj} ${dir_cluster}
 done
 

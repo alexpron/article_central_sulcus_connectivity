@@ -7,7 +7,6 @@
 # param $1: a txt file containing the subjects ids
 #--------------------------------------------------------------------#
 
-# "hard sourcing" this is bad but fast !
 source ../../../../configuration/set_env.sh
 source ../../../../libs/tools/tools.sh
 ######################################################################
@@ -18,7 +17,7 @@ do
     echo ${subj}
     dir_dataset_subj="${HCP_DATASET}/${subj}/T1w/Diffusion"
     #put files directly into the Brainvisa db to avoid loss of storage
-    dir_BV_subj="${BV_DB}/${subj}/dmri/default_acquisition/HCP_pipeline"
+    dir_BV_subj="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}"
     echo ${dir_BV_subj}
     create_dir  ${dir_BV_subj}
 #    #Base
@@ -46,16 +45,16 @@ do
     create_dir  ${dir_brain_fit_csd}
     tissues="${dir_BV_subj}/5tt.mif"
     #B1 bias correction
-    b1biascorr="${DIR_SCRIPTS}/dwi_processing/cmds/B1_bias_correction.sh  ${dwi} ${bvals} ${bvecs} ${dwi_corr}"
+    b1biascorr="${DIR_LIBS}/mri_processing/dwi/B1_bias_correction.sh  ${dwi} ${bvals} ${bvecs} ${dwi_corr}"
     ${b1biascorr}
     #Mean BO estimation 
-    meanb0="${DIR_SCRIPTS}/dwi_processing/cmds/mean_b0_extraction.sh  ${dwi_corr} ${bvecs} ${bvals} ${mb0}"
+    meanb0="${DIR_LIBS}/mri_processing/dwi/mean_b0_extraction.sh  ${dwi_corr} ${bvecs} ${bvals} ${mb0}"
     ${meanb0}
     #Tensor Fitting 
-    dtifit="${DIR_SCRIPTS}/dwi_processing/cmds/tensor.sh  ${dwi_corr} ${bvals} ${bvecs} ${mask} ${tensor} ${FA} ${MD} ${e1}"
+    dtifit="${DIR_LIBS}/mri_processing/dwi/tensor.sh  ${dwi_corr} ${bvals} ${bvecs} ${mask} ${tensor} ${FA} ${MD} ${e1}"
     ${dtifit}
     #Impulsionnal Response
-    imp="${DIR_SCRIPTS}/dwi_processing/cmds/impulsionnal_response_estimation.sh  ${dwi_corr} ${bvecs} ${bvals} ${tissues} ${mask} ${dir_csd}"
+    imp="${DIR_LIBS}/mri_processing/dwi/impulsionnal_response_estimation.sh  ${dwi_corr} ${bvecs} ${bvals} ${tissues} ${mask} ${dir_csd}"
     ${imp}
     #MSMT deconv
     csd="${DIR_SCRIPTS}/dwi_processing/cmds/msmt_csd.sh  ${dwi_corr} ${bvecs} ${bvals} ${mask} ${dir_csd} ${dir_brain_fit_csd}"

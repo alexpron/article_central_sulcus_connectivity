@@ -27,7 +27,7 @@ do
     bvecs="${dir_FS_subj_in}/bvecs"
     tissues="${dir_BV_subj_in}/5tt.mif"
 
-    cmd="/hpc/meca/users/pron.a/HCP/scripts/DWI_processing/cmds/msmt_csd.sh  ${dwi} ${bvecs} ${bvals} ${mask} ${dir_subj_in} ${dir_subj_out}"
+    cmd="${DIR_LIBS}/mri_processing/dwi/msmt_csd.sh  ${dwi} ${bvecs} ${bvals} ${mask} ${dir_subj_in} ${dir_subj_out}"
     echo ${cmd}
     #command on passive
     launch_subject_cmd "${cmd}" ${subj} ${dir_cluster}

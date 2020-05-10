@@ -16,7 +16,7 @@ do
     s
     #data related files
     dir_dataset_subj_in="${HCP_DATASET}/${subj}/T1w/Diffusion"
-    dir_BV_subj_in="${BV_DB}/${subj}/dmri/default_acquisition/HCP_pipeline"
+    dir_BV_subj_in="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}"
     dir_subj_out="${dir_BV_subj_in}/dti/Mrtrix"
     dir_brain_fit="${dir_subj_out}/brain_fit"
     dir_derived_quantities="${dir_brain_fit}/derived_indices"
@@ -32,7 +32,7 @@ do
     MD="${dir_derived_quantities}/${subj}_mean_diffusivity.nii.gz"
     e1="${dir_derived_quantities}/${subj}_first_eigen_vector.nii.gz"
 
-    cmd="${DIR_SCRIPTS}/DWI_processing/cmds/${sequence}.sh  ${dwi} ${bvals} ${bvecs} ${mask} ${tensor} ${FA} ${MD} ${e1}"
+    cmd="${DIR_LIBS}/mri_processing/dwi/${sequence}.sh  ${dwi} ${bvals} ${bvecs} ${mask} ${tensor} ${FA} ${MD} ${e1}"
     echo ${cmd}
     #command on passive
     launch_subject_cmd "${cmd}" ${subj} ${dir_cluster}

@@ -16,8 +16,8 @@ nb_peaks=3
 for subj in $(cat ${SUBJ_LIST})
 do
     echo ${subj}
-    peaks="${BV_DB}/${subj}/dmri/${DWI_ACQ}/${DWI_PROC}/csd/MSMT/brain_fit/peaks.nii.gz"
-    sh_coeffs="${BV_DB}/${subj}/dmri/${DWI_ACQ}/${DWI_PROC}/csd/MSMT/brain_fit/wm_fod.nii.gz"
+    peaks="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}/csd/MSMT/brain_fit/peaks.nii.gz"
+    sh_coeffs="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}/csd/MSMT/brain_fit/wm_fod.nii.gz"
     if [ ! -e "${peaks}" ] && [ -e "${sh_coeffs}" ]; then
         #optional parameters
         dir_FS_subj_in="${HCP_DATASET}/${subj}/T1w/Diffusion"

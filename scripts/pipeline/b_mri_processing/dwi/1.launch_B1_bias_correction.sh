@@ -21,7 +21,7 @@ do
     echo ${subj}
     dir_subj_in=${HCP_DATASET}'/'${subj}'/T1w/Diffusion'
     #put files directly into the Brainvisa db to avoid loss of storage
-    dir_subj_out=${BV_DB}'/'${subj}'/dmri/default_acquisition/HCP_pipeline'
+    dir_subj_out="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}"
     create_dir ${dir_subj_out}
     #
     dwi="${dir_subj_in}/data.nii.gz"
@@ -29,7 +29,7 @@ do
     bvecs="${dir_subj_in}/bvecs"
     dwi_corr="${dir_subj_out}/corrected_dwi_${subj}.nii.gz"
     #cluster related files
-    cmd="${DIR_SCRIPTS}/DWI_processing/cmds/${sequence}.sh  ${dwi} ${bvals} ${bvecs}  ${dwi_corr}"
+    cmd="${DIR_LIBS}/mri_processing/dwi/${sequence}.sh  ${dwi} ${bvals} ${bvecs}  ${dwi_corr}"
     echo ${cmd}
     #command on passive
     launch_subject_cmd "${cmd}" ${subj} ${dir_cluster}

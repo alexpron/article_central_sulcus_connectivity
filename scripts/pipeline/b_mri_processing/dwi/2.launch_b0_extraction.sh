@@ -16,7 +16,7 @@ do
     echo "Processing HCP subject: ${subj}"
     #data related files
     dir_dataset_subj_in="${HCP_DATASET}/${subj}/T1w/Diffusion"
-    dir_BV_subj_in="${BV_DB}/${subj}/dmri/default_acquisition/HCP_pipeline"
+    dir_BV_subj_in="${BV_DB}/${subj}/${DWI}/${DWI_ACQ}/${DWI_PROC}"
 
     dwi="${dir_BV_subj_in}/corrected_dwi_${subj}.nii.gz"
     mask="${dir_dataset_subj_in}/nodif_brain_mask.nii.gz"
@@ -24,7 +24,7 @@ do
     bvecs="${dir_dataset_subj_in}/bvecs"
     mb0="${dir_BV_subj_in}/b0_${subj}.nii.gz"
 
-    cmd="${DIR_SCRIPTS}/DWI_processing/cmds/${sequence}.sh  ${dwi} ${bvecs} ${bvals} ${mb0}"
+    cmd="${DIR_LIBS}/mri_processing/dwi/${sequence}.sh  ${dwi} ${bvecs} ${bvals} ${mb0}"
     echo ${cmd}
     #command on passive
     launch_subject_cmd "${cmd}" ${subj} ${dir_cluster}
