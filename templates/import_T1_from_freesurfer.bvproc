@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<minf expander="brainvisa-history_2.0">
+<f type="bvproc">
+  <f type="Uuid">
+    <s>ca3eaef9-d68d-9360-d65f-5437b28f3549</s>
+  </f>
+  <d>
+    <d name="window">
+      <l length="2" name="position">
+        <n>100</n>
+        <n>25</n>
+      </l>
+      <l length="2" name="size">
+        <n>600</n>
+        <n>721</n>
+      </l>
+    </d>
+    <s name="pipelineStructure">Import_FROM_FreeSurfer_TO_Morpho_withOptions</s>
+    <d name="parameters">
+      <d name="default">
+        <s name="bias_corrected_output">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/default_analysis/nobias_100206.nii.gz</s>
+        <s name="delete_last_n_slices">auto (AC/PC Points needed)</s>
+        <s name="normalization_transformation">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/registration/RawT1-100206_HCP_pipeline_modified_TO_Talairach-MNI.trm</s>
+        <s name="mni_referential">/hpc/soft/brainvisa/brainvisa_4.5.0/share/brainvisa-share-4.5/registration/Talairach-MNI_template-SPM.referential</s>
+        <s name="acpc_referential">/hpc/soft/brainvisa/brainvisa_4.5.0/share/brainvisa-share-4.5/registration/Talairach-AC_PC-Anatomist.referential</s>
+        <s name="brain_mask_output">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/default_analysis/segmentation/brain_100206.nii.gz</s>
+        <s name="commissure_coordinates">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/100206.APC</s>
+        <n name="use_morphologist">1</n>
+        <l length="1" name="transform_chain_ACPC_to_Normalized">
+          <s>/hpc/soft/brainvisa/brainvisa_4.5.0/share/brainvisa-share-4.5/transformation/talairach_TO_spm_template_novoxels.trm</s>
+        </l>
+        <s name="transform_to_scanner_based">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/registration/RawT1-100206_HCP_pipeline_modified_TO_Scanner_Based.trm</s>
+        <s name="ribbon_image">/hpc/meca/data/FreesurferDatabases/FS_HCP_preprocessed/100206/mri/ribbon.mgz</s>
+        <s name="left_grey_white_output">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/default_analysis/segmentation/Lgrey_white_100206.nii.gz</s>
+        <s name="split_brain_output">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/default_analysis/segmentation/voronoi_100206.nii.gz</s>
+        <s name="talairach_transform">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/registration/RawT1-100206_HCP_pipeline_modified_TO_Talairach-ACPC.trm</s>
+        <s name="Talairach_Auto">/hpc/meca/data/FreesurferDatabases/FS_HCP_preprocessed/100206/mri/transforms/talairach.auto.xfm</s>
+        <none name="scanner_based_referential"/>
+        <s name="right_grey_white_output">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/default_analysis/segmentation/Rgrey_white_100206.nii.gz</s>
+        <s name="histo_analysis">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/default_analysis/nobias_100206.han</s>
+        <s name="T1_referential">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/registration/RawT1-100206_HCP_pipeline_modified.referential</s>
+      </d>
+      <d name="selected">
+        <s name="T1_orig">/hpc/meca/data/FreesurferDatabases/FS_HCP_preprocessed/100206/mri/orig.mgz</s>
+        <s name="T1_output">/hpc/meca/data/BrainVisaDatabases/HCP_preprocessed/subjects/100206/t1mri/HCP_pipeline_modified/100206.nii.gz</s>
+      </d>
+    </d>
+  </d>
+</f>
+</minf>

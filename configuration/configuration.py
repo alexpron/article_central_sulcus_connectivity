@@ -19,7 +19,6 @@ def read_subjects_list(path_list):
     return subjects_list
 
 
-
 #default brainvisa and associated python version used for analyses/visualisation in the paper
 BRAINVISA = '/hpc/meca/users/pron.a/softs/brainvisa-4.6.1'
 BRAINVISA_PYTHON = os.path.join(BRAINVISA, 'bin', 'python')
@@ -27,7 +26,7 @@ BRAINVISA_PYTHON = os.path.join(BRAINVISA, 'bin', 'python')
 #storage directory of the preprocessed HCP S900 release dataset
 HCP_DATASET = '/envau/work/meca/data/HCP/data/HCP_dataset'
 
-#Data organisation (outside BrainVISA)
+#Data (output directory outside of BrainVISA database)
 DATA = '/hpc/meca/users/pron.a/data'
 DIR_SUBJECTS = os.path.join(DATA, 'subjects')
 DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
@@ -47,7 +46,7 @@ PATH_SUBJ_LIST = os.path.join(os.getcwd(), 'subjects_list.txt')
 SUBJ_LIST = read_subjects_list(PATH_SUBJ_LIST)
 
 SIDES = {'L': 'Left', 'R': 'Right'}
-SULCUS = 'CS' #this study focus on the central sulcus
+SULCUS = 'CS' #this study focus on the central sulcus but generic organisation
 GYRI = ['precentral', 'postcentral']
 #Adjacent gyri of the central sulcus
 ADJACENT_GYRI = {SULCUS: GYRI}
@@ -73,16 +72,22 @@ FIT_INSTANCE = 'brain_fit'
 
 BVALS = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'bvals') for subject in SUBJ_LIST}
 BVECS = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'bvecs') for subject in SUBJ_LIST}
-DIR_DWI = {subject: os.path.join(BRAINVISA_DB,CENTER,subject,DWI,DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
+DWI_HCP = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion','data.nii.gz') for subject in SUBJ_LIST}
+DIR_T1 = {subject: os.path.join(BRAINVISA_DB, CENTER, subject, T1) for subject in SUBJ_LIST}
+DIR_DWI = {subject: os.path.join(BRAINVISA_DB, CENTER, subject, DWI, DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
 COMMIT_META = {subject: os.path.join(DIR_DWI[subject], 'commit_metada.txt') for subject in SUBJ_LIST}
+T1_2_DWI = {subject: os.path.join(DIR_DWI[subject], 'registration', 'T1_TO_dwi' + '_' + subject + '.trm') for subject in SUBJ_LIST}
+DWI_2_T1 = {subject: os.path.join(DIR_DWI[subject], 'registration', 'dwi_TO_T1' + '_' + subject + '.trm') for subject in SUBJ_LIST}
 
+MESHES_TYPE = ['white', 'hemi']
+MESHES_BRAINVISA_T1 = {(subject, side, mesh_type, 't1'): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC,'segmentation','meshes', subject + '_' + side + mesh_type + '.gii') for subject in SUBJ_LIST for side in SIDES for mesh_type in MESHES_TYPE}
+MESHES_BRAINVISA_DWI = {(subject, side, mesh_type, 'dwi'): os.path.join(DIR_DWI[subject],'mesh', subject + '_' + side + '_' + mesh_type + '_' + 'to_dwi.gii') for subject in SUBJ_LIST for side in SIDES for mesh_type in MESHES_TYPE}
+MESHES_BRAINVISA = merge_dicts(MESHES_BRAINVISA_T1, MESHES_BRAINVISA_DWI)
 
-
-
-MESHES = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
-DEPTHS = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_depth.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
-DPFS = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_dpf.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
-CURVATURES = {(subject, side): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_curvature.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
+MESHES = {(subject, side, mesh_type): os.path.join(DIR_MESHES, subject + '_' + side + '_' + mesh_type + '.gii') for subject in SUBJ_LIST for side in SIDES.keys() for mesh_type in MESHES_TYPE}
+DEPTHS = {(subject, side, 'white'): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_depth.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
+DPFS = {(subject, side, 'white'): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_dpf.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
+CURVATURES = {(subject, side, 'white'): os.path.join(DIR_MESHES, subject + '_' + side + '_' + 'white_curvature.gii') for subject in SUBJ_LIST for side in SIDES.keys()}
 
 STATUS = ['drawn', 'cleaned']
 EXTENSIONS = {'array': '.npy', 'mesh': '.mesh', 'texture': '.gii'} #valid only for lines (fundus or crests)

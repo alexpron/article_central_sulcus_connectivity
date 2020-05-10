@@ -11,9 +11,6 @@
 #Directory where the preprocessed data selected from HCP disks are copied
 HCP_DATASET='/envau/work/meca/data/HCP/data/HCP_dataset'
 export HCP_DATASET
-#list of the subjects in HCP_DATASET obtained automatically
-SUBJ_LIST="${HCP_DATASET}/subjects_list.txt"
-export SUBJ_LIST
 #FreeSurfer Database containing HCP subjects processed with FreeSurfer 6 from
 # the output data of PreFreeSurferPipeline
 FS_DB='/hpc/meca/data/U_Fibers/FS_database'
@@ -38,26 +35,23 @@ FIT_INSTANCE='brain_fit'
 export DTI_MODEL
 export FIT_INSTANCE
 
-#
-#directories for bvproc and cluster on frioul
-DIR_HOME='/hpc/meca/users/pron.a/HCP'
+
+#directories for bvproc and cluster on frioul (Need to be changed)
+DIR_HOME='/hpc/meca/users/pron.a/HCP/article_central_sulcus_connectivity'
 export DIR_HOME
+SUBJ_LIST="${DIR_HOME}/configuration/subjects_list.txt"
+export SUBJ_LIST
 DIR_CLUSTER="${DIR_HOME}/cluster"
 export DIR_CLUSTER
 DIR_BVPROC="${DIR_HOME}/bvproc"
 export DIR_BVPROC
-
 DIR_SCRIPTS="${DIR_HOME}/scripts"
 export DIR_SCRIPTS
+DIR_LIBS="${DIR_HOME}/libs"
+export DIR_LIBS
 
-DIR_BVPROC_TEMPLATES="${DIR_SCRIPTS}/bv_proc_templates"
+DIR_BVPROC_TEMPLATES="${DIR_HOME}/templates"
 export DIR_BVPROC_TEMPLATES
-
-#source with relative path
-source "../libs/tools/tools.sh"
-
-create_dir ${DIR_CLUSTER}
-create_dir ${DIR_BVPROC}
 
 #Brainvisa
 BRAINVISA='/hpc/meca/users/pron.a/softs/brainvisa-4.6.1'
@@ -65,7 +59,6 @@ export BRAINVISA
 #Mrtrix binary
 MRTRIX='/hpc/meca/softs/mrtrix/bin'
 export MRTRIX
-
 #This subject is the first one of the subject list and was used as model in all bvprocs files
 SUBJECT_TEST='100206'
 export SUBJECT_TEST
