@@ -1,4 +1,3 @@
-import os
 from soma import aims, aimsalgo
 import numpy as np
 from variables import SUBJ_LIST, SIDES, GYRI,DIR_OUT

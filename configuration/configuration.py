@@ -28,6 +28,7 @@ HCP_DATASET = '/envau/work/meca/data/HCP/data/HCP_dataset'
 
 # Data (output directory outside of BrainVISA database)
 DATA = '/hpc/meca/users/pron.a/data'
+DIR_CLUSTER = '/hpc/meca/users/pron.a/cluster' #Only useful in INT
 DIR_SUBJECTS = os.path.join(DATA, 'subjects')
 DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
 
@@ -74,7 +75,7 @@ DWI_HCP = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'data
 DIR_SUBJECT_BRAINVISA = {subject: os.path.join(BRAINVISA_DB, CENTER, subject) for subject in SUBJ_LIST}
 DIR_T1 = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], T1) for subject in SUBJ_LIST}
 DIR_DWI = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], DWI, DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
-COMMIT_DIR = {subject: os.path.join(DIR_DWI[subject], 'a_commit') for subject in SUBJ_LIST}
+COMMIT_DIR = {subject: os.path.join(DIR_DWI[subject], 'b_commit') for subject in SUBJ_LIST}
 COMMIT_META = {subject: os.path.join(DIR_DWI[subject], 'commit_metada.txt') for subject in SUBJ_LIST}
 T1_2_DWI = {subject: os.path.join(DIR_DWI[subject], 'registration', 'T1_TO_dwi' + '_' + subject + '.trm') for subject in
             SUBJ_LIST}
@@ -123,6 +124,11 @@ SULCUS_FUNDI = {(subject, side, SULCUS, status, nature): os.path.join(DIR_LANDMA
                 side in SIDES.keys() for gyrus in ADJACENT_GYRI[SULCUS] for status in STATUS for nature in EXTENSIONS}
 LINES = merge_dicts(GYRAL_CRESTS, SULCUS_FUNDI)
 
+GEO_DISTS = {(subject, side, 'white', gyrus): os.path.join(DIR_LANDMARKS,'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'geodesic_distance_map.gii') for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in ADJACENT_GYRI[SULCUS]}
+ROI_DISTANCES = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'geodesic_distance_threshold' + '.gii') for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
+PARTITIONS = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'partition' + '.gii') for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
+ADJ_GYRI_ROI = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS,'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'surface_roi' + '.gii') for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
+
 PARAMETRISATIONS = ['iso', 'global_mean', 'mean_by_hemi']
 
 GYRAL_PARAMETRISATIONS = {(subject, side, gyrus, status, nature, param): os.path.join(DIR_LANDMARKS, 'adjacent_gyri',
@@ -136,6 +142,8 @@ FUNDI_PARAMETRISATIONS = {(subject, side, SULCUS, status, nature, param): os.pat
                           in SUBJ_LIST for side in SIDES.keys() for gyrus in ADJACENT_GYRI[SULCUS] for status in STATUS
                           for nature in EXTENSIONS for param in PARAMETRISATIONS}
 LINE_PARAMETRISATIONS = merge_dicts(GYRAL_PARAMETRISATIONS, FUNDI_PARAMETRISATIONS)
+
+
 
 TABLES = ['draw_attribution', 'mesh_index', 'cs_coord', 'gyri_index', 'gyri_coord', 'final']
 PPFM_TABLES = {t: os.path.join(DIR_LANDMARKS, 'ppfm', 'ppfm' + '_' + t + '.csv') for t in TABLES}

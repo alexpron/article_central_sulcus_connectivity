@@ -9,7 +9,7 @@ if __name__ == '__main__':
     path_df = os.path.join(DIR_OUT,'pli_passage', 'tables', 'pp_manual_drawing_coord_gyri.csv')
     path_df_out = os.path.join(DIR_OUT,'pli_passage', 'tables', 'pp_manual_drawing_geo_depth.csv')
     df = pd.read_csv(path_df)
-    df = df.rename(index=str, columns={'Vertex':'PP_CS_Index_Brain'})
+    df = df.rename(index=str, columns={'Vertex': 'PP_CS_Index_Brain'})
     df['PP_CS_Depth'] = np.nan
 
 
