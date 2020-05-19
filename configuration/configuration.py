@@ -43,7 +43,7 @@ DWI_HCP = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'data
 
 # --------------------------------- FreeSurfer 6.0.0 database structure and associated variables ----------------------#
 
-FS_DB = '/envau/work/meca/data/HCP/data/FreeSurfer_database'
+FS_DB = '/hpc/meca/data/U_Fibers/FS_database'
 ASEGS = {subject: os.path.join(FS_DB, subject, 'stats', 'aseg.stats') for subject in SUBJ_LIST}
 
 # --------------------------------- BrainVISA database structure and associated variables -----------------------------|
