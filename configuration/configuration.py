@@ -5,18 +5,7 @@ TODO: move the content of this file and of the set_env.sh file to an unique .jso
 """
 
 import os
-import numpy as np
-from libs.tools.usual import merge_dicts
-
-
-def read_subjects_list(path_list):
-    """
-    :param path_list: path of the text file containing the IDs of the subjects
-    :return: list of the subjects IDs as strings (easier for path completion)
-    """
-    subs = np.loadtxt(path_list)
-    subjects_list = [str(int(s)) for s in subs]
-    return subjects_list
+from libs.tools.usual import merge_dicts, read_subjects_list
 
 
 # --------------------------------- Global Variables for the study ----------------------------------------------------#
@@ -42,7 +31,7 @@ BRAINVISA_PYTHON = os.path.join(BRAINVISA, 'bin', 'python')
 # TO DO : find a way to remove the absolute path inside the script directories
 DIR_PROJECT = '/hpc/meca/users/pron.a/projects/article_central_sulcus_connectivity'
 # selected subject list is included in this git repo for the sake of completness
-PATH_SUBJ_LIST = os.path.join(os.getcwd(), 'subjects_list.txt')
+PATH_SUBJ_LIST = os.path.join(DIR_PROJECT, 'configuration', 'subjects_list.txt')
 SUBJ_LIST = read_subjects_list(PATH_SUBJ_LIST)
 
 # --------------------------------- INT storage location of the preprocessed HCP S900 release dataset -----------------#
@@ -52,6 +41,56 @@ BVALS = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'bvals'
 BVECS = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'bvecs') for subject in SUBJ_LIST}
 DWI_HCP = {subject: os.path.join(HCP_DATASET, subject, 'T1w', 'Diffusion', 'data.nii.gz') for subject in SUBJ_LIST}
 
+# --------------------------------- FreeSurfer 6.0.0 database structure and associated variables ----------------------#
+
+FS_DB = '/envau/work/meca/data/HCP/data/FreeSurfer_database'
+ASEGS = {subject: os.path.join(FS_DB, subject, 'stats', 'aseg.stats') for subject in SUBJ_LIST}
+
+# --------------------------------- BrainVISA database structure and associated variables -----------------------------|
+
+BRAINVISA_DB = '/hpc/meca/data/U_Fibers/BV_database'
+CENTER = 'subjects'
+DWI = 'dmri'
+T1 = 't1mri'
+# acquisitions
+STRUCT_ACQ = 'HCP_pipeline_modified'
+DWI_ACQ = 'default_acquisition'
+STRUCT_PROC = 'default_analysis'
+DWI_PROC = 'HCP_pipeline'
+# model instances:
+CSD_MODEL = 'MSMT'
+DTI_MODEL = 'Mrtrix'
+FIT_INSTANCE = 'brain_fit'
+
+DIR_SUBJECT_BRAINVISA = {subject: os.path.join(BRAINVISA_DB, CENTER, subject) for subject in SUBJ_LIST}
+DIR_T1 = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], T1) for subject in SUBJ_LIST}
+DIR_DWI = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], DWI, DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
+TISSUE_MASKS = {(subject, side): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation', side + 'grey_white' + '_' + subject + '.nii.gz') for subject in SUBJ_LIST for side in SIDES.keys()}
+MESHES_BRAINVISA_T1 = {
+    (subject, side, mesh_type, 't1'): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation', 'meshes',
+                                                   subject + '_' + side + mesh_type + '.gii') for subject in SUBJ_LIST
+    for side in SIDES for mesh_type in MESHES_TYPE}
+MESHES_BRAINVISA_DWI = {(subject, side, mesh_type, 'dwi'): os.path.join(DIR_DWI[subject], 'mesh',
+                                                                        subject + '_' + side + '_' + mesh_type + '_' + 'to_dwi.gii')
+                        for subject in SUBJ_LIST for side in SIDES for mesh_type in MESHES_TYPE}
+MESHES_BRAINVISA = merge_dicts(MESHES_BRAINVISA_T1, MESHES_BRAINVISA_DWI)
+FODS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'wm_fod.nii') for subject in SUBJ_LIST}
+AIMS_TO_RAS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE,'wm_fod_ras_to_aims.npy') for subject in SUBJ_LIST}
+COMMIT_DIR = {subject: os.path.join(DIR_DWI[subject], 'commit') for subject in SUBJ_LIST}
+COMMIT_META = {subject: os.path.join(DIR_DWI[subject], 'commit_metada.txt') for subject in SUBJ_LIST}
+COMMIT_WEIGHTS = {subject: os.path.join(COMMIT_DIR[subject], 'Results_StickZeppelinBall') for subject in SUBJ_LIST}
+T1_2_DWI = {subject: os.path.join(DIR_DWI[subject], 'registration', 'T1_TO_dwi' + '_' + subject + '.trm') for subject in
+            SUBJ_LIST}
+DWI_2_T1 = {subject: os.path.join(DIR_DWI[subject], 'registration', 'dwi_TO_T1' + '_' + subject + '.trm') for subject in
+            SUBJ_LIST}
+TTVIS = {subject: os.path.join(DIR_DWI[subject], '5ttvisu.nii.gz') for subject in SUBJ_LIST}
+SEED_MASK = {subject: os.path.join(DIR_DWI[subject], 'seeding_mask.nii.gz') for subject in SUBJ_LIST}
+PEAKS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'peaks.nii.gz') for subject in
+         SUBJ_LIST}
+TRACTS = {(subject, tract_type, status): os.path.join(DIR_DWI[subject], 'tractography', subject + 'track.' + tract_type) for subject in SUBJ_LIST for tract_type in ['tck', 'trk'] for status in ['', 'filtered']}
+
+FIEDLER_TABLES = {side: os.path.join(BRAINVISA_DB, 'group' + '_' + side + '_' + 'average_Fiedler_length.csv') for side in SIDES.keys()}
+AREA_TABLES = {side: os.path.join(BRAINVISA_DB, 'group' + '_' + side + '_' + 'average_Fiedler_length.csv') for side in SIDES.keys()}
 # --------------------------------- Data (output directory outside of BrainVISA database)
 
 DATA = '/hpc/meca/users/pron.a/data'
@@ -60,6 +99,7 @@ DIR_SUBJECTS = os.path.join(DATA, 'subjects')
 DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
 DIR_SULCUS = os.path.join(DATA, 'sulci', SULCUS)
 DIR_LANDMARKS = os.path.join(DIR_SULCUS, 'landmarks')
+DIR_STATS = os.path.join(DATA, 'statistics')
 
 # Subjects selection related variables
 RESTRICTED = os.path.join(DIR_SUBJECTS, 'RESTRICTED' + '_' + RELEASE + '.csv')
@@ -121,49 +161,10 @@ ASSO_TRACT_EXTREMITIES = {(subject, side, ext): os.path.join(DATA,'tractograms',
 ASSO_TRACT_NEAREST_VERTEX = {(subject, side, ext): os.path.join(DATA, 'tractograms','nearest_mesh_vertex', subject + '_' + side + '_' + ext + '_' + 'nearest_vertex.npy') for subject in SUBJ_LIST for side in SIDES.keys() for ext in TRACTS_EXTREMITIES}
 U_FIBERS_MASK = {(subject, side): os.path.join(DATA, 'u-fibers', subject + '_' + side + '_' + 'mask' + '.npy') for subject in SUBJ_LIST for side in SIDES.keys()}
 
-# --------------------------------- BrainVISA database structure and associated variables -----------------------------|
-BRAINVISA_DB = '/hpc/meca/data/U_Fibers/BV_database'
-CENTER = 'subjects'
-DWI = 'dmri'
-T1 = 't1mri'
-# acquisitions
-STRUCT_ACQ = 'HCP_pipeline_modified'
-DWI_ACQ = 'default_acquisition'
-STRUCT_PROC = 'default_analysis'
-DWI_PROC = 'HCP_pipeline'
-# model instances:
-CSD_MODEL = 'MSMT'
-DTI_MODEL = 'Mrtrix'
-FIT_INSTANCE = 'brain_fit'
-
-DIR_SUBJECT_BRAINVISA = {subject: os.path.join(BRAINVISA_DB, CENTER, subject) for subject in SUBJ_LIST}
-DIR_T1 = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], T1) for subject in SUBJ_LIST}
-DIR_DWI = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], DWI, DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
-TISSUE_MASKS = {(subject, side): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation', side + 'grey_white' + '_' + subject + '.nii.gz') for subject in SUBJ_LIST for side in SIDES.keys()}
-MESHES_BRAINVISA_T1 = {
-    (subject, side, mesh_type, 't1'): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation', 'meshes',
-                                                   subject + '_' + side + mesh_type + '.gii') for subject in SUBJ_LIST
-    for side in SIDES for mesh_type in MESHES_TYPE}
-MESHES_BRAINVISA_DWI = {(subject, side, mesh_type, 'dwi'): os.path.join(DIR_DWI[subject], 'mesh',
-                                                                        subject + '_' + side + '_' + mesh_type + '_' + 'to_dwi.gii')
-                        for subject in SUBJ_LIST for side in SIDES for mesh_type in MESHES_TYPE}
-MESHES_BRAINVISA = merge_dicts(MESHES_BRAINVISA_T1, MESHES_BRAINVISA_DWI)
-FODS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'wm_fod.nii') for subject in SUBJ_LIST}
-AIMS_TO_RAS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE,'wm_fod_ras_to_aims.npy') for subject in SUBJ_LIST}
-COMMIT_DIR = {subject: os.path.join(DIR_DWI[subject], 'commit') for subject in SUBJ_LIST}
-COMMIT_META = {subject: os.path.join(DIR_DWI[subject], 'commit_metada.txt') for subject in SUBJ_LIST}
-COMMIT_WEIGHTS = {subject: os.path.join(COMMIT_DIR[subject], 'Results_StickZeppelinBall') for subject in SUBJ_LIST}
-T1_2_DWI = {subject: os.path.join(DIR_DWI[subject], 'registration', 'T1_TO_dwi' + '_' + subject + '.trm') for subject in
-            SUBJ_LIST}
-DWI_2_T1 = {subject: os.path.join(DIR_DWI[subject], 'registration', 'dwi_TO_T1' + '_' + subject + '.trm') for subject in
-            SUBJ_LIST}
-TTVIS = {subject: os.path.join(DIR_DWI[subject], '5ttvisu.nii.gz') for subject in SUBJ_LIST}
-SEED_MASK = {subject: os.path.join(DIR_DWI[subject], 'seeding_mask.nii.gz') for subject in SUBJ_LIST}
-PEAKS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'peaks.nii.gz') for subject in
-         SUBJ_LIST}
-TRACTS = {(subject, tract_type, status): os.path.join(DIR_DWI[subject], 'tractography', subject + 'track.' + tract_type) for subject in SUBJ_LIST for tract_type in ['tck', 'trk'] for status in ['', 'filtered']}
-
-
+ICV_DF = os.path.join(DIR_STATS, 'init_tables', 'ICV.csv')
+FIEDLER_DF = os.path.join(DIR_STATS, 'init_tables', 'Fiedler_length.csv')
+MESH_AREA_DF = os.path.join(DIR_STATS, 'init_tables', 'mesh_area.csv')
+PPFM_DF = os.path.join(DIR_STATS, 'init_tables', 'ppfm.csv')
 
 
 
