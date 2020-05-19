@@ -28,8 +28,7 @@ This repository is structured as follows:
 + ``templates``: BrainVISA process (bvproc) template file that summarize the process used to import the FreeSurfer results into the BrainVISA ecosystem. Can be used and adapted to reproduce this step.
 
 
-
-##Pipeline 
+## Pipeline 
     
   1. Subjects selection 
   2. Structural (T1, T2) and diffusion weighted MRI (dMRI) processing:
@@ -48,4 +47,6 @@ This repository is structured as follows:
         2. Central sulcus fundus
         3. Adjacent gyral crests
         4. Pli de passage fronto parietal moyen (PPFM) position along the fundus line and projection along the gyral crest lines
-        
+   6. Streamlines extremities projection
+   7. Connectivity profiles
+   8. Group profiles clustering     
