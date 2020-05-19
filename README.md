@@ -12,6 +12,7 @@ This study was performed relying on:
    5. COMMIT (https://github.com/daducci/COMMIT)
    6. Trimesh (https://github.com/mikedh/trimesh) 
    7. Matplotlib 3.2 (not included into the BrainVISA 4.6.1 python environment)
+   8. The tck2trk.py script (https://github.com/nipy/nibabel/blob/master/nibabel/cmdline/tck2trk.py)
 
 ## Repository organisation
 This repository is structured as follows:
