@@ -1,8 +1,6 @@
 import pandas as pd
 
-
 if __name__ == '__main__':
-
     from configuration.configuration import SUBJ_LIST, FULL, SELECTED
 
     # variables of interest for the study
@@ -11,10 +9,3 @@ if __name__ == '__main__':
     df = pd.read_csv(FULL)
     selected = df.loc[df['Subject'].isin(SUBJ_LIST), variables]
     selected.to_csv(SELECTED)
-
-
-
-
-
-
-

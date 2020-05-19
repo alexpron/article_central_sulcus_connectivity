@@ -2,7 +2,8 @@ from __future__ import print_function
 import os
 from soma import aims
 
-def get_transformation(path_volume,path_reference_volume,path_transfo,path_inverse):
+
+def get_transformation(path_volume, path_reference_volume, path_transfo, path_inverse):
     volume = aims.read(path_volume)
     reference_volume = aims.read(path_reference_volume)
     header = volume.header()
@@ -15,7 +16,8 @@ def get_transformation(path_volume,path_reference_volume,path_transfo,path_inver
     aims.write(inverse, path_inverse)
     pass
 
-if __name__ =='__main__':
+
+if __name__ == '__main__':
 
     from configuration.configuration import SUBJ_LIST, T1_BRAINVISA, T1_2_DWI, DWI_2_T1, DWI_HCP
 
@@ -25,23 +27,3 @@ if __name__ =='__main__':
             pass
         else:
             get_transformation(T1_BRAINVISA[subject], DWI_HCP[subject], T1_2_DWI[subject], DWI_2_T1[subject])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

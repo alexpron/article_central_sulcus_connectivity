@@ -19,7 +19,7 @@ def modify_template_bvproc(path_template_bv_proc, old, subject, path_bvproc_subj
     template_root = template_bvproc.getroot()
     for tag in template_root.iter('*'):
         init_value = tag.text
-        #sometimes tag.text is empty (None) or different type
+        # sometimes tag.text is empty (None) or different type
         if type(init_value) is str:
             new_value = init_value.replace(old, subject)
             tag.text = new_value
@@ -38,7 +38,7 @@ def compute_surfacic_curvature(path_mesh, path_curvature_tex, bv_instance=BRAINV
     pass
 
 
-def compute_geodesic_distance(path_mesh,path_texture, path_distance, bv_instance=BRAINVISA):
+def compute_geodesic_distance(path_mesh, path_texture, path_distance, bv_instance=BRAINVISA):
     """
     Wrapper for the Aims geodesic distance command
     :param path_mesh: path of the mesh

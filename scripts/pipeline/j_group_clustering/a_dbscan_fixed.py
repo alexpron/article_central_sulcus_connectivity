@@ -1,11 +1,6 @@
 import numpy as np
 from libs.clustering import dbscan_density_clustering
 
-
-
-
-
-
 if __name__ == '__main__':
 
     from configuration.configuration import SIDES, U_FIBERS_COORD, HEMI_INDEXES, DBSCAN_LABELS
@@ -20,20 +15,3 @@ if __name__ == '__main__':
         labels = dbscan_density_clustering(data_)
         global_labels[side_index == j] = labels
     np.save(DBSCAN_LABELS, global_labels)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

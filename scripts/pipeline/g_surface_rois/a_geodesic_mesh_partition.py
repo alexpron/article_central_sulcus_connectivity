@@ -1,6 +1,7 @@
 from soma import aims, aimsalgo
 import numpy as np
 
+
 def partition_mesh(line, mesh, roi):
     """
     Create a partition of a mesh such as each vertex of the mesh is associated to its closest point belonging
@@ -16,7 +17,7 @@ def partition_mesh(line, mesh, roi):
     if roi is not None:
         roi_indexes = np.where(roi != 0)[0].tolist()
     else:
-        roi_indexes = np.arange(vertices.shape[0],dtype=int).tolist()
+        roi_indexes = np.arange(vertices.shape[0], dtype=int).tolist()
     for i, vertex in enumerate(roi_indexes):
         index, length = geo.shortestPath_1_N_ind(vertex, line)
         partition[vertex] = index
@@ -26,6 +27,7 @@ def partition_mesh(line, mesh, roi):
 if __name__ == '__main__':
 
     from configuration.configuration import SUBJ_LIST, SIDES, MESHES, GYRI, GYRAL_CRESTS, GEO_DISTS, PARTITIONS
+
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
             mesh = aims.read(MESHES[(subject, side, 'white')])
@@ -40,21 +42,3 @@ if __name__ == '__main__':
                 np.save(PARTITIONS[(subject, side, gyrus, 'array')], partition)
                 partition_tex = aims.TimeTexture(partition)
                 aims.write(partition_tex, PARTITIONS[(subject, side, gyrus, 'texture')])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

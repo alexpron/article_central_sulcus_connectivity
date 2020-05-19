@@ -10,8 +10,7 @@ from scipy.stats import normaltest, ttest_rel, wilcoxon, ranksums, levene, ttest
 from variables import DIR_OUT
 
 if __name__ == '__main__':
-
-    df = pd.read_csv(os.path.join(DIR_OUT,'inter_tables','hemispheres_level.csv'))
+    df = pd.read_csv(os.path.join(DIR_OUT, 'inter_tables', 'hemispheres_level.csv'))
     # subgroups = df.groupby(['Gender'])
     # mesh_areas = [group['Mesh_Area'].values for name, group in subgroups]
     # W, p = levene(mesh_areas[0],mesh_areas[1])
@@ -21,7 +20,7 @@ if __name__ == '__main__':
     # summary = model.summary()
     # print summary
     # anova = sm.stats.anova_lm(model)
-    sns.jointplot(x='Mesh_Area',y='ICV',data=df,kind='reg')
+    sns.jointplot(x='Mesh_Area', y='ICV', data=df, kind='reg')
     plt.show()
 
     # model = ols('ICV ~ np.power(Mesh_Area,1.5)-1', data=df).fit()
@@ -29,27 +28,3 @@ if __name__ == '__main__':
     # print summary
     # # anova = sm.stats.anova_lm(model)
     # # print anova
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

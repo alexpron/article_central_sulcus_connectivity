@@ -7,7 +7,6 @@ import numpy as np
 from soma import aims
 
 
-
 def vertices_and_faces_to_mesh(vertices, faces):
     """
     Create an aims 2D or 3D mesh using precomputed vertices and faces. Vertices and faces are assumed to be compatible
@@ -25,7 +24,7 @@ def vertices_and_faces_to_mesh(vertices, faces):
     v.assign([aims.Point3df(x) for x in vertices])
     p.assign([aims.AimsVector(x, dtype='U32', dim=poly_type) for x in faces])
     # recompute normals, not mandatory but to have coherent mesh
-    #rem does not work for 2D meshes normals need to be added manually (works like a texture)
+    # rem does not work for 2D meshes normals need to be added manually (works like a texture)
     mesh.updateNormals()
     return mesh
 
@@ -39,7 +38,7 @@ def mesh_2D_Merge(mesh_base, added_mesh, update_normals=True):
     :return void
     """
     # Fixing sizes of the respective mesh
-    #copies are mandatory due to prevent from update on the fly of objects
+    # copies are mandatory due to prevent from update on the fly of objects
     s1 = copy(mesh_base.vertex().size())
     s2 = copy(added_mesh.vertex().size())
     p1 = copy(mesh_base.polygon().size())
@@ -64,8 +63,8 @@ def build_2D_line(n):
     :param n: number of vertices (at least 2)
     :return: indices of mesh faces.
     """
-    faces = np.zeros((n-1, 2), dtype=np.int16)
-    faces[:, 0] = np.arange(n-1)
+    faces = np.zeros((n - 1, 2), dtype=np.int16)
+    faces[:, 0] = np.arange(n - 1)
     faces[:, 1] = np.arange(1, n)
     return faces
 
@@ -79,7 +78,7 @@ def vertices_to_2d_line(vertices):
         mesh = aims.TimeSurface()
     else:
         faces = build_2D_line(vertices.shape[0])
-        mesh = vertices_and_faces_to_mesh(vertices,faces)
+        mesh = vertices_and_faces_to_mesh(vertices, faces)
     return mesh
 
 
@@ -90,8 +89,8 @@ def indexMerge(mesh_list):
     aims.meshMerge "concatenate the two meshes", this function create an index texture
     to keep trace of origin mesh. Useful for example for left and right hemisphere
     '''
-    #TO DO : remplace mesh list by *args
-    sizes = np.array([len(np.array(m.vertex())) for m in mesh_list],dtype=int)
+    # TO DO : remplace mesh list by *args
+    sizes = np.array([len(np.array(m.vertex())) for m in mesh_list], dtype=int)
     tot = np.sum(sizes)
     c = np.cumsum(sizes)
     t = np.zeros(tot)
@@ -99,10 +98,9 @@ def indexMerge(mesh_list):
         if i == 0:
             continue
         else:
-            t[c[i-1]:c[i]] = i
+            t[c[i - 1]:c[i]] = i
     texture = aims.TimeTexture(t)
     return texture
-
 
 
 def mesh_normals_as_arrows(mesh):
@@ -116,7 +114,8 @@ def mesh_normals_as_arrows(mesh):
     normals = np.array(mesh.normal())
     start_point = vertices
     end_point = vertices + normals
-    arrows = [aims.SurfaceGenerator.arrow(end_point[i].tolist(), start_point[i].tolist(), 1.1, 0.1, 4, 1) for i, s in enumerate(start_point)]
+    arrows = [aims.SurfaceGenerator.arrow(end_point[i].tolist(), start_point[i].tolist(), 1.1, 0.1, 4, 1) for i, s in
+              enumerate(start_point)]
 
     for i, arrow in enumerate(arrows):
         if i == 0:
@@ -124,16 +123,3 @@ def mesh_normals_as_arrows(mesh):
         else:
             aims.SurfaceManip.meshMerge(normals_mesh, arrow)
         return normals_mesh
-
-
-
-
-
-
-
-
-
-
-
-
-

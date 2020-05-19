@@ -16,7 +16,8 @@ if __name__ == '__main__':
         if os.path.exists(U_FIBERS_GROUP_PROFILES[(side, 'global_mean')]):
             ppfm = get_hemisphere_group_pp(ppfm_df, '102006', side)
             density = np.load(U_FIBERS_GROUP_PROFILES[(side, 'global_mean')])
-            density_plot_group_with_maxima(X, Y, density, pli_passage=ppfm, path_fig=FIG_GROUP_PROFILES_MAXIMA[side], title=None, vmin=0,
-                               vmax=GROUP_DENSITIES_MAX)
+            density_plot_group_with_maxima(X, Y, density, pli_passage=ppfm, path_fig=FIG_GROUP_PROFILES_MAXIMA[side],
+                                           title=None, vmin=0,
+                                           vmax=GROUP_DENSITIES_MAX)
         else:
             pass

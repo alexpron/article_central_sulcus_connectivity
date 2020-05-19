@@ -3,7 +3,6 @@ from soma import aims
 import nibabel as nib
 
 
-
 def select_association_streamline(path_mask, path_affine_dwi_to_t1, path_tractogram, path_association_streamlines):
     """
     :param path_mask:
@@ -33,28 +32,13 @@ def select_association_streamline(path_mask, path_affine_dwi_to_t1, path_tractog
     np.save(path_association_streamlines, association_streamlines)
 
 
-
 if __name__ == '__main__':
 
-    from configuration.configuration import SUBJ_LIST, SIDES, DWI_2_T1,TISSUE_MASKS, TRACTS, ASSOCIATION_TRACTS
+    from configuration.configuration import SUBJ_LIST, SIDES, DWI_2_T1, TISSUE_MASKS, TRACTS, ASSOCIATION_TRACTS
 
     for subject in SUBJ_LIST:
         for side in SIDES.keys():
-            select_association_streamline(TISSUE_MASKS[(subject, side)], DWI_2_T1[subject], TRACTS[(subject, 'trk', 'filtered')], ASSOCIATION_TRACTS[(subject, side)])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            select_association_streamline(TISSUE_MASKS[(subject, side)], DWI_2_T1[subject],
+                                          TRACTS[(subject, 'trk', 'filtered')], ASSOCIATION_TRACTS[(subject, side)])
 
 #
-

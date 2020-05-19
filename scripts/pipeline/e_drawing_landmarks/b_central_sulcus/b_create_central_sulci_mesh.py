@@ -4,7 +4,6 @@ from soma import aims
 from meshes_.processing import vertices_to_2d_line
 from configuration.configuration import SUBJ_LIST, SIDES, SULCUS, SULCUS_FUNDI, MESHES
 
-
 if __name__ == '__main__':
 
     for subject in SUBJ_LIST:
@@ -19,9 +18,3 @@ if __name__ == '__main__':
                 aims.write(line, SULCUS_FUNDI[(subject, side, SULCUS, 'mesh')])
             else:
                 print("Central sulcus fundus does not exist for subject ", subject, side, ' Hemisphere')
-
-
-
-
-
-

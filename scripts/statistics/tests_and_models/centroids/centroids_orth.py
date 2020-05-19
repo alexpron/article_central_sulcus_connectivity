@@ -5,28 +5,28 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
-from scipy.stats import levene, shapiro,ttest_rel, ttest_ind,ttest_1samp
+from scipy.stats import levene, shapiro, ttest_rel, ttest_ind, ttest_1samp
 from statsmodels.stats.anova import anova_lm
 from variables import DIR_OUT
 
-
 if __name__ == '__main__':
-
-    path_df1 = os.path.join(DIR_OUT, 'derived_tables','centroids_iso.csv')
+    path_df1 = os.path.join(DIR_OUT, 'derived_tables', 'centroids_iso.csv')
     df1 = pd.read_csv(path_df1)
-    path_df2 = os.path.join(DIR_OUT,'inter_tables','hemispheres_level.csv')
+    path_df2 = os.path.join(DIR_OUT, 'inter_tables', 'hemispheres_level.csv')
     df2 = pd.read_csv(path_df2)
 
-    df = pd.merge(df1,df2, on=['Subject','Hemisphere'])
-    print df.columns
+    df = pd.merge(df1, df2, on=['Subject', 'Hemisphere'])
+    print
+    df.columns
 
-
-    model = smf.ols('Centroid_Orth_Coord_Iso ~ C(Hemisphere)',data=df).fit()
+    model = smf.ols('Centroid_Orth_Coord_Iso ~ C(Hemisphere)', data=df).fit()
     summary = model.summary()
     anova = anova_lm(model)
 
-    print summary
-    print anova
+    print
+    summary
+    print
+    anova
     #
     # labels = np.unique(df['Label'].values)
     #
@@ -72,28 +72,22 @@ if __name__ == '__main__':
     #         if p<=0.05:
     #             print "Label",l, "Subgroup", j, "nb_ind",len(g), "Gaussian assumption rejected"
     #     # D = R - L
-        # A = 2*D/(R+L)
-        # #W,  p = shapiro(D)
-        # W, p = shapiro(A)
-        # t, p_t = ttest_rel(L,R)
-        # # print "Label", l
-        # # print "Shapiro test", W, p
-        # # print "Student paired t test", t, p_t
-        # sub_df = lab_df.drop_duplicates(['Subject','Label'])
-        # #print sub_df
-        # sub_df['Assymetry'] = A
-        # low = sub_df.loc[sub_df['HandednessQ']=='Low','Assymetry']
-        # high = sub_df.loc[sub_df['HandednessQ']=='High','Assymetry']
-        # W_l, p_l = shapiro(low)
-        # W_h, p_h = shapiro(high)
-        # print "Low Hand Shapiro", W_l, p_l
-        # print "High Hand Shapiro",  W_h, p_h
-        # W, p = levene(low,high)
-        # print "Levene Low/High Hand"
-        # print W, p
-
-
-
-
-
-
+    # A = 2*D/(R+L)
+    # #W,  p = shapiro(D)
+    # W, p = shapiro(A)
+    # t, p_t = ttest_rel(L,R)
+    # # print "Label", l
+    # # print "Shapiro test", W, p
+    # # print "Student paired t test", t, p_t
+    # sub_df = lab_df.drop_duplicates(['Subject','Label'])
+    # #print sub_df
+    # sub_df['Assymetry'] = A
+    # low = sub_df.loc[sub_df['HandednessQ']=='Low','Assymetry']
+    # high = sub_df.loc[sub_df['HandednessQ']=='High','Assymetry']
+    # W_l, p_l = shapiro(low)
+    # W_h, p_h = shapiro(high)
+    # print "Low Hand Shapiro", W_l, p_l
+    # print "High Hand Shapiro",  W_h, p_h
+    # W, p = levene(low,high)
+    # print "Levene Low/High Hand"
+    # print W, p

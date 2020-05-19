@@ -22,16 +22,6 @@ def main(path_potential_subjects, path_selected_subjects):
 
 
 if __name__ == '__main__':
-
     from configuration.configuration import POTENTIALS, SELECTED
+
     main(POTENTIALS, SELECTED)
-
-
-
-
-
-
-
-
-
-

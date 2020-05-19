@@ -42,5 +42,6 @@ def main():
         tck = nib.streamlines.load(tractogram)
         nib.streamlines.save(tck.tractogram, output_filename, header=header)
 
+
 if __name__ == '__main__':
     main()

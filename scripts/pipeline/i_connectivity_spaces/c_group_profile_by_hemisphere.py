@@ -7,7 +7,8 @@ from libs.connectivity_space import estimate_pseudo_density
 
 if __name__ == '__main__':
 
-    from configuration.configuration import HEMI_INDEXES, SIDES, PARAMETRISATIONS, DENSITIES_RADIUS, U_FIBERS_COORD, U_FIBERS_GROUP_PROFILES, X_GRID, Y_GRID
+    from configuration.configuration import HEMI_INDEXES, SIDES, PARAMETRISATIONS, DENSITIES_RADIUS, U_FIBERS_COORD, \
+        U_FIBERS_GROUP_PROFILES, X_GRID, Y_GRID
 
     hemispheres_index = np.load(HEMI_INDEXES)
     sides_index = np.mod(hemispheres_index, 2)
@@ -21,9 +22,3 @@ if __name__ == '__main__':
             if not os.path.exists(X_GRID) and not os.path.exists(Y_GRID):
                 np.save(X_GRID, X)
                 np.save(Y_GRID, Y)
-
-
-
-
-
-

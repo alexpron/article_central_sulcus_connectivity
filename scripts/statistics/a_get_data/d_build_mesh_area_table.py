@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def read_mesh_area_df(path_dataframe):
     """
     :param path_dataframe:
@@ -15,10 +16,8 @@ def read_mesh_area_df(path_dataframe):
 
 
 if __name__ == '__main__':
-
     from configuration.configuration import SIDES, AREA_TABLES, MESH_AREA_DF
 
     area_dfs = [read_mesh_area_df(AREA_TABLES[side]) for side in SIDES.keys()]
     d = pd.concat(area_dfs)
     d.to_csv(MESH_AREA_DF)
-

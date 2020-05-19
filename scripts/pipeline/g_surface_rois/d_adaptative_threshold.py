@@ -1,10 +1,10 @@
 import numpy as np
 from soma import aims
 
-
 if __name__ == '__main__':
 
-    from configuration.configuration import SUBJ_LIST, SIDES, GYRI, MESHES, GYRAL_CRESTS, GEO_DISTS, PARTITIONS, ADJ_GYRI_ROI, ROI_DISTANCES
+    from configuration.configuration import SUBJ_LIST, SIDES, GYRI, MESHES, GYRAL_CRESTS, GEO_DISTS, PARTITIONS, \
+        ADJ_GYRI_ROI, ROI_DISTANCES
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
@@ -21,36 +21,8 @@ if __name__ == '__main__':
                 # Varying distance threshold
                 dist_threshold = np.load(ROI_DISTANCES[(subject, side, gyrus)])
                 # Output texture
-                roi = np.zeros(len(geo_dist),dtype=np.uint32)
+                roi = np.zeros(len(geo_dist), dtype=np.uint32)
                 for l, g in enumerate(gyral_line):
-                    roi[(partition == g)*(geo_dist <= dist_threshold[l])] = 1
+                    roi[(partition == g) * (geo_dist <= dist_threshold[l])] = 1
                 roi_t = aims.TimeTexture(roi)
                 aims.write(roi_t, ADJ_GYRI_ROI[(subject, side, gyrus)])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,8 +5,6 @@ from soma import aims
 from libs.tools.aims.textures import index_to_texture
 from configuration.configuration import EXTREMITIES, MESHES, DPFS, SUBJ_LIST, SIDES, SULCUS_FUNDI
 
-
-
 if __name__ == '__main__':
 
     for i, subject in enumerate(SUBJ_LIST):
@@ -15,20 +13,20 @@ if __name__ == '__main__':
             if os.path.exists(path_extremities):
                 path_mesh = MESHES[subject, side]
                 path_dpf = DPFS[subject, side]
-                path_fundus_tex = SULCUS_FUNDI[(subject,side,'drawn','texture')]
-                #sulcus fundus as mesh index list
+                path_fundus_tex = SULCUS_FUNDI[(subject, side, 'drawn', 'texture')]
+                # sulcus fundus as mesh index list
                 path_fundus_index = SULCUS_FUNDI[subject, side, 'drawn', 'array']
 
-                #Get the two extremal points of the sulcus fundus line index
+                # Get the two extremal points of the sulcus fundus line index
                 ext_tex = aims.read(path_extremities)
                 ext = np.array(ext_tex[0])
-                #round the texture to avoid error when texture modified in SurfPaint
+                # round the texture to avoid error when texture modified in SurfPaint
                 ext = np.round(ext)
                 start = np.where(ext == 50.00)[0][0]
                 end = np.where(ext == 100.00)[0][0]
                 mesh = aims.read(path_mesh)
                 dpf = aims.read(path_dpf)
-                #draw sulcus fundus line and retrieve ist vertices index on mesh
+                # draw sulcus fundus line and retrieve ist vertices index on mesh
                 sulcus = sulcus_fundus_from_extremities(start, end, mesh, dpf)
                 np.save(path_fundus_index, sulcus)
                 sulcus_tex = index_to_texture(sulcus, ext.shape[0])
@@ -36,4 +34,3 @@ if __name__ == '__main__':
 
             else:
                 print("Extremities texture does not exists for subject  ", subject, side, ' Hemisphere')
-

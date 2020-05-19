@@ -1,6 +1,7 @@
 import numpy as np
 from soma import aims
 
+
 def get_aims_to_RAS_transfo(path_volume, path_transformation):
     """
     Retrieve the estimated transformation between AIMS mm and RAS mm space

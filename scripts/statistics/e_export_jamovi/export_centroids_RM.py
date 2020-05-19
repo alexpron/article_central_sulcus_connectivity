@@ -10,13 +10,13 @@ if __name__ == '__main__':
     L = subgroups.get_group('L')
     R = subgroups.get_group('R')
 
-
-    subject_variables = ['Subject', 'Gender','Age_in_Yrs','AgeQ','Handedness','HandednessQ','Dexterity_AgeAdj','Strength_AgeAdj','PMAT24_A_CR','PMAT24_A_CR_Q','ICV']
-    variables = ['Mesh_Area','Fiedler_Length','Roi_Area','Max_Geo_Depth','PP_CS_Coord_Iso','PP_Pre_Coord_Iso',
-                 'PP_Post_Coord_Iso','PP_CS_Depth', 'Centroid_Diag_Coord_Iso', 'Centroid_Orth_Coord_Iso',
-                 'Centroid_Diag_Coord_Aligned', 'Centroid_Orth_Coord_Aligned','Centroid_Pre_Coord_Iso','Centroid_Post_Coord_Iso',
-                 'Centroid_Pre_Coord_Aligned','Centroid_Post_Coord_Aligned']
-
+    subject_variables = ['Subject', 'Gender', 'Age_in_Yrs', 'AgeQ', 'Handedness', 'HandednessQ', 'Dexterity_AgeAdj',
+                         'Strength_AgeAdj', 'PMAT24_A_CR', 'PMAT24_A_CR_Q', 'ICV']
+    variables = ['Mesh_Area', 'Fiedler_Length', 'Roi_Area', 'Max_Geo_Depth', 'PP_CS_Coord_Iso', 'PP_Pre_Coord_Iso',
+                 'PP_Post_Coord_Iso', 'PP_CS_Depth', 'Centroid_Diag_Coord_Iso', 'Centroid_Orth_Coord_Iso',
+                 'Centroid_Diag_Coord_Aligned', 'Centroid_Orth_Coord_Aligned', 'Centroid_Pre_Coord_Iso',
+                 'Centroid_Post_Coord_Iso',
+                 'Centroid_Pre_Coord_Aligned', 'Centroid_Post_Coord_Aligned']
 
     L = L[subject_variables + variables + ['Label']]
     # shameless hack to avoid renamming when merging
@@ -34,26 +34,18 @@ if __name__ == '__main__':
     R = R.rename(index=str, columns=d_R)
     R = R.reset_index(drop=True)
 
-    print L.head()
-    print R.head()
+    print
+    L.head()
+    print
+    R.head()
 
     final = pd.concat([L, R], axis=1)
-
-
 
     for i, v in enumerate(variables):
         R_v = final[R_variables[i]].values
         L_v = final[L_variables[i]].values
-        A = 2*(R_v - L_v)/(R_v + L_v)
+        A = 2 * (R_v - L_v) / (R_v + L_v)
         final[A_variables[i]] = A
 
-
     for label, subdf in final.groupby('Label'):
-
-                subdf.to_csv(os.path.join(DIR_JAM, 'inter', 'centroids' + '_' + str(int(label)) + '_' + 'RM.csv'),index=False)
-
-
-
-
-
-
+        subdf.to_csv(os.path.join(DIR_JAM, 'inter', 'centroids' + '_' + str(int(label)) + '_' + 'RM.csv'), index=False)

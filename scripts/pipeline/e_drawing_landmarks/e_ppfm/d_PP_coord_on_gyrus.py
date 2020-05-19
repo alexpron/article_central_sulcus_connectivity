@@ -19,7 +19,7 @@ if __name__ == '__main__':
                 variable_in = 'PP' + '_' + gyr_suffix + '_' + 'Index_Line'
                 variable_out = 'PP' + '_' + gyr_suffix + '_' + 'Coord_Iso'
                 pp_index_gyrus = int(df.loc[(df['Subject'] == int(subject)) & (df['Hemisphere'] == side), variable_in])
-                gyrus_param = np.load(GYRAL_PARAMETRISATIONS[(subject, side, gyrus,'cleaned','array','iso')])
+                gyrus_param = np.load(GYRAL_PARAMETRISATIONS[(subject, side, gyrus, 'cleaned', 'array', 'iso')])
                 pp_coord = gyrus_param[pp_index_gyrus]
                 df.loc[(df['Subject'] == int(subject)) & (df['Hemisphere'] == side), variable_out] = pp_coord
     df.to_csv(PPFM_TABLES['gyri_coord'])

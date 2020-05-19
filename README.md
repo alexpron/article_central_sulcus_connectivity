@@ -10,7 +10,8 @@ This study was performed relying on:
    3. Mrtrix3 (https://www.mrtrix.org/)
    4. Ants (https://github.com/ANTsX/ANTs)
    5. COMMIT (https://github.com/daducci/COMMIT)
-   6. Matplotlib 3.2 (not included into the BrainVISA 4.6.1 python environment)
+   6. Trimesh (https://github.com/mikedh/trimesh) 
+   7. Matplotlib 3.2 (not included into the BrainVISA 4.6.1 python environment)
 
 ## Repository organisation
 This repository is structured as follows:

@@ -8,14 +8,14 @@ import os
 import anatomist.api as anatomist
 from configuration.configuration import MESHES, EXTREMITIES, GYRAL_CRESTS, SULCUS, ADJACENT_GYRI, SUBJ_LIST, SIDES
 
-subject = SUBJ_LIST[0] # to be modified (0-99)
-side = SIDES.keys()[0] # to be modified (0-1)
+subject = SUBJ_LIST[0]  # to be modified (0-99)
+side = SIDES.keys()[0]  # to be modified (0-1)
 
 path_mesh = MESHES[(subject, side)]
 path_extremities = EXTREMITIES[(subject, side)]
 
 # to handle the case of modification of existing lines
-path_precentral = GYRAL_CRESTS[(subject, side, ADJACENT_GYRI[SULCUS][0], 'drawn','texture')]
+path_precentral = GYRAL_CRESTS[(subject, side, ADJACENT_GYRI[SULCUS][0], 'drawn', 'texture')]
 path_postcentral = GYRAL_CRESTS[(subject, side, ADJACENT_GYRI[SULCUS][1], 'drawn', 'texture')]
 
 if os.path.exists(path_precentral) and os.path.exists(path_postcentral):
@@ -30,5 +30,3 @@ else:
     a.execute("TexturingParams", object=fusion, interpolation='rgb')
     w = a.createWindow('3D')
     w.addObjects(fusion)
-
-

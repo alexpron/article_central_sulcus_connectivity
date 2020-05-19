@@ -5,7 +5,8 @@ from soma import aims
 import numpy as np
 import sys
 
-def streamlines_nearest_vertex(points,vertices,size_chunk=10000):
+
+def streamlines_nearest_vertex(points, vertices, size_chunk=10000):
     '''
     Small hack to avoid memory error even on the cluster. This function acts as a compromise
     between performance and memory consumption. Since (N1,N) distance array can generally not be created on cluster
@@ -26,6 +27,7 @@ def streamlines_nearest_vertex(points,vertices,size_chunk=10000):
         nearest_vertices[n_min:n_max] = np.argmin(distances, axis=1)
     return nearest_vertices
 
+
 def main(path_points, path_mesh, path_index):
     points = np.load(path_points)
     vertices = np.array(aims.read(path_mesh).vertex())
@@ -35,10 +37,8 @@ def main(path_points, path_mesh, path_index):
 
 
 if __name__ == '__main__':
-
     args = sys.argv
     path_points = args[1]
     path_vertices = args[2]
     path_index = args[3]
     main(path_points, path_vertices, path_index)
-

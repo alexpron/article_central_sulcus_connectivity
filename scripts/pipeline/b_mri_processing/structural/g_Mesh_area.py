@@ -7,7 +7,6 @@ Area was computed for the white mesh in Aims diffusion space
 import pandas as pd
 from soma import aims, aimsalgo
 
-
 if __name__ == '__main__':
 
     from configuration.configuration import SUBJ_LIST, SIDES, MESHES, MESH_AREA_DF

@@ -27,14 +27,9 @@ def main():
         for j, side in enumerate(SIDES):
             for mesh_type in MESHES_TYPE:
                 if os.path.exists(MESHES_BRAINVISA_DWI[(subject, side)]):
-                    shutil.copy2(MESHES_BRAINVISA_DWI[(subject, side, mesh_type)], MESHES[(subject, side, mesh_type )])
+                    shutil.copy2(MESHES_BRAINVISA_DWI[(subject, side, mesh_type)], MESHES[(subject, side, mesh_type)])
     pass
 
 
 if __name__ == '__main__':
-
     main()
-
-
-                        
-

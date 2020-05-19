@@ -1,10 +1,10 @@
 import numpy as np
 from sklearn.mixture.gaussian_mixture import GaussianMixture
 
-
 if __name__ == '__main__':
 
-    from configuration.configuration import SIDES, U_FIBERS_COORD, HEMI_INDEXES,DBSCAN_LABELS, N, N_INIT, INIT_METHOD, CLUSTERING_LABELS
+    from configuration.configuration import SIDES, U_FIBERS_COORD, HEMI_INDEXES, DBSCAN_LABELS, N, N_INIT, INIT_METHOD, \
+        CLUSTERING_LABELS
 
     data = np.load(U_FIBERS_COORD['global_mean'])
     hemispheres_index = np.load(HEMI_INDEXES)
@@ -17,7 +17,7 @@ if __name__ == '__main__':
         labels_ = labels[side_index == j]
 
         final_labels = labels_.copy()
-        #reencode the labels to take into account the added clusters
+        # reencode the labels to take into account the added clusters
         final_labels[labels_ == 2] = 4
         # select central cluster
         data_ = data_[labels_ == 1]
@@ -28,7 +28,7 @@ if __name__ == '__main__':
         c = g.covariances_
         pred_labels = g.predict(data_)
 
-        #directly sort the labels according to the precentral coordinates of the cluster
+        # directly sort the labels according to the precentral coordinates of the cluster
         t = np.argsort(m, axis=0)[:, 0]
         sorted_means = m[t]
         sorted_cov = c[t]
@@ -40,9 +40,3 @@ if __name__ == '__main__':
             sorted_pred_labels[pred_labels == s] = z + 1
         final_labels[labels_ == 1] = sorted_pred_labels
         np.save(CLUSTERING_LABELS[side], final_labels)
-
-
-
-
-
-

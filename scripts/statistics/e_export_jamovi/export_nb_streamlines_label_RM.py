@@ -6,7 +6,8 @@ if __name__ == '__main__':
 
     df = pd.read_csv(os.path.join(DIR_OUT, 'derived_tables', 'nb_streamlines_label_level.csv'))
     df = df.loc[df['Label'] != -1]
-    print df.head()
+    print
+    df.head()
 
     subgroups = df.groupby('Hemisphere')
     L = subgroups.get_group('L')
@@ -30,11 +31,11 @@ if __name__ == '__main__':
     R = R.reset_index(drop=True)
 
     final = pd.concat([L, R], axis=1)
-    #print final.shape
+    # print final.shape
     final = final.drop(columns='Hemisphere')
-    #print final.head()
+    # print final.head()
 
-    #second step
+    # second step
     subsubgroups = final.groupby('Label')
     first = subsubgroups.get_group(0)
     second = subsubgroups.get_group(1)
@@ -66,9 +67,9 @@ if __name__ == '__main__':
     mygroups = [g.rename(index=str, columns=myvars[i]) for i, g in enumerate(mygroups)]
     mygroups = [g.reset_index(drop=True) for i, g in enumerate(mygroups)]
 
-    real_final = pd.concat(mygroups,axis=1)
-    print real_final.head()
-
+    real_final = pd.concat(mygroups, axis=1)
+    print
+    real_final.head()
 
     new_A_variables = ['Asymmetry_Streamlines_Label_' + str(i) for i in range(5)]
     new_variables_L = ['Nb_Streamlines_Label_L_' + str(i) for i in range(5)]
@@ -79,7 +80,8 @@ if __name__ == '__main__':
         L_v = real_final[new_variables_L[i]].values
         A = 2.0 * (R_v - L_v) / (R_v + L_v)
         real_final[a] = A
-    print real_final.head()
+    print
+    real_final.head()
     real_final.to_csv(os.path.join(DIR_JAM, 'inter', 'nb_streamlines_label_level_RM.csv'), index=False)
     # #
     # for label, subdf in final.groupby('Label'):
@@ -88,9 +90,3 @@ if __name__ == '__main__':
     #         subdf.to_csv(os.path.join(DIR_JAM, 'inter', 'nb_streamlines_label_level_' + str(label) + '_RM.csv'), index=False)
     #
     #
-
-
-
-
-
-

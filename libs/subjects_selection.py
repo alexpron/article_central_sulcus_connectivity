@@ -39,14 +39,15 @@ def add_drive_index(metadata):
     :return: metadata
     """
     disks = create_disk_index()
-    #instanciating empty column
+    # instanciating empty column
     e = np.zeros(metadata.shape[0], dtype=np.int)
     # Creating the correspondance
     for d in disks:
         e[(metadata['Subject'] >= d['min_index']) & (metadata['Subject'] <= d['max_index'])] = d['disk']
-    #add the Hard_Drive column to the metadata dataset
+    # add the Hard_Drive column to the metadata dataset
     metadata['Hard_Drive'] = e
     return metadata
+
 
 def merge_metadata(path_data1, path_data2, merge_var='Subject'):
     """
@@ -63,8 +64,7 @@ def merge_metadata(path_data1, path_data2, merge_var='Subject'):
     return full_data
 
 
-def exclude_subjects_with_QC_issues(metadata, exclude_tags=('A','B','C','D','E')):
-
+def exclude_subjects_with_QC_issues(metadata, exclude_tags=('A', 'B', 'C', 'D', 'E')):
     """
     QC was performed on structural data essentially here is a sump up of the codes
     A : anatomical issues revealed on structural scans (T1 and T2)
@@ -84,18 +84,17 @@ def exclude_subjects_with_QC_issues(metadata, exclude_tags=('A','B','C','D','E')
 
     subjects = np.array(metadata['Subject'])
     qc_issue = np.array(metadata['QC_Issue'])
-    #print qc_issue.dtype
-    #by default all subjects are included
-    valid_subjects = np.zeros(len(subjects),dtype=bool)
+    # print qc_issue.dtype
+    # by default all subjects are included
+    valid_subjects = np.zeros(len(subjects), dtype=bool)
     for i, qc_tag in enumerate(qc_issue):
-        if type(qc_tag) is not str: # there is at least one know issue
-            #for t in exclude_tags:
-                #if t in qc_tag:
+        if type(qc_tag) is not str:  # there is at least one know issue
+            # for t in exclude_tags:
+            # if t in qc_tag:
             valid_subjects[i] = True
     metadata['OK_Subjects'] = valid_subjects
-    valid_subjects = metadata.loc[metadata['OK_Subjects'] == True,:]
+    valid_subjects = metadata.loc[metadata['OK_Subjects'] == True, :]
     return valid_subjects
-
 
 
 def extract_valid_subjects(metadata):
@@ -110,12 +109,12 @@ def extract_valid_subjects(metadata):
     :return: potential subjects dataframe with all the variables
     """
 
-    #selection is done in several steps for readability
-    #subjects must have completed all the structural and diffusion session
-    acquisition_cond = metadata.loc[((metadata['3T_Full_MR_Compl'] == True ) & (metadata['3T_dMRI_Compl'] == True)), :]
-    #no twins (SR stands for Self Reported)
+    # selection is done in several steps for readability
+    # subjects must have completed all the structural and diffusion session
+    acquisition_cond = metadata.loc[((metadata['3T_Full_MR_Compl'] == True) & (metadata['3T_dMRI_Compl'] == True)), :]
+    # no twins (SR stands for Self Reported)
     twin_cond = acquisition_cond.loc[(acquisition_cond['ZygositySR'] == "NotTwin")]
-    #strong right-handedness condition so that subject are more homogeneous
+    # strong right-handedness condition so that subject are more homogeneous
     handed_cond = twin_cond.loc[(twin_cond['Handedness'] >= 50), :]
     age_cond = handed_cond.loc[((handed_cond['Age_in_Yrs'] >= 20) & (handed_cond['Age_in_Yrs'] <= 40)), :]
     return age_cond
@@ -141,9 +140,9 @@ def build_proper_subjects_table(path_unrestricted, path_restricted, path_ok_subj
     :param path_ok_subjects:
     :return:
     """
-    #build dataframe containing all the metadata
+    # build dataframe containing all the metadata
     full_data = complete_data(path_unrestricted, path_restricted)
-    #some subjects might not be appropriate for a study, exclude them
+    # some subjects might not be appropriate for a study, exclude them
     ok_subjects = exclude_subjects_with_QC_issues(full_data)
     ok_subjects.to_csv(path_ok_subjects)
     pass
@@ -163,7 +162,6 @@ def subjects_by_disk(metadata, path_base):
     pass
 
 
-
 def update_subjects_list(dataset_directory, path_subjects_list):
     """
     Check the  subjects stored in the dataset and save their identifier (HCP index)
@@ -175,7 +173,7 @@ def update_subjects_list(dataset_directory, path_subjects_list):
     return subjects_list
 
 
-def sample_subjects(metadata, nb_subjects=50,alpha=0.01):
+def sample_subjects(metadata, nb_subjects=50, alpha=0.01):
     """
     Sample at random men and female subjects such as the two groups are well balanced (same number of subjects in each
     group) and that the distribution of Age_in_Yrs in statistically non different between the two groups
@@ -191,7 +189,7 @@ def sample_subjects(metadata, nb_subjects=50,alpha=0.01):
 
         dist_male = np.array(s_male['Age_in_Yrs'])
         dist_female = np.array(s_female['Age_in_Yrs'])
-        #testing statistically that the two distributions are identical
+        # testing statistically that the two distributions are identical
         t, p = stat.wilcoxon(dist_male, dist_female)
 
     index_f = np.array(s_female['Subjects'])
@@ -200,6 +198,7 @@ def sample_subjects(metadata, nb_subjects=50,alpha=0.01):
     selected_subjects = np.sort(index)
 
     return selected_subjects
+
 
 def add_selection_index(metadata, subjects_selected):
     """
@@ -215,13 +214,11 @@ def add_selection_index(metadata, subjects_selected):
 
 
 def export_sampled_subjects(metadata):
-
-    sampled_subjects = metadata.loc[metadata['Selected' == True],:]
+    sampled_subjects = metadata.loc[metadata['Selected' == True], :]
     return sampled_subjects
 
 
-
-def select_identical_subjects(d1,d2):
+def select_identical_subjects(d1, d2):
     """
     Some subjects coming from the initial selection were found to have QC_Issue a posteriori when the QC_Issue field
     was added by the HCP into the metadata file. This function try to select subjects as close as possible with respect
@@ -240,33 +237,31 @@ def select_identical_subjects(d1,d2):
     g2 = np.array(d2['Gender'])
     h2 = np.array(d2['Handedness'])
 
-    new_subjects = [s2[(a2 == a1[i])*(g2==g1[i])*h2==h1[i]] for i in range(len(s1))]
+    new_subjects = [s2[(a2 == a1[i]) * (g2 == g1[i]) * h2 == h1[i]] for i in range(len(s1))]
     new_subjects_approx = [s2[(a2 == a1[i]) * (g2 == g1[i])] for i in range(len(s1))]
-    #First step exact remplacement
+    # First step exact remplacement
     new_subjects_final = np.zeros(len(new_subjects)).tolist()
     for i, subjects in enumerate(new_subjects):
         if len(subjects) == 0:
             new_subjects_final[i] = []
         else:
             for j in range(len(subjects)):
-                 if subjects[j] not in new_subjects_final:
-                     new_subjects_final[i] = subjects[j]
-                     break
+                if subjects[j] not in new_subjects_final:
+                    new_subjects_final[i] = subjects[j]
+                    break
             # if new_subjects_final[i] == 0:
             #      new_subjects_final[i] = []
 
-    #Second step approximate remplacement
+    # Second step approximate remplacement
     new_subjects_final2 = copy(new_subjects_final)
     for i, subject in enumerate(new_subjects_final2):
-        #la liste est vide
+        # la liste est vide
         if not subject:
-           hand_score = np.array([h2[s2 == s] for  s in new_subjects_approx[i]]).ravel()
-           diff = np.abs(hand_score - h1[i])
-           min_subject = np.array(new_subjects_approx[i],dtype=int)[np.argsort(diff)].tolist()
-           for j in range(len(min_subject)):
-               if min_subject[j] not in new_subjects_final2:
-                   new_subjects_final2[i] = min_subject[j]
-                   break
+            hand_score = np.array([h2[s2 == s] for s in new_subjects_approx[i]]).ravel()
+            diff = np.abs(hand_score - h1[i])
+            min_subject = np.array(new_subjects_approx[i], dtype=int)[np.argsort(diff)].tolist()
+            for j in range(len(min_subject)):
+                if min_subject[j] not in new_subjects_final2:
+                    new_subjects_final2[i] = min_subject[j]
+                    break
     return new_subjects_final2
-
-

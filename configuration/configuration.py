@@ -7,10 +7,9 @@ TODO: move the content of this file and of the set_env.sh file to an unique .jso
 import os
 from libs.tools.usual import merge_dicts, read_subjects_list
 
-
 # --------------------------------- Global Variables for the study ----------------------------------------------------#
 
-RELEASE = '07_30_2018_S900_release' # version of the HCP metadata used
+RELEASE = '07_30_2018_S900_release'  # version of the HCP metadata used
 SIDES = {'L': 'Left', 'R': 'Right'}  # hemispheres
 SULCUS = 'CS'  # this study focus on the central sulcus but generic organisation
 GYRI = ['precentral', 'postcentral']
@@ -19,9 +18,9 @@ MESHES_TYPE = ['white', 'hemi']  # white and pial triangular meshes
 PARAMETRISATIONS = ['iso', 'global_mean', 'mean_by_hemi']  # parametrisations for the landmark lines (CS and gyri)
 STATUS = ['drawn', 'cleaned']
 EXTENSIONS = {'array': '.npy', 'mesh': '.mesh', 'texture': '.gii'}  # valid only for lines (fundus or crests)
-TABLES = ['draw_attribution', 'mesh_index', 'cs_coord', 'gyri_index', 'gyri_coord', 'final'] # tables related to PPFM
+TABLES = ['draw_attribution', 'mesh_index', 'cs_coord', 'gyri_index', 'gyri_coord', 'final']  # tables related to PPFM
 TRACTS_EXTREMITIES = ['s', 'e']
-DENSITIES_RADIUS = 5     # variance of the gaussian kernel used to provide continuous information
+DENSITIES_RADIUS = 5  # variance of the gaussian kernel used to provide continuous information
 GROUP_DENSITIES_MAX = 8000
 
 # --------------------------------- BrainVISA instance and associated python used in this study -----------------------#
@@ -67,7 +66,9 @@ FIT_INSTANCE = 'brain_fit'
 DIR_SUBJECT_BRAINVISA = {subject: os.path.join(BRAINVISA_DB, CENTER, subject) for subject in SUBJ_LIST}
 DIR_T1 = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], T1) for subject in SUBJ_LIST}
 DIR_DWI = {subject: os.path.join(DIR_SUBJECT_BRAINVISA[subject], DWI, DWI_ACQ, DWI_PROC) for subject in SUBJ_LIST}
-TISSUE_MASKS = {(subject, side): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation', side + 'grey_white' + '_' + subject + '.nii.gz') for subject in SUBJ_LIST for side in SIDES.keys()}
+TISSUE_MASKS = {(subject, side): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation',
+                                              side + 'grey_white' + '_' + subject + '.nii.gz') for subject in SUBJ_LIST
+                for side in SIDES.keys()}
 MESHES_BRAINVISA_T1 = {
     (subject, side, mesh_type, 't1'): os.path.join(DIR_T1[subject], STRUCT_ACQ, STRUCT_PROC, 'segmentation', 'meshes',
                                                    subject + '_' + side + mesh_type + '.gii') for subject in SUBJ_LIST
@@ -77,7 +78,8 @@ MESHES_BRAINVISA_DWI = {(subject, side, mesh_type, 'dwi'): os.path.join(DIR_DWI[
                         for subject in SUBJ_LIST for side in SIDES for mesh_type in MESHES_TYPE}
 MESHES_BRAINVISA = merge_dicts(MESHES_BRAINVISA_T1, MESHES_BRAINVISA_DWI)
 FODS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'wm_fod.nii') for subject in SUBJ_LIST}
-AIMS_TO_RAS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE,'wm_fod_ras_to_aims.npy') for subject in SUBJ_LIST}
+AIMS_TO_RAS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'wm_fod_ras_to_aims.npy') for
+               subject in SUBJ_LIST}
 COMMIT_DIR = {subject: os.path.join(DIR_DWI[subject], 'commit') for subject in SUBJ_LIST}
 COMMIT_META = {subject: os.path.join(DIR_DWI[subject], 'commit_metada.txt') for subject in SUBJ_LIST}
 COMMIT_WEIGHTS = {subject: os.path.join(COMMIT_DIR[subject], 'Results_StickZeppelinBall') for subject in SUBJ_LIST}
@@ -89,10 +91,13 @@ TTVIS = {subject: os.path.join(DIR_DWI[subject], '5ttvisu.nii.gz') for subject i
 SEED_MASK = {subject: os.path.join(DIR_DWI[subject], 'seeding_mask.nii.gz') for subject in SUBJ_LIST}
 PEAKS = {subject: os.path.join(DIR_DWI[subject], 'csd', CSD_MODEL, FIT_INSTANCE, 'peaks.nii.gz') for subject in
          SUBJ_LIST}
-TRACTS = {(subject, tract_type, status): os.path.join(DIR_DWI[subject], 'tractography', subject + 'track.' + tract_type) for subject in SUBJ_LIST for tract_type in ['tck', 'trk'] for status in ['', 'filtered']}
+TRACTS = {(subject, tract_type, status): os.path.join(DIR_DWI[subject], 'tractography', subject + 'track.' + tract_type)
+          for subject in SUBJ_LIST for tract_type in ['tck', 'trk'] for status in ['', 'filtered']}
 
-FIEDLER_TABLES = {side: os.path.join(BRAINVISA_DB, 'group' + '_' + side + '_' + 'average_Fiedler_length.csv') for side in SIDES.keys()}
-AREA_TABLES = {side: os.path.join(BRAINVISA_DB, 'group' + '_' + side + '_' + 'average_Fiedler_length.csv') for side in SIDES.keys()}
+FIEDLER_TABLES = {side: os.path.join(BRAINVISA_DB, 'group' + '_' + side + '_' + 'average_Fiedler_length.csv') for side
+                  in SIDES.keys()}
+AREA_TABLES = {side: os.path.join(BRAINVISA_DB, 'group' + '_' + side + '_' + 'average_Fiedler_length.csv') for side in
+               SIDES.keys()}
 # --------------------------------- Data (output directory outside of BrainVISA database)
 
 DATA = '/hpc/meca/users/pron.a/data'
@@ -139,10 +144,18 @@ SULCUS_FUNDI = {(subject, side, SULCUS, status, nature): os.path.join(DIR_LANDMA
                 side in SIDES.keys() for gyrus in ADJACENT_GYRI[SULCUS] for status in STATUS for nature in EXTENSIONS}
 LINES = merge_dicts(GYRAL_CRESTS, SULCUS_FUNDI)
 
-GEO_DISTS = {(subject, side, 'white', gyrus): os.path.join(DIR_LANDMARKS,'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'geodesic_distance_map.gii') for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in ADJACENT_GYRI[SULCUS]}
-ROI_DISTANCES = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'geodesic_distance_threshold' + '.gii') for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
-PARTITIONS = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'partition' + '.gii') for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
-ADJ_GYRI_ROI = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS,'adjacent_gyri', subject + '_' + side + '_' + gyrus + '_' + 'surface_roi' + '.gii') for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
+GEO_DISTS = {(subject, side, 'white', gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri',
+                                                           subject + '_' + side + '_' + gyrus + '_' + 'geodesic_distance_map.gii')
+             for subject in SUBJ_LIST for side in SIDES.keys() for gyrus in ADJACENT_GYRI[SULCUS]}
+ROI_DISTANCES = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri',
+                                                      subject + '_' + side + '_' + gyrus + '_' + 'geodesic_distance_threshold' + '.gii')
+                 for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
+PARTITIONS = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri',
+                                                   subject + '_' + side + '_' + gyrus + '_' + 'partition' + '.gii') for
+              subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
+ADJ_GYRI_ROI = {(subject, side, gyrus): os.path.join(DIR_LANDMARKS, 'adjacent_gyri',
+                                                     subject + '_' + side + '_' + gyrus + '_' + 'surface_roi' + '.gii')
+                for subject in SUBJ_LIST for side in SIDES for gyrus in ADJACENT_GYRI[SULCUS]}
 
 # Lines
 GYRAL_PARAMETRISATIONS = {(subject, side, gyrus, status, nature, param): os.path.join(DIR_LANDMARKS, 'adjacent_gyri',
@@ -159,27 +172,39 @@ LINE_PARAMETRISATIONS = merge_dicts(GYRAL_PARAMETRISATIONS, FUNDI_PARAMETRISATIO
 
 PPFM_TABLES = {t: os.path.join(DIR_LANDMARKS, 'ppfm', 'ppfm' + '_' + t + '.csv') for t in TABLES}
 
-ASSOCIATION_TRACTS = {(subject, side): os.path.join(DATA, 'tractograms', 'association_tracts', subject + '_' + side + '.npy') for subject in SUBJ_LIST  for side in SIDES.keys()}
-ASSO_TRACT_EXTREMITIES = {(subject, side, ext): os.path.join(DATA,'tractograms','association_tracts_ext', subject + '_' + side + '_' +  ext + '.npy') for subject  in SUBJ_LIST for side in SIDES.keys() for ext in TRACTS_EXTREMITIES}
-ASSO_TRACT_NEAREST_VERTEX = {(subject, side, ext): os.path.join(DATA, 'tractograms','nearest_mesh_vertex', subject + '_' + side + '_' + ext + '_' + 'nearest_vertex.npy') for subject in SUBJ_LIST for side in SIDES.keys() for ext in TRACTS_EXTREMITIES}
-U_FIBERS_MASK = {(subject, side): os.path.join(DATA, 'u-fibers', subject + '_' + side + '_' + 'mask' + '.npy') for subject in SUBJ_LIST for side in SIDES.keys()}
+ASSOCIATION_TRACTS = {
+    (subject, side): os.path.join(DATA, 'tractograms', 'association_tracts', subject + '_' + side + '.npy') for subject
+    in SUBJ_LIST for side in SIDES.keys()}
+ASSO_TRACT_EXTREMITIES = {(subject, side, ext): os.path.join(DATA, 'tractograms', 'association_tracts_ext',
+                                                             subject + '_' + side + '_' + ext + '.npy') for subject in
+                          SUBJ_LIST for side in SIDES.keys() for ext in TRACTS_EXTREMITIES}
+ASSO_TRACT_NEAREST_VERTEX = {(subject, side, ext): os.path.join(DATA, 'tractograms', 'nearest_mesh_vertex',
+                                                                subject + '_' + side + '_' + ext + '_' + 'nearest_vertex.npy')
+                             for subject in SUBJ_LIST for side in SIDES.keys() for ext in TRACTS_EXTREMITIES}
+U_FIBERS_MASK = {(subject, side): os.path.join(DATA, 'u-fibers', subject + '_' + side + '_' + 'mask' + '.npy') for
+                 subject in SUBJ_LIST for side in SIDES.keys()}
 
 # Connectivity space
-U_FIBERS_INDEXES = os.path.join(DATA, 'connectivity_space','U_fibers_indexes_on_gyri.npy')
-HEMI_INDEXES = os.path.join(DATA, 'connectivity_space','hemispheres_indexes.npy')
+U_FIBERS_INDEXES = os.path.join(DATA, 'connectivity_space', 'U_fibers_indexes_on_gyri.npy')
+HEMI_INDEXES = os.path.join(DATA, 'connectivity_space', 'hemispheres_indexes.npy')
 
-U_FIBERS_COORD = {p: os.path.join(DATA,'connectivity_space', 'U_fibers_coord_on_gyri' + '_' + p + '_param.npy') for p in PARAMETRISATIONS}
+U_FIBERS_COORD = {p: os.path.join(DATA, 'connectivity_space', 'U_fibers_coord_on_gyri' + '_' + p + '_param.npy') for p
+                  in PARAMETRISATIONS}
 X_GRID = os.path.join(DATA, 'connectivity_space', 'profiles', 'X.npy')
 Y_GRID = os.path.join(DATA, 'connectivity_space', 'profiles', 'Y.npy')
-U_FIBERS_GROUP_PROFILES = {(side, p): os.path.join(DATA, 'connectivity_space', 'profiles', 'group', side + '_' + p + '_' + 'param' + '_' + 'profile.npy') for side in SIDES.keys() for p in PARAMETRISATIONS}
-U_FIBERS_INDIV_PROFILES = {(subject, side, p): os.path.join(DATA, 'connectivity_space','profiles', 'individuals', subject + '_' + side + '_' + p + '_' + 'param' + '_' + 'profile.npy') for subject in SUBJ_LIST for side in SIDES.keys() for p in PARAMETRISATIONS}
+U_FIBERS_GROUP_PROFILES = {(side, p): os.path.join(DATA, 'connectivity_space', 'profiles', 'group',
+                                                   side + '_' + p + '_' + 'param' + '_' + 'profile.npy') for side in
+                           SIDES.keys() for p in PARAMETRISATIONS}
+U_FIBERS_INDIV_PROFILES = {(subject, side, p): os.path.join(DATA, 'connectivity_space', 'profiles', 'individuals',
+                                                            subject + '_' + side + '_' + p + '_' + 'param' + '_' + 'profile.npy')
+                           for subject in SUBJ_LIST for side in SIDES.keys() for p in PARAMETRISATIONS}
 
 # Parameters obtained and fixed for DBSCAN clustering of group profiles
 EPS = 3
 ABS = 12000
-NORM_THRESHOLD = ABS/249897.0
+NORM_THRESHOLD = ABS / 249897.0
 
-DBSCAN_LABELS = os.path.join(DATA, 'connectivity_space','clustering', 'dbscan_labels.npy')
+DBSCAN_LABELS = os.path.join(DATA, 'connectivity_space', 'clustering', 'dbscan_labels.npy')
 
 # parameters used for Gaussian Mixture Model
 N = 3
@@ -187,18 +212,22 @@ N_INIT = 1000
 MAX_ITER = 5000
 INIT_METHOD = 'kmeans'
 
-CLUSTERING_LABELS = {side: os.path.join(DATA, 'connectivity_space', 'clustering', 'labels.npy') for side in SIDES.keys()}
+CLUSTERING_LABELS = {side: os.path.join(DATA, 'connectivity_space', 'clustering', 'labels.npy') for side in
+                     SIDES.keys()}
 
-#Statistics tables
+# Statistics tables
 ICV_DF = os.path.join(DIR_STATS, 'init_tables', 'ICV.csv')
 FIEDLER_DF = os.path.join(DIR_STATS, 'init_tables', 'Fiedler_length.csv')
 MESH_AREA_DF = os.path.join(DIR_STATS, 'init_tables', 'mesh_area.csv')
 PPFM_DF = os.path.join(DIR_STATS, 'init_tables', 'ppfm.csv')
 
-#Figures
+# Figures
 DIR_PROFILES = os.path.join(DIR_FIGURES, 'connectivity_profiles')
-FIG_GROUP_PROFILES = {side: os.path.join(DIR_PROFILES, 'group', side + '_' + 'group_profile' + '.tiff') for side in SIDES.keys()}
-FIG_GROUP_PROFILES_MAXIMA = {side: os.path.join(DIR_PROFILES, 'group', side + '_' + 'group_profile_with_maxima' + '.tiff') for side in SIDES.keys()}
-FIG_INDIV_PROFILES = {(subject, side, param): os.path.join(DIR_PROFILES, 'subjects', subject + '_' + side + '_' + param + '_' + 'profile.tiff') for subject in SUBJ_LIST for side in SIDES.keys() for param in PARAMETRISATIONS}
-
-
+FIG_GROUP_PROFILES = {side: os.path.join(DIR_PROFILES, 'group', side + '_' + 'group_profile' + '.tiff') for side in
+                      SIDES.keys()}
+FIG_GROUP_PROFILES_MAXIMA = {
+    side: os.path.join(DIR_PROFILES, 'group', side + '_' + 'group_profile_with_maxima' + '.tiff') for side in
+    SIDES.keys()}
+FIG_INDIV_PROFILES = {(subject, side, param): os.path.join(DIR_PROFILES, 'subjects',
+                                                           subject + '_' + side + '_' + param + '_' + 'profile.tiff')
+                      for subject in SUBJ_LIST for side in SIDES.keys() for param in PARAMETRISATIONS}

@@ -7,8 +7,8 @@ Depth Potential Function computed with default parameter. The script preload the
 import anatomist.api as anatomist
 from configuration.configuration import MESHES, DPFS, SUBJ_LIST, SIDES
 
-subject = SUBJ_LIST[0] #to be modified (0-99)
-side = SIDES.keys()[0] #to be modified (0-1)
+subject = SUBJ_LIST[0]  # to be modified (0-99)
+side = SIDES.keys()[0]  # to be modified (0-1)
 
 path_mesh = MESHES[(subject, side)]
 path_dpf = DPFS[(subject, side)]
@@ -21,9 +21,3 @@ mesh.setMaterial(polygon_mode='outline')
 dpf.setPalette('Purple-Red + Stripes', minVal=0, maxVal=-1.6, absoluteMode=True)
 fusion = a.fusionObjects(objects=[mesh, dpf], method='FusionTexSurfMethod')
 w.addObjects(fusion)
-
-
-
-
-
-

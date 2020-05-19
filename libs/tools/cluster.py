@@ -18,7 +18,8 @@ def launch_cmd(cmd, core, exec_dir, stdout_file, stderr_file, cmd_file):
     :param cmd_file: the command passed to frioul_batch (should be cmd)
     :return: None
     """
-    subprocess.run('frioul_batch' + ' -d ' + exec_dir + ' -E ' + stderr_file + '  -O ' + stdout_file + ' -C ' + cmd_file + ' -c ' + str(
+    subprocess.run(
+        'frioul_batch' + ' -d ' + exec_dir + ' -E ' + stderr_file + '  -O ' + stdout_file + ' -C ' + cmd_file + ' -c ' + str(
             core) + ' "' + cmd + '"')
     pass
 
@@ -41,4 +42,3 @@ def launch_subject_cmd(cmd, subject, dir_cluster, core=1):
     cmd_file = os.path.join(dir_cluster, subject + '.cmd')
     launch_cmd(cmd, core, dir_cluster, stdout, stderr, cmd_file)
     pass
-
