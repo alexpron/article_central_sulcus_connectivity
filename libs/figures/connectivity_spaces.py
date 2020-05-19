@@ -28,6 +28,27 @@ clustering_color_map = {'default':hierarchical_clustering_colormap(), 'dbscan':d
 XLABEL = 'Pre-Central Coordinate'
 YLABEL = 'Post-Central Coordinate'
 
+# TODO MOVE TO BACKEND MODULE NOT DISPLAY
+def get_hemisphere_group_pp(dataframe, subject, side):
+    pre_c = dataframe.loc[(dataframe['Subject'] == int(subject)) & (dataframe['Hemisphere'] == side),'PP_Pre_Coord_Global_Mean'].iloc[0]
+    post_c = dataframe.loc[(dataframe['Subject'] == int(subject)) & (dataframe['Hemisphere'] == side),'PP_Post_Coord_Global_Mean'].iloc[0]
+    pp = np.array([pre_c, post_c])
+    return pp
+#
+def get_hemisphere_subject_pp(dataframe,subject,side):
+    """
+    :param dataframe:
+    :param subject:
+    :param side:
+    :param PP_coord:
+    :return:
+    """
+    pre_coord = dataframe.loc[(dataframe['Subject'] == int(subject)) & (dataframe['Hemisphere'] == side),'PP_Pre_Coord_Iso'].iloc[0]
+    post_coord = dataframe.loc[(dataframe['Subject'] == int(subject)) & (dataframe['Hemisphere'] == side),'PP_Post_Coord_Iso'].iloc[0]
+    pp = np.array([pre_coord, post_coord])
+    return pp
+
+
 
 def default_plot(path_fig=None, title=None, xlabel=XLABEL, ylabel=YLABEL):
     """
@@ -65,8 +86,7 @@ def default_plot(path_fig=None, title=None, xlabel=XLABEL, ylabel=YLABEL):
     return fig, ax
 
 
-
-
+# TODO : find a way to reuse basic plot to factor code
 def scatter_plot(points,labels=None, pli_passage=None, path_fig=None, title=None,colormap=None, alpha=1):
     '''
     :param points: the b_coordinates of the streamlines in the 2D space (a Nx2 ndarray)
@@ -300,7 +320,7 @@ def density_plot_subject_no_annot(X, Y, density, pli_passage_subject=None, pli_p
     plt.grid()
     plt.contourf(X, Y, density, nb_levels, cmap='magma_r')
     #m = plt.cm.ScalarMappable(cmap=cm.magma_r)
-    #m.set_array(density)
+    #m.set_array(connectivity_profiles)
     #m.set_clim(0, 100)
     #cbar = plt.colorbar(m, boundaries=np.linspace(0, 100, 100))
     #cbar.set_ticks(np.arange(0, 105, 5))
@@ -354,7 +374,7 @@ def density_plot_subject_no_annot_crests(X, Y, density, pli_passage_subject=None
     plt.grid()
     plt.contourf(X, Y, density, nb_levels, cmap='magma_r')
     #m = plt.cm.ScalarMappable(cmap=cm.magma_r)
-    #m.set_array(density)
+    #m.set_array(connectivity_profiles)
     #m.set_clim(0, 100)
     #cbar = plt.colorbar(m, boundaries=np.linspace(0, 100, 100))
     #cbar.set_ticks(np.arange(0, 105, 5))
@@ -459,7 +479,7 @@ def density_and_clusters_ellipses(X, Y, density,means,covariances, pli_passage =
     if vmin is not None and vmax is not None:
         ax.contourf(X, Y, density, nb_levels, cmap=cm.magma_r, vmin=vmin, vmax=vmax)
         #m = plt.cm.ScalarMappable(cmap=cm.magma_r)
-        #m.set_array(density)
+        #m.set_array(connectivity_profiles)
         #m.set_clim(vmin, vmax)
         #cbar = plt.colorbar(m, boundaries=np.linspace(vmin, vmax, nb_levels + 1))
         #cbar.set_ticks(np.arange(vmin, vmax + 500, 500))
@@ -576,7 +596,7 @@ def density_plot_group_with_maxima(X, Y, density, pli_passage=None, path_fig=Non
     if vmin is not None and vmax is not None:
         plt.contourf(X, Y, density, nb_levels, cmap=cm.magma_r,vmin=vmin, vmax=vmax)
         #m = plt.cm.ScalarMappable(cmap=cm.magma_r)
-        #m.set_array(density)
+        #m.set_array(connectivity_profiles)
         #m.set_clim(vmin, vmax)
         #cbar = plt.colorbar(m, boundaries=np.linspace(vmin, vmax, nb_levels + 1))
         #cbar.set_ticks(np.arange(vmin,vmax +500, 500 ))

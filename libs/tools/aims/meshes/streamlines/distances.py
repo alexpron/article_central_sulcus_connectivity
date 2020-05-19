@@ -69,8 +69,8 @@ def full_fibers_index_by_vertex(s_vertex_index,e_vertex_index,nb_vertices):
 
 def compute_vertex_density(s_vertex, e_vertex ,nb_vertices):
     '''This function compute at each vertex a so called vertex
-    density i.e the number of the streamlines at the node divided by
-    the total number of streamlines. This is not a surfacic density'''
+    connectivity_profiles i.e the number of the streamlines at the node divided by
+    the total number of streamlines. This is not a surfacic connectivity_profiles'''
     nb_fibers = s_vertex.shape[0]
     index_vertices = np.arange(nb_vertices + 1).astype(int)
     density = np.zeros(nb_vertices)

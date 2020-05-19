@@ -21,7 +21,8 @@ STATUS = ['drawn', 'cleaned']
 EXTENSIONS = {'array': '.npy', 'mesh': '.mesh', 'texture': '.gii'}  # valid only for lines (fundus or crests)
 TABLES = ['draw_attribution', 'mesh_index', 'cs_coord', 'gyri_index', 'gyri_coord', 'final'] # tables related to PPFM
 TRACTS_EXTREMITIES = ['s', 'e']
-DENSITIES_RADIUS = 5     #variance of the gaussian kernel used to provide continuous information
+DENSITIES_RADIUS = 5     # variance of the gaussian kernel used to provide continuous information
+GROUP_DENSITIES_MAX = 8000
 
 # --------------------------------- BrainVISA instance and associated python used in this study -----------------------#
 
@@ -100,7 +101,8 @@ DIR_SUBJECTS = os.path.join(DATA, 'subjects')
 DIR_MESHES = os.path.join(DATA, 'meshes_and_textures')
 DIR_SULCUS = os.path.join(DATA, 'sulci', SULCUS)
 DIR_LANDMARKS = os.path.join(DIR_SULCUS, 'landmarks')
-DIR_STATS = os.path.join(DATA, 'statistics')
+DIR_STATS = os.path.join(DIR_SULCUS, 'statistics')
+DIR_FIGURES = os.path.join(DIR_SULCUS, 'figures')
 
 # Subjects selection related variables
 RESTRICTED = os.path.join(DIR_SUBJECTS, 'RESTRICTED' + '_' + RELEASE + '.csv')
@@ -185,13 +187,18 @@ N_INIT = 1000
 MAX_ITER = 5000
 INIT_METHOD = 'kmeans'
 
-CLUSTERING_LABELS = {side: os.path.join(DATA, 'connectivity_space', 'clustering', 'labels.npy')}
+CLUSTERING_LABELS = {side: os.path.join(DATA, 'connectivity_space', 'clustering', 'labels.npy') for side in SIDES.keys()}
 
+#Statistics tables
 ICV_DF = os.path.join(DIR_STATS, 'init_tables', 'ICV.csv')
 FIEDLER_DF = os.path.join(DIR_STATS, 'init_tables', 'Fiedler_length.csv')
 MESH_AREA_DF = os.path.join(DIR_STATS, 'init_tables', 'mesh_area.csv')
 PPFM_DF = os.path.join(DIR_STATS, 'init_tables', 'ppfm.csv')
 
-
+#Figures
+DIR_PROFILES = os.path.join(DIR_FIGURES, 'connectivity_profiles')
+FIG_GROUP_PROFILES = {side: os.path.join(DIR_PROFILES, 'group', side + '_' + 'group_profile' + '.tiff') for side in SIDES.keys()}
+FIG_GROUP_PROFILES_MAXIMA = {side: os.path.join(DIR_PROFILES, 'group', side + '_' + 'group_profile_with_maxima' + '.tiff') for side in SIDES.keys()}
+FIG_INDIV_PROFILES = {(subject, side, param): os.path.join(DIR_PROFILES, 'subjects', subject + '_' + side + '_' + param + '_' + 'profile.tiff') for subject in SUBJ_LIST for side in SIDES.keys() for param in PARAMETRISATIONS}
 
 

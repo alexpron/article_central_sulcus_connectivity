@@ -100,7 +100,7 @@ def unnormalized_kernel(points,factor=10):
 
 def estimate_pseudo_density(points, grid_size=101, factor=10):
     '''
-    Estimate the (unormalized density with fixed kernel size)
+    Estimate the (unormalized connectivity_profiles with fixed kernel size)
     :param points:
     :param grid_size:
     :return:
