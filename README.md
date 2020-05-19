@@ -5,12 +5,12 @@ This repository regroups the code used to carry out the design, the magnetic res
 
 ## Dependencies
 This study was performed relying on :
-    1. FreeSurfer version 6 (https://surfer.nmr.mgh.harvard.edu)
-    2. BrainVISA version 4.6.1 /Anatomist (http://brainvisa.info/web/index.html) 
-    3. Mrtrix3 (https://www.mrtrix.org/)
-    4. Ants (https://github.com/ANTsX/ANTs)
-    5. COMMIT (https://github.com/daducci/COMMIT)
-    6. Matplotlib 3.2 (not included into BrainVISA environnement)
+   1. FreeSurfer version 6 (https://surfer.nmr.mgh.harvard.edu)
+   2. BrainVISA version 4.6.1 /Anatomist (http://brainvisa.info/web/index.html) 
+   3. Mrtrix3 (https://www.mrtrix.org/)
+   4. Ants (https://github.com/ANTsX/ANTs)
+   5. COMMIT (https://github.com/daducci/COMMIT)
+   6. Matplotlib 3.2 (not included into the BrainVISA 4.6.1 python environnement)
     
 
 ## Repository organisation
@@ -31,19 +31,20 @@ context.
 
  
 ##Pipeline 
-    1. Subjects selection 
-    2. Structural (T1, T2) and diffusion weighted MRI (dMRI) processing:
+    
+   1. Subjects selection 
+   2. Structural (T1, T2) and diffusion weighted MRI (dMRI) processing:
         1. Tissue segmentation (FreeSurfer)
         2. Triangular meshes generation (BrainVISA)
         3. Surface maps computation (e.g. curvature, geodesic depth) (BrainVISA)
         4. dMRI volume bias correction (Ants)
         5. Multi-Shell Multi Tissue Spherical Deconvolution (Mrtrix)
-    3. Whole brain anatomically constrained probabilistic tractography (Mrtrix)
-    4. Tractogram filtering
+   3. Whole brain anatomically constrained probabilistic tractography (Mrtrix)
+   4. Tractogram filtering
         1. Filtering with respect to the dMRI signal (COMMIT)
         2. Association streamlines extraction
         3. White mesh based filtering
-    5. Surface landmarks drawing
+   5. Surface landmarks drawing
         1. Central sulcus extremities
         2. Central sulcus fundus
         3. Adjacent gyral crests
