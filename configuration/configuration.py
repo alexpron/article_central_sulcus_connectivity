@@ -161,6 +161,12 @@ ASSO_TRACT_EXTREMITIES = {(subject, side, ext): os.path.join(DATA,'tractograms',
 ASSO_TRACT_NEAREST_VERTEX = {(subject, side, ext): os.path.join(DATA, 'tractograms','nearest_mesh_vertex', subject + '_' + side + '_' + ext + '_' + 'nearest_vertex.npy') for subject in SUBJ_LIST for side in SIDES.keys() for ext in TRACTS_EXTREMITIES}
 U_FIBERS_MASK = {(subject, side): os.path.join(DATA, 'u-fibers', subject + '_' + side + '_' + 'mask' + '.npy') for subject in SUBJ_LIST for side in SIDES.keys()}
 
+# Connectivity space
+U_FIBERS_INDEXES = os.path.join(DATA, 'connectivity_space','U_fibers_indexes_on_gyri.npy')
+HEMI_INDEXES = os.path.join(DATA, 'connectivity_space','hemispheres_indexes.npy')
+
+
+
 ICV_DF = os.path.join(DIR_STATS, 'init_tables', 'ICV.csv')
 FIEDLER_DF = os.path.join(DIR_STATS, 'init_tables', 'Fiedler_length.csv')
 MESH_AREA_DF = os.path.join(DIR_STATS, 'init_tables', 'mesh_area.csv')

@@ -5,7 +5,7 @@ from libs.connectivity_space import get_streamline_coord_on_gyri
 
 if __name__ == '__main__':
 
-    from configuration.configuration import SUBJ_LIST, SIDES, GYRI, MESHES, ASSO_TRACT_NEAREST_VERTEX, U_FIBERS_MASK, GYRAL_CRESTS, GEO_DISTS
+    from configuration.configuration import SUBJ_LIST, SIDES, GYRI, MESHES, ASSO_TRACT_NEAREST_VERTEX, U_FIBERS_MASK, GYRAL_CRESTS, GEO_DISTS, U_FIBERS_INDEXES, HEMI_INDEXES
 
     pre_central_index = np.array([])
     post_central_index = np.array([])
@@ -40,8 +40,8 @@ if __name__ == '__main__':
     group_index[:, 0] = pre_central_index
     group_index[:, 1] = post_central_index
 
-    np.save(os.path.join(DIR_OUT, 'connectivity','indexes', 'U_fibers_indexes_on_gyri.npy'), group_index)
-    np.save(os.path.join(DIR_OUT, 'connectivity', 'indexes', 'hemispheres_index.npy'), hemispheres_index)
+    np.save(U_FIBERS_INDEXES, group_index)
+    np.save(HEMI_INDEXES, hemispheres_index)
 
 
 

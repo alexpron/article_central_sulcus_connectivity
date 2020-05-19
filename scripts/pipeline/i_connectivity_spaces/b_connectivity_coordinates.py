@@ -7,10 +7,6 @@ import numpy as np
 if __name__ == '__main__':
 
 
-
-    hemispheres_index = np.load(os.path.join(DIR_OUT, 'connectivity','indexes', 'hemispheres_index.npy'))
-    U_fibers_extremities_index = np.load(os.path.join(DIR_OUT, 'connectivity','indexes',
-                                                      'U_fibers_indexes_on_gyri.npy'))
     group_coordinates = np.zeros(U_fibers_extremities_index.shape)
 
     for p in PARAMS:
