@@ -1,9 +1,7 @@
 import pandas as pd
-import seaborn as sns
-import os
+from scipy.stats import shapiro, mannwhitneyu, levene, ttest_1samp,ttest_ind, ttest_rel
 from matplotlib import pyplot as plt
-from configuration import DIR_OUT
-from scipy.stats import shapiro, mannwhitneyu, levene, ttest_1samp,ttest_ind,ttest_rel
+import seaborn as sns
 
 if __name__ == '__main__':
 

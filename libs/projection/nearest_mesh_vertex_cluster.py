@@ -1,6 +1,7 @@
 #!/hpc/meca/users/pron.a/softs/brainvisa-4.6.1/bin/python -u
 
 from scipy.spatial.distance import cdist
+from soma import aims
 import numpy as np
 import sys
 
@@ -25,9 +26,9 @@ def streamlines_nearest_vertex(points,vertices,size_chunk=10000):
         nearest_vertices[n_min:n_max] = np.argmin(distances, axis=1)
     return nearest_vertices
 
-def main(path_points, path_vertices, path_index):
+def main(path_points, path_mesh, path_index):
     points = np.load(path_points)
-    vertices = np.load(path_vertices)
+    vertices = np.array(aims.read(path_mesh).vertex())
     n_vertices = streamlines_nearest_vertex(points, vertices)
     np.save(path_index, n_vertices)
     pass
