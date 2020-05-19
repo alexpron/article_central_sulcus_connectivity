@@ -12,4 +12,17 @@ This repository is organized as follows:
 
 + libs: modules and functions used that can be imported to reproduce the study 
 + scripts: code used in this study that takes into account the data and software context in the Institut of Neurosciences (INT)
-context.
+context. This includes:
+    1. Subjects selection 
+    2. Structural (T1, T2) and diffusion weighted MRI (dMRI) processing:
+        1. Tissue segmentation (FreeSurfer 6.0.0)
+        2. Triangular meshes generation (BrainVISA)
+        3. Surface maps computation (e.g. curvature, geodesic depth) (Cortical Surface toolbox)
+        4. dMRI volume bias correction (Ants)
+        5. Multi-Shell Multi Tissue Spherical Deconvolution (Mrtrix)
+    3. Whole brain anatomically constrained probabilistic tractography (Mrtrix)
+    4. Tractogram filtering
+        1. COMMIT 
+        2. Association streamlines extraction
+        3. White mesh based filtering
+        
