@@ -4,7 +4,7 @@ This repository regroups the code used to carry out the design, the magnetic res
 . A pre-print  summarizing this study is also available here: (https://www.biorxiv.org/content/10.1101/2020.05.07.082800v1)
 
 ## Dependencies
-This study was performed relying on :
+This study was performed relying on:
    1. FreeSurfer version 6 (https://surfer.nmr.mgh.harvard.edu)
    2. BrainVISA version 4.6.1 /Anatomist (http://brainvisa.info/web/index.html) 
    3. Mrtrix3 (https://www.mrtrix.org/)
@@ -27,7 +27,8 @@ This repository is structured as follows:
     + ``figures``: scripts to produce main figures of the study
 + ``templates``: BrainVISA process (bvproc) template file that summarize the process used to import the FreeSurfer results into the BrainVISA ecosystem. Can be used and adapted to reproduce this step.
 
- 
+
+
 ##Pipeline 
     
   1. Subjects selection 
