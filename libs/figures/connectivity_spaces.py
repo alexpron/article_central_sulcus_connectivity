@@ -99,7 +99,7 @@ def scatter_plot(points,labels=None, pli_passage=None, path_fig=None, title=None
     x = np.linspace(0,100,1000)
     plt.plot(x,x,color='grey')
     if pli_passage is not None:
-    #trace de la position  du pli_passage
+    #trace de la position  du ppfm
         plt.plot([0, pli_passage[0]], [pli_passage[1], pli_passage[1]], 'b-', linewidth=2, alpha=1)
         plt.plot([pli_passage[0], pli_passage[0]], [0, pli_passage[1]], 'b-', linewidth=2, alpha=1)
         plt.scatter([pli_passage[0]], [pli_passage[1]], marker='+', color='blue', s=150, label="Individual PPFM  (" + str(np.round(pli_passage[0][0],decimals=2)) + ' ; ' + str(np.round(pli_passage[1][0],decimals=2)) + ')' )
@@ -154,7 +154,7 @@ def weighted_scatter_plot(points, pli_passage=None, path_fig=None, title=None,co
     x = np.linspace(0,100,1000)
     plt.plot(x,x,color='grey')
     if pli_passage is not None:
-    #trace de la position  du pli_passage
+    #trace de la position  du ppfm
         plt.plot([0, pli_passage[0]], [pli_passage[1], pli_passage[1]], 'r:', linewidth=2, alpha=1)
         plt.plot([pli_passage[0], pli_passage[0]], [0, pli_passage[1]], 'r:', linewidth=2, alpha=1)
         plt.scatter([pli_passage[0]], [pli_passage[1]], marker='+', color='red', s=150, label="Pli de Passage")
@@ -207,7 +207,7 @@ def density_plot_group(X, Y, density, pli_passage=None, path_fig=None, title=Non
         plt.contourf(X, Y, density, nb_levels, cmap='magma_r')
         plt.colorbar()
     if pli_passage is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage[0]], [pli_passage[1], pli_passage[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage[0], pli_passage[0]], [0, pli_passage[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage[0]], [pli_passage[1]], marker='+', color='b', s=150, label="PPFM position")
@@ -254,14 +254,14 @@ def density_plot_subject(X, Y, density, pli_passage_subject=None, pli_passage_gr
 
     plt.clim(0, 100)
     if pli_passage_subject is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage_subject[0]], [pli_passage_subject[1], pli_passage_subject[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_subject[0], pli_passage_subject[0]], [0, pli_passage_subject[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage_subject[0]], [pli_passage_subject[1]], marker='+', color='blue', s=150,
                     label="Individual PPFM  (" + str(np.round(pli_passage_subject[0],decimals=2)) + ' ; ' + str(np.round(pli_passage_subject[1],decimals=2)) + ')' )
 
     if pli_passage_group is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage_group[0]], [pli_passage_group[1], pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_group[0], pli_passage_group[0]], [0, pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage_group[0]], [pli_passage_group[1]], marker='+', color='blue', s=150, label="Mean PPFM  (" + str(np.round(pli_passage_group[0],decimals=2)) + ' ; ' + str(np.round(pli_passage_group[1],decimals=2)) + ')')
@@ -307,14 +307,14 @@ def density_plot_subject_no_annot(X, Y, density, pli_passage_subject=None, pli_p
 
    #plt.clim(0, 100)
     if pli_passage_subject is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage_subject[0]], [pli_passage_subject[1], pli_passage_subject[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_subject[0], pli_passage_subject[0]], [0, pli_passage_subject[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage_subject[0]], [pli_passage_subject[1]], marker='+', color='blue', s=150,
                     label="Individual PPFM  (" + str(np.round(pli_passage_subject[0], decimals=2)) + ' ; ' + str(np.round(pli_passage_subject[1],decimals=2)) + ')' )
 
     if pli_passage_group is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage_group[0]], [pli_passage_group[1], pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_group[0], pli_passage_group[0]], [0, pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage_group[0]], [pli_passage_group[1]], marker='+', color='blue', s=150, label="Mean PPFM  (" + str(np.round(pli_passage_group[0],decimals=2)) + ' ; ' + str(np.round(pli_passage_group[1],decimals=2)) + ')')
@@ -384,14 +384,14 @@ def density_plot_subject_no_annot_crests(X, Y, density, pli_passage_subject=None
 
 
     if pli_passage_subject is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         #plt.plot([0, pli_passage_subject[0]], [pli_passage_subject[1], pli_passage_subject[1]], 'b--', linewidth=2, alpha=1)
         #plt.plot([pli_passage_subject[0], pli_passage_subject[0]], [0, pli_passage_subject[1]], 'b--', linewidth=2, alpha=1)
         plt.scatter([pli_passage_subject[0]], [pli_passage_subject[1]], marker='o', color='blue', s=150,
                     label="Individual PPFM  (" + str(np.round(pli_passage_subject[0], decimals=2)) + ' ; ' + str(np.round(pli_passage_subject[1],decimals=2)) + ')' )
 
     if pli_passage_group is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
 
         plt.plot([0, pli_passage_group[0]], [pli_passage_group[1], pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_group[0], pli_passage_group[0]], [0, pli_passage_group[1]], 'b', linewidth=2, alpha=1)
@@ -473,7 +473,7 @@ def density_and_clusters_ellipses(X, Y, density,means,covariances, pli_passage =
         #print i, covariances[i]
         plot_ellipse(ax, m,covariances[i],color=colors[i])
     if pli_passage is not None:
-    # trace de la position  du pli_passage
+    # trace de la position  du ppfm
         plt.plot([0, pli_passage[0]], [pli_passage[1], pli_passage[1]], 'b:', linewidth=2, alpha=1)
         plt.plot([pli_passage[0], pli_passage[0]], [0, pli_passage[1]], 'b:', linewidth=2, alpha=1)
         plt.scatter([pli_passage[0]], [pli_passage[1]], marker='+', color='blue', s=150, label="PPFM ")
@@ -528,14 +528,14 @@ def density_plot_subject_with_maxima(X, Y, density, pli_passage_subject=None, pl
 
     #plt.clim(0, 300)
     if pli_passage_subject is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage_subject[0]], [pli_passage_subject[1], pli_passage_subject[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_subject[0], pli_passage_subject[0]], [0, pli_passage_subject[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage_subject[0]], [pli_passage_subject[1]], marker='+', color='blue', s=150,
                     label="PPFM position")
 
     if pli_passage_group is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage_group[0]], [pli_passage_group[1], pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage_group[0], pli_passage_group[0]], [0, pli_passage_group[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage_group[0]], [pli_passage_group[1]], marker='+', color='blue', s=150, label="PPFM position ")
@@ -589,7 +589,7 @@ def density_plot_group_with_maxima(X, Y, density, pli_passage=None, path_fig=Non
 
 
     if pli_passage is not None:
-        # trace de la position  du pli_passage
+        # trace de la position  du ppfm
         plt.plot([0, pli_passage[0]], [pli_passage[1], pli_passage[1]], 'b', linewidth=2, alpha=1)
         plt.plot([pli_passage[0], pli_passage[0]], [0, pli_passage[1]], 'b', linewidth=2, alpha=1)
         plt.scatter([pli_passage[0]], [pli_passage[1]], marker='+', color='b', s=150, label="Mean PPFM  (" + str(np.round(pli_passage[0],decimals=2)) + ' ; ' + str(np.round(pli_passage[1],decimals=2)) + ')')

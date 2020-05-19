@@ -12,7 +12,7 @@ if __name__ == '__main__':
     roi_area = pd.read_csv(os.path.join(DIR_IN,'roi_area.csv'))
     fiedler = pd.read_csv(os.path.join(dir_base_tables,'fiedler_length.csv'),index_col=0)
     geo_depth = pd.read_csv(os.path.join(dir_base_tables,'geo_depth.csv'),index_col=0)
-    pp = pd.read_csv(os.path.join(dir_base_tables,'pli_passage.csv'))
+    pp = pd.read_csv(os.path.join(dir_base_tables,'ppfm.csv'))
     subjects = pd.read_csv(os.path.join(dir_mod_tables,'subjects_level.csv'))
 
     mesh_x_fiedl = pd.merge(mesh_area,fiedler,on=['Subject','Hemisphere'])

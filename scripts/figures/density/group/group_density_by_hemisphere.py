@@ -10,7 +10,7 @@ if __name__ == '__main__':
     names = ['global_mean']
     factor = 5
     density_max = 8000
-    path_pli_passage = os.path.join(DIR_OUT,'pli_passage','pp_gyri.csv')
+    path_pli_passage = os.path.join(DIR_OUT,'ppfm','pp_gyri.csv')
     path_X = os.path.join(DIR_OUT,'connectivity','densities', 'X.npy')
     path_Y = os.path.join(DIR_OUT,'connectivity','densities', 'Y.npy')
     pp = pd.read_csv(path_pli_passage)

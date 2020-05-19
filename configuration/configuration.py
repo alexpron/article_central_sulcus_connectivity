@@ -21,6 +21,7 @@ STATUS = ['drawn', 'cleaned']
 EXTENSIONS = {'array': '.npy', 'mesh': '.mesh', 'texture': '.gii'}  # valid only for lines (fundus or crests)
 TABLES = ['draw_attribution', 'mesh_index', 'cs_coord', 'gyri_index', 'gyri_coord', 'final'] # tables related to PPFM
 TRACTS_EXTREMITIES = ['s', 'e']
+DENSITIES_RADIUS = 5     #variance of the gaussian kernel used to provide continuous information
 
 # --------------------------------- BrainVISA instance and associated python used in this study -----------------------#
 
@@ -165,7 +166,26 @@ U_FIBERS_MASK = {(subject, side): os.path.join(DATA, 'u-fibers', subject + '_' +
 U_FIBERS_INDEXES = os.path.join(DATA, 'connectivity_space','U_fibers_indexes_on_gyri.npy')
 HEMI_INDEXES = os.path.join(DATA, 'connectivity_space','hemispheres_indexes.npy')
 
+U_FIBERS_COORD = {p: os.path.join(DATA,'connectivity_space', 'U_fibers_coord_on_gyri' + '_' + p + '_param.npy') for p in PARAMETRISATIONS}
+X_GRID = os.path.join(DATA, 'connectivity_space', 'profiles', 'X.npy')
+Y_GRID = os.path.join(DATA, 'connectivity_space', 'profiles', 'Y.npy')
+U_FIBERS_GROUP_PROFILES = {(side, p): os.path.join(DATA, 'connectivity_space', 'profiles', 'group', side + '_' + p + '_' + 'param' + '_' + 'profile.npy') for side in SIDES.keys() for p in PARAMETRISATIONS}
+U_FIBERS_INDIV_PROFILES = {(subject, side, p): os.path.join(DATA, 'connectivity_space','profiles', 'individuals', subject + '_' + side + '_' + p + '_' + 'param' + '_' + 'profile.npy') for subject in SUBJ_LIST for side in SIDES.keys() for p in PARAMETRISATIONS}
 
+# Parameters obtained and fixed for DBSCAN clustering of group profiles
+EPS = 3
+ABS = 12000
+NORM_THRESHOLD = ABS/249897.0
+
+DBSCAN_LABELS = os.path.join(DATA, 'connectivity_space','clustering', 'dbscan_labels.npy')
+
+# parameters used for Gaussian Mixture Model
+N = 3
+N_INIT = 1000
+MAX_ITER = 5000
+INIT_METHOD = 'kmeans'
+
+CLUSTERING_LABELS = {side: os.path.join(DATA, 'connectivity_space', 'clustering', 'labels.npy')}
 
 ICV_DF = os.path.join(DIR_STATS, 'init_tables', 'ICV.csv')
 FIEDLER_DF = os.path.join(DIR_STATS, 'init_tables', 'Fiedler_length.csv')

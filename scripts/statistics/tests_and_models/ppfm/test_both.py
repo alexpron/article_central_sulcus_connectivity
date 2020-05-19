@@ -7,7 +7,7 @@ from scipy.stats import shapiro, mannwhitneyu, levene, ttest_1samp,ttest_ind,tte
 
 if __name__ == '__main__':
 
-    df = pd.read_csv(os.path.join(DIR_OUT,'pli_passage','tables','pp_manual_drawing_coord_sulcus.csv'))
+    df = pd.read_csv(os.path.join(DIR_OUT,'ppfm','tables','pp_manual_drawing_coord_sulcus.csv'))
     df = df[['Subject','Hemisphere','PP_CS_Coord_Iso','Drawer']]
     df = df.dropna()
     #Test normality of the different distributions
