@@ -5,7 +5,7 @@ were selected this script is useless and is  just kept for the sake of clarity a
 was done in the study.
 """
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import pandas as pd
     from libs.subjects_selection import select_identical_subjects
     from configuration.configuration import BAD_SUBJECTS, POTENTIALS

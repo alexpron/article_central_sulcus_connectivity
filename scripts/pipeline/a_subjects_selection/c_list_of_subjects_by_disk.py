@@ -21,7 +21,7 @@ def main(path_metadata, path_base):
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from configuration.configuration import DIR_SUBJECTS, SELECTED
 
     main(SELECTED, DIR_SUBJECTS)

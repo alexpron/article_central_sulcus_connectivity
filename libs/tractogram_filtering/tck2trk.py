@@ -8,9 +8,16 @@ from nibabel.orientations import aff2axcodes
 def build_argparser():
     DESCRIPTION = "Convert tractograms (TCK -> TRK)."
     p = argparse.ArgumentParser(description=DESCRIPTION)
-    p.add_argument('anatomy', help='reference anatomy (.nii|.nii.gz.')
-    p.add_argument('tractograms', metavar='tractogram', nargs="+", help='list of tractograms (.tck).')
-    p.add_argument('-f', '--force', action="store_true", help='overwrite existing output files.')
+    p.add_argument("anatomy", help="reference anatomy (.nii|.nii.gz.")
+    p.add_argument(
+        "tractograms",
+        metavar="tractogram",
+        nargs="+",
+        help="list of tractograms (.tck).",
+    )
+    p.add_argument(
+        "-f", "--force", action="store_true", help="overwrite existing output files."
+    )
     return p
 
 
@@ -28,9 +35,13 @@ def main():
             print("Skipping non TCK file: '{}'".format(tractogram))
             continue
 
-        output_filename = tractogram[:-4] + '.trk'
+        output_filename = tractogram[:-4] + ".trk"
         if os.path.isfile(output_filename) and not args.force:
-            print("Skipping existing file: '{}'. Use -f to overwrite.".format(output_filename))
+            print(
+                "Skipping existing file: '{}'. Use -f to overwrite.".format(
+                    output_filename
+                )
+            )
             continue
 
         header = {}
@@ -43,5 +54,5 @@ def main():
         nib.streamlines.save(tck.tractogram, output_filename, header=header)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -12,16 +12,26 @@ def adaptative_distance(gyral_line, sulcal_line, mesh):
     return geo_dist
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    from configuration.configuration import SUBJ_LIST, SIDES, MESHES, ADJACENT_GYRI, SULCUS, GYRAL_CRESTS, SULCUS_FUNDI, \
-        ROI_DISTANCES
+    from configuration.configuration import (
+        SUBJ_LIST,
+        SIDES,
+        MESHES,
+        ADJACENT_GYRI,
+        SULCUS,
+        GYRAL_CRESTS,
+        SULCUS_FUNDI,
+        ROI_DISTANCES,
+    )
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
-            mesh = aims.read(MESHES[(subject, side, 'white')])
-            sulcus_fundus = np.load(SULCUS_FUNDI[(subject, side, 'cleaned', 'array')])
+            mesh = aims.read(MESHES[(subject, side, "white")])
+            sulcus_fundus = np.load(SULCUS_FUNDI[(subject, side, "cleaned", "array")])
             for k, gyrus in enumerate(ADJACENT_GYRI[SULCUS]):
-                gyral_crest = np.load(GYRAL_CRESTS[(subject, side, gyrus, 'cleaned', 'array')])
+                gyral_crest = np.load(
+                    GYRAL_CRESTS[(subject, side, gyrus, "cleaned", "array")]
+                )
                 distance = adaptative_distance(gyral_crest, sulcus_fundus, mesh)
                 np.save(ROI_DISTANCES[(subject, side, gyrus)], distance)

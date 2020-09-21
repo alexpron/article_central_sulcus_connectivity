@@ -1,10 +1,14 @@
 import numpy as np
 from soma import aims
-from libs.tools.aims.meshes.processing import build_2D_line, vertices_and_faces_to_mesh, mesh_2D_Merge
+from libs.tools.aims.meshes.processing import (
+    build_2D_line,
+    vertices_and_faces_to_mesh,
+    mesh_2D_Merge,
+)
 from libs.tools.aims.meshes.streamlines.processing import compute_frenet_serret
 
 
-def set_local_orientation(mesh, local_orientation, norm='default'):
+def set_local_orientation(mesh, local_orientation, norm="default"):
     """Add local information orientation at vertex level (or streamline level)
     to be used in Anatomist for coloring the streamlines.
     :param mesh : AimsTimeSurface containing n vertices
@@ -20,7 +24,7 @@ def set_local_orientation(mesh, local_orientation, norm='default'):
     pass
 
 
-def bundle_to_mesh(bundle, coloring='global'):
+def bundle_to_mesh(bundle, coloring="global"):
     """
     :param bundle: set of streamlines
     :return: mesh
@@ -36,7 +40,7 @@ def bundle_to_mesh(bundle, coloring='global'):
             else:
                 mesh_2D_Merge(mesh, streamline)
         if coloring is not None:
-            if coloring == 'global':
+            if coloring == "global":
                 T, N, B, k, t = compute_frenet_serret(bundle, local=False)
                 del N, B, k, t
             else:

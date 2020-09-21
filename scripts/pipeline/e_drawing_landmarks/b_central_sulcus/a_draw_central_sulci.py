@@ -3,9 +3,16 @@ import os
 import numpy as np
 from soma import aims
 from libs.tools.aims.textures import index_to_texture
-from configuration.configuration import EXTREMITIES, MESHES, DPFS, SUBJ_LIST, SIDES, SULCUS_FUNDI
+from configuration.configuration import (
+    EXTREMITIES,
+    MESHES,
+    DPFS,
+    SUBJ_LIST,
+    SIDES,
+    SULCUS_FUNDI,
+)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in SIDES:
@@ -13,9 +20,9 @@ if __name__ == '__main__':
             if os.path.exists(path_extremities):
                 path_mesh = MESHES[subject, side]
                 path_dpf = DPFS[subject, side]
-                path_fundus_tex = SULCUS_FUNDI[(subject, side, 'drawn', 'texture')]
+                path_fundus_tex = SULCUS_FUNDI[(subject, side, "drawn", "texture")]
                 # sulcus fundus as mesh index list
-                path_fundus_index = SULCUS_FUNDI[subject, side, 'drawn', 'array']
+                path_fundus_index = SULCUS_FUNDI[subject, side, "drawn", "array"]
 
                 # Get the two extremal points of the sulcus fundus line index
                 ext_tex = aims.read(path_extremities)
@@ -33,4 +40,9 @@ if __name__ == '__main__':
                 aims.write(sulcus_tex, path_fundus_tex)
 
             else:
-                print("Extremities texture does not exists for subject  ", subject, side, ' Hemisphere')
+                print(
+                    "Extremities texture does not exists for subject  ",
+                    subject,
+                    side,
+                    " Hemisphere",
+                )

@@ -7,7 +7,7 @@ import sys
 
 
 def streamlines_nearest_vertex(points, vertices, size_chunk=10000):
-    '''
+    """
     Small hack to avoid memory error even on the cluster. This function acts as a compromise
     between performance and memory consumption. Since (N1,N) distance array can generally not be created on cluster
     this function split it into several parts (in the fibers domain)
@@ -15,7 +15,7 @@ def streamlines_nearest_vertex(points, vertices, size_chunk=10000):
     :param vertices:  (N1,3) array
     :param size_chunk: size of the sub array to be considered
     :return:nearest_vertices (N,3) array containing the index of the nearest vertices for the euclidian distance
-    '''
+    """
     nb_points = len(points)
     nb_chunk = int(nb_points) / int(size_chunk) + 1
     nearest_vertices = np.zeros(nb_points, dtype=np.int)
@@ -36,7 +36,7 @@ def main(path_points, path_mesh, path_index):
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = sys.argv
     path_points = args[1]
     path_vertices = args[2]

@@ -27,17 +27,38 @@ def tshuprowsT(nrows, ncols, chisquared, correct_bias=True):
     return T
 
 
-if __name__ == '__main__':
-    df = pd.read_csv(os.path.join(DIR_OUT, 'derived_tables', 'nb_streamlines_hemi_level.csv'))
-    groups = ['Male', 'Female']
-    quantitative_variables = ['Dexterity_AgeAdj', 'Strength_AgeAdj', 'Fiedler_Length', 'ICV', 'Mesh_Area',
-                              'Max_Geo_Depth',
-                              'PP_CS_Coord_Iso', 'PP_CS_Depth', 'Nb_Streamlines_Hemi']
-    qualitative_variables = ['Gender', 'AgeQ', 'HandednessQ', 'PMAT24_A_CR_Q']
+if __name__ == "__main__":
+    df = pd.read_csv(
+        os.path.join(DIR_OUT, "derived_tables", "nb_streamlines_hemi_level.csv")
+    )
+    groups = ["Male", "Female"]
+    quantitative_variables = [
+        "Dexterity_AgeAdj",
+        "Strength_AgeAdj",
+        "Fiedler_Length",
+        "ICV",
+        "Mesh_Area",
+        "Max_Geo_Depth",
+        "PP_CS_Coord_Iso",
+        "PP_CS_Depth",
+        "Nb_Streamlines_Hemi",
+    ]
+    qualitative_variables = ["Gender", "AgeQ", "HandednessQ", "PMAT24_A_CR_Q"]
 
     quantitative = df[quantitative_variables]
     corr_matrix = np.corrcoef(quantitative, rowvar=False)
     mask = np.zeros_like(corr_matrix)
     mask[np.triu_indices_from(mask)] = True
-    sns.heatmap(corr_matrix, mask=mask, annot=True, center=0, square=True, linewidths=0.5, vmin=-1, vmax=1,
-                cmap='Spectral_r', xticklabels=quantitative_variables, yticklabels=quantitative_variables)
+    sns.heatmap(
+        corr_matrix,
+        mask=mask,
+        annot=True,
+        center=0,
+        square=True,
+        linewidths=0.5,
+        vmin=-1,
+        vmax=1,
+        cmap="Spectral_r",
+        xticklabels=quantitative_variables,
+        yticklabels=quantitative_variables,
+    )

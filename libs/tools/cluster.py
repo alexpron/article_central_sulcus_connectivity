@@ -19,8 +19,21 @@ def launch_cmd(cmd, core, exec_dir, stdout_file, stderr_file, cmd_file):
     :return: None
     """
     subprocess.run(
-        'frioul_batch' + ' -d ' + exec_dir + ' -E ' + stderr_file + '  -O ' + stdout_file + ' -C ' + cmd_file + ' -c ' + str(
-            core) + ' "' + cmd + '"')
+        "frioul_batch"
+        + " -d "
+        + exec_dir
+        + " -E "
+        + stderr_file
+        + "  -O "
+        + stdout_file
+        + " -C "
+        + cmd_file
+        + " -c "
+        + str(core)
+        + ' "'
+        + cmd
+        + '"'
+    )
     pass
 
 
@@ -37,8 +50,8 @@ def launch_subject_cmd(cmd, subject, dir_cluster, core=1):
     # creating appropriate files for cluster outputs
     if not os.path.exists(dir_cluster):
         os.makedirs(dir_cluster)
-    stderr = os.path.join(dir_cluster, subject + '.stderr')
-    stdout = os.path.join(dir_cluster, subject + '.stdout')
-    cmd_file = os.path.join(dir_cluster, subject + '.cmd')
+    stderr = os.path.join(dir_cluster, subject + ".stderr")
+    stdout = os.path.join(dir_cluster, subject + ".stdout")
+    cmd_file = os.path.join(dir_cluster, subject + ".cmd")
     launch_cmd(cmd, core, dir_cluster, stdout, stderr, cmd_file)
     pass

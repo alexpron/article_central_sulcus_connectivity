@@ -3,7 +3,7 @@ from scipy.spatial.distance import cdist
 
 
 def streamlines_nearest_vertex(points, vertices, size_chunk=10000):
-    '''
+    """
     Small hack to avoid memory error even on the cluster. This function acts as a compromise
     between performance and memory consumption. Since (N1,N) distance array can generally not be created on cluster
     this function split it into several parts (in the streamlines domain)
@@ -11,7 +11,7 @@ def streamlines_nearest_vertex(points, vertices, size_chunk=10000):
     :param vertices:  (N1,3) array
     :param size_chunk: size of the sub array to be considered
     :return:nearest_vertices (N,3) array containing the index of the nearest vertices for the euclidian distance
-    '''
+    """
     nb_points = len(points)
     nb_chunk = int(nb_points) / int(size_chunk) + 1
     nearest_vertices = np.zeros(nb_points, dtype=np.int)
@@ -25,11 +25,11 @@ def streamlines_nearest_vertex(points, vertices, size_chunk=10000):
 
 
 def fibers_index_by_vertex(nearest_vertex_index, nb_vertices):
-    '''
+    """
     :param nearest_vertex_index:
     :param nb_vertices:
     :return:
-    '''
+    """
     hist, edges = np.histogram(nearest_vertex_index, bins=np.arange(nb_vertices + 1))
     del edges
     index = []
@@ -60,16 +60,23 @@ def full_fibers_index_by_vertex(s_vertex_index, e_vertex_index, nb_vertices):
             if hist_e[i] == 0:
                 a = np.where(s_vertex_index == i)[0]
             else:
-                a = np.unique(np.concatenate((np.where(s_vertex_index == i)[0], np.where(e_vertex_index == i)[0])))
+                a = np.unique(
+                    np.concatenate(
+                        (
+                            np.where(s_vertex_index == i)[0],
+                            np.where(e_vertex_index == i)[0],
+                        )
+                    )
+                )
         index.append(a)
     final_index = np.array(index, dtype=object)
     return final_index
 
 
 def compute_vertex_density(s_vertex, e_vertex, nb_vertices):
-    '''This function compute at each vertex a so called vertex
+    """This function compute at each vertex a so called vertex
     connectivity_profiles i.e the number of the streamlines at the node divided by
-    the total number of streamlines. This is not a surfacic connectivity_profiles'''
+    the total number of streamlines. This is not a surfacic connectivity_profiles"""
     nb_fibers = s_vertex.shape[0]
     index_vertices = np.arange(nb_vertices + 1).astype(int)
     density = np.zeros(nb_vertices)

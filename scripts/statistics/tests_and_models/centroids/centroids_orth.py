@@ -9,17 +9,17 @@ from scipy.stats import levene, shapiro, ttest_rel, ttest_ind, ttest_1samp
 from statsmodels.stats.anova import anova_lm
 from variables import DIR_OUT
 
-if __name__ == '__main__':
-    path_df1 = os.path.join(DIR_OUT, 'derived_tables', 'centroids_iso.csv')
+if __name__ == "__main__":
+    path_df1 = os.path.join(DIR_OUT, "derived_tables", "centroids_iso.csv")
     df1 = pd.read_csv(path_df1)
-    path_df2 = os.path.join(DIR_OUT, 'inter_tables', 'hemispheres_level.csv')
+    path_df2 = os.path.join(DIR_OUT, "inter_tables", "hemispheres_level.csv")
     df2 = pd.read_csv(path_df2)
 
-    df = pd.merge(df1, df2, on=['Subject', 'Hemisphere'])
+    df = pd.merge(df1, df2, on=["Subject", "Hemisphere"])
     print
     df.columns
 
-    model = smf.ols('Centroid_Orth_Coord_Iso ~ C(Hemisphere)', data=df).fit()
+    model = smf.ols("Centroid_Orth_Coord_Iso ~ C(Hemisphere)", data=df).fit()
     summary = model.summary()
     anova = anova_lm(model)
 

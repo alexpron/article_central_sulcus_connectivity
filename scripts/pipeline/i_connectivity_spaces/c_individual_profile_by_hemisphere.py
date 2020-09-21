@@ -2,10 +2,19 @@ import os
 import numpy as np
 from libs.connectivity_space import estimate_pseudo_density
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    from configuration.configuration import SUBJ_LIST, SIDES, PARAMETRISATIONS, HEMI_INDEXES, U_FIBERS_COORD, \
-        DENSITIES_RADIUS, U_FIBERS_INDIV_PROFILES, X_GRID, Y_GRID
+    from configuration.configuration import (
+        SUBJ_LIST,
+        SIDES,
+        PARAMETRISATIONS,
+        HEMI_INDEXES,
+        U_FIBERS_COORD,
+        DENSITIES_RADIUS,
+        U_FIBERS_INDIV_PROFILES,
+        X_GRID,
+        Y_GRID,
+    )
 
     hemispheres_index = np.load(HEMI_INDEXES)
 

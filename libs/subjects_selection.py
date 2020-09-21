@@ -19,14 +19,14 @@ def create_diskindex():
     :return: Information about first and last subject on a given HCP hard drive
     :rtype: List of dictionnaries
     """
-    d1 = {'disk': 1, 'min_index': 100206, 'max_index': 128026}
-    d2 = {'disk': 2, 'min_index': 128127, 'max_index': 154229}
-    d3 = {'disk': 3, 'min_index': 154431, 'max_index': 178950}
-    d4 = {'disk': 4, 'min_index': 179245, 'max_index': 209329}
-    d5 = {'disk': 5, 'min_index': 209834, 'max_index': 371843}
-    d6 = {'disk': 6, 'min_index': 377451, 'max_index': 587664}
-    d7 = {'disk': 7, 'min_index': 588565, 'max_index': 783462}
-    d8 = {'disk': 8, 'min_index': 784565, 'max_index': 996782}
+    d1 = {"disk": 1, "min_index": 100206, "max_index": 128026}
+    d2 = {"disk": 2, "min_index": 128127, "max_index": 154229}
+    d3 = {"disk": 3, "min_index": 154431, "max_index": 178950}
+    d4 = {"disk": 4, "min_index": 179245, "max_index": 209329}
+    d5 = {"disk": 5, "min_index": 209834, "max_index": 371843}
+    d6 = {"disk": 6, "min_index": 377451, "max_index": 587664}
+    d7 = {"disk": 7, "min_index": 588565, "max_index": 783462}
+    d8 = {"disk": 8, "min_index": 784565, "max_index": 996782}
     disks = [d1, d2, d3, d4, d5, d6, d7, d8]
     return disks
 
@@ -43,13 +43,16 @@ def add_drive_index(metadata):
     e = np.zeros(metadata.shape[0], dtype=np.int)
     # Creating the correspondance
     for d in disks:
-        e[(metadata['Subject'] >= d['min_index']) & (metadata['Subject'] <= d['max_index'])] = d['disk']
+        e[
+            (metadata["Subject"] >= d["min_index"])
+            & (metadata["Subject"] <= d["max_index"])
+        ] = d["disk"]
     # add the Hard_Drive column to the metadata dataset
-    metadata['Hard_Drive'] = e
+    metadata["Hard_Drive"] = e
     return metadata
 
 
-def merge_metadata(path_data1, path_data2, merge_var='Subject'):
+def merge_metadata(path_data1, path_data2, merge_var="Subject"):
     """
     Merge two HCP metadata dataframes into one dataframe. Merge is don by default on subject ID key
 
@@ -64,7 +67,7 @@ def merge_metadata(path_data1, path_data2, merge_var='Subject'):
     return full_data
 
 
-def exclude_subjects_with_QC_issues(metadata, exclude_tags=('A', 'B', 'C', 'D', 'E')):
+def exclude_subjects_with_QC_issues(metadata, exclude_tags=("A", "B", "C", "D", "E")):
     """
     QC was performed on structural data essentially here is a sump up of the codes
     A : anatomical issues revealed on structural scans (T1 and T2)
@@ -82,8 +85,8 @@ def exclude_subjects_with_QC_issues(metadata, exclude_tags=('A', 'B', 'C', 'D', 
     :return:
     """
 
-    subjects = np.array(metadata['Subject'])
-    qc_issue = np.array(metadata['QC_Issue'])
+    subjects = np.array(metadata["Subject"])
+    qc_issue = np.array(metadata["QC_Issue"])
     # print qc_issue.dtype
     # by default all subjects are included
     valid_subjects = np.zeros(len(subjects), dtype=bool)
@@ -92,8 +95,8 @@ def exclude_subjects_with_QC_issues(metadata, exclude_tags=('A', 'B', 'C', 'D', 
             # for t in exclude_tags:
             # if t in qc_tag:
             valid_subjects[i] = True
-    metadata['OK_Subjects'] = valid_subjects
-    valid_subjects = metadata.loc[metadata['OK_Subjects'] == True, :]
+    metadata["OK_Subjects"] = valid_subjects
+    valid_subjects = metadata.loc[metadata["OK_Subjects"] == True, :]
     return valid_subjects
 
 
@@ -111,12 +114,17 @@ def extract_valid_subjects(metadata):
 
     # selection is done in several steps for readability
     # subjects must have completed all the structural and diffusion session
-    acquisition_cond = metadata.loc[((metadata['3T_Full_MR_Compl'] == True) & (metadata['3T_dMRI_Compl'] == True)), :]
+    acquisition_cond = metadata.loc[
+        ((metadata["3T_Full_MR_Compl"] == True) & (metadata["3T_dMRI_Compl"] == True)),
+        :,
+    ]
     # no twins (SR stands for Self Reported)
-    twin_cond = acquisition_cond.loc[(acquisition_cond['ZygositySR'] == "NotTwin")]
+    twin_cond = acquisition_cond.loc[(acquisition_cond["ZygositySR"] == "NotTwin")]
     # strong right-handedness condition so that subject are more homogeneous
-    handed_cond = twin_cond.loc[(twin_cond['Handedness'] >= 50), :]
-    age_cond = handed_cond.loc[((handed_cond['Age_in_Yrs'] >= 20) & (handed_cond['Age_in_Yrs'] <= 40)), :]
+    handed_cond = twin_cond.loc[(twin_cond["Handedness"] >= 50), :]
+    age_cond = handed_cond.loc[
+        ((handed_cond["Age_in_Yrs"] >= 20) & (handed_cond["Age_in_Yrs"] <= 40)), :
+    ]
     return age_cond
 
 
@@ -154,11 +162,13 @@ def subjects_by_disk(metadata, path_base):
     :param metadata: dataframe contaiing the selected subjects and their associated hard drive
     :return:
     """
-    meta = metadata[['Subject', 'Hard_Drive']]
-    subjects_by_disk = meta.groupby('Hard_Drive')
+    meta = metadata[["Subject", "Hard_Drive"]]
+    subjects_by_disk = meta.groupby("Hard_Drive")
     for s in subjects_by_disk:
-        subjects = np.array([s[1]]['Subject'])
-        np.savetxt(os.path.join(path_base, 'disk_' + str(s[0]) + '.txt'), subjects, fmt='%i')
+        subjects = np.array([s[1]]["Subject"])
+        np.savetxt(
+            os.path.join(path_base, "disk_" + str(s[0]) + ".txt"), subjects, fmt="%i"
+        )
     pass
 
 
@@ -180,20 +190,20 @@ def sample_subjects(metadata, nb_subjects=50, alpha=0.01):
     :param metadata: dataframe containing the potential subjects of interest and the whole metadata
     :return: selected subjects HCP ids
     """
-    male = metadata.loc(metadata['Gender'] == 'M')
-    female = metadata.loc(metadata['Gender'] == 'F')
+    male = metadata.loc(metadata["Gender"] == "M")
+    female = metadata.loc(metadata["Gender"] == "F")
     p = 0.0
     while p < alpha:
         s_female = female.sample(nb_subjects)
         s_male = male.sample(nb_subjects)
 
-        dist_male = np.array(s_male['Age_in_Yrs'])
-        dist_female = np.array(s_female['Age_in_Yrs'])
+        dist_male = np.array(s_male["Age_in_Yrs"])
+        dist_female = np.array(s_female["Age_in_Yrs"])
         # testing statistically that the two distributions are identical
         t, p = stat.wilcoxon(dist_male, dist_female)
 
-    index_f = np.array(s_female['Subjects'])
-    index_m = np.array(s_male['Subjects'])
+    index_f = np.array(s_female["Subjects"])
+    index_m = np.array(s_male["Subjects"])
     index = np.concatenate((index_m, index_f))
     selected_subjects = np.sort(index)
 
@@ -208,13 +218,13 @@ def add_selection_index(metadata, subjects_selected):
     :return:
     """
     selected = np.zeros(metadata.shape[0], dtype=bool)
-    metadata['Selected'] = selected
-    metadata['Selected'][metadata.Subject.isin(subjects_selected.tolist())] = True
+    metadata["Selected"] = selected
+    metadata["Selected"][metadata.Subject.isin(subjects_selected.tolist())] = True
     return metadata
 
 
 def export_sampled_subjects(metadata):
-    sampled_subjects = metadata.loc[metadata['Selected' == True], :]
+    sampled_subjects = metadata.loc[metadata["Selected" == True], :]
     return sampled_subjects
 
 
@@ -227,17 +237,19 @@ def select_identical_subjects(d1, d2):
     :param d2:
     :return:
     """
-    s1 = np.array(d1['Subject'])
-    a1 = np.array(d1['Age_in_Yrs'])
-    g1 = np.array(d1['Gender'])
-    h1 = np.array(d1['Handedness'])
+    s1 = np.array(d1["Subject"])
+    a1 = np.array(d1["Age_in_Yrs"])
+    g1 = np.array(d1["Gender"])
+    h1 = np.array(d1["Handedness"])
 
-    s2 = np.array(d2['Subject'])
-    a2 = np.array(d2['Age_in_Yrs'])
-    g2 = np.array(d2['Gender'])
-    h2 = np.array(d2['Handedness'])
+    s2 = np.array(d2["Subject"])
+    a2 = np.array(d2["Age_in_Yrs"])
+    g2 = np.array(d2["Gender"])
+    h2 = np.array(d2["Handedness"])
 
-    new_subjects = [s2[(a2 == a1[i]) * (g2 == g1[i]) * h2 == h1[i]] for i in range(len(s1))]
+    new_subjects = [
+        s2[(a2 == a1[i]) * (g2 == g1[i]) * h2 == h1[i]] for i in range(len(s1))
+    ]
     new_subjects_approx = [s2[(a2 == a1[i]) * (g2 == g1[i])] for i in range(len(s1))]
     # First step exact remplacement
     new_subjects_final = np.zeros(len(new_subjects)).tolist()
@@ -259,7 +271,9 @@ def select_identical_subjects(d1, d2):
         if not subject:
             hand_score = np.array([h2[s2 == s] for s in new_subjects_approx[i]]).ravel()
             diff = np.abs(hand_score - h1[i])
-            min_subject = np.array(new_subjects_approx[i], dtype=int)[np.argsort(diff)].tolist()
+            min_subject = np.array(new_subjects_approx[i], dtype=int)[
+                np.argsort(diff)
+            ].tolist()
             for j in range(len(min_subject)):
                 if min_subject[j] not in new_subjects_final2:
                     new_subjects_final2[i] = min_subject[j]

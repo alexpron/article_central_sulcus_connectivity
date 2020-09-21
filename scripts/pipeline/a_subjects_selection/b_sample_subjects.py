@@ -4,7 +4,11 @@ WARNING : this script should only be launched once !
 """
 
 import pandas as pd
-from libs.subjects_selection import sample_subjects, add_selection_index, export_sampled_subjects
+from libs.subjects_selection import (
+    sample_subjects,
+    add_selection_index,
+    export_sampled_subjects,
+)
 
 
 def main(path_potential_subjects, path_selected_subjects):
@@ -21,7 +25,7 @@ def main(path_potential_subjects, path_selected_subjects):
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from configuration.configuration import POTENTIALS, SELECTED
 
     main(POTENTIALS, SELECTED)

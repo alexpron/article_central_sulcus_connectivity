@@ -3,12 +3,12 @@ import pandas as pd
 from variables import DIR_OUT
 import numpy as np
 
-if __name__ == '__main__':
-    path_df1 = os.path.join(DIR_OUT, 'derived_tables', 'centroids_iso.csv')
+if __name__ == "__main__":
+    path_df1 = os.path.join(DIR_OUT, "derived_tables", "centroids_iso.csv")
     df1 = pd.read_csv(path_df1)
     print
     df1
-    path_df2 = os.path.join(DIR_OUT, 'inter_tables', 'hemispheres_level.csv')
+    path_df2 = os.path.join(DIR_OUT, "inter_tables", "hemispheres_level.csv")
     df2 = pd.read_csv(path_df2)
     print
     df2

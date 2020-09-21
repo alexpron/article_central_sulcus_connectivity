@@ -5,6 +5,7 @@ from scipy.stats import chi2_contingency
 
 # Functions for calculating the degree of association between nominal variables
 
+
 def cramersV(nrows, ncols, chisquared, correct_bias=False):
     nobs = nrows * ncols
     if correct_bias is True:

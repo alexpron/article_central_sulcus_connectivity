@@ -5,10 +5,19 @@ First step of the subject selection process used for this study :
    + select all subjects respecting inclusion criteria decided
 """
 
-if __name__ == '__main__':
-    from libs.subjects_selection import complete_data, exclude_subjects_with_QC_issues, \
-        extract_valid_subjects
-    from configuration.configuration import RESTRICTED, UNRESTRICTED, FULL, CLEAN, POTENTIALS
+if __name__ == "__main__":
+    from libs.subjects_selection import (
+        complete_data,
+        exclude_subjects_with_QC_issues,
+        extract_valid_subjects,
+    )
+    from configuration.configuration import (
+        RESTRICTED,
+        UNRESTRICTED,
+        FULL,
+        CLEAN,
+        POTENTIALS,
+    )
 
     full_data = complete_data(RESTRICTED, UNRESTRICTED)
     full_data.to_csv(FULL)

@@ -10,7 +10,7 @@ def get_aims_to_RAS_transfo(path_volume, path_transformation):
     :return:
     """
     vol = aims.read(path_volume)
-    aims_to_RAS = aims.AffineTransformation3d(vol.header()['transformations'][0])
+    aims_to_RAS = aims.AffineTransformation3d(vol.header()["transformations"][0])
     RAS_to_aims = aims_to_RAS.inverse()
     aff = np.array(aims_to_RAS.toMatrix())
     affine = np.array(RAS_to_aims.toMatrix())

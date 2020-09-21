@@ -1,12 +1,20 @@
 import numpy as np
 from sklearn.mixture.gaussian_mixture import GaussianMixture
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    from configuration.configuration import SIDES, U_FIBERS_COORD, HEMI_INDEXES, DBSCAN_LABELS, N, N_INIT, INIT_METHOD, \
-        CLUSTERING_LABELS
+    from configuration.configuration import (
+        SIDES,
+        U_FIBERS_COORD,
+        HEMI_INDEXES,
+        DBSCAN_LABELS,
+        N,
+        N_INIT,
+        INIT_METHOD,
+        CLUSTERING_LABELS,
+    )
 
-    data = np.load(U_FIBERS_COORD['global_mean'])
+    data = np.load(U_FIBERS_COORD["global_mean"])
     hemispheres_index = np.load(HEMI_INDEXES)
     side_index = np.mod(hemispheres_index, 2)
     labels = np.load(DBSCAN_LABELS)

@@ -18,7 +18,7 @@ def get_extremities_points(streamlines, n=1):
     return s_points, e_points
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = sys.argv
     path_tracts = args[1]
     path_affine = args[2]

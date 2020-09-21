@@ -1,11 +1,16 @@
 import numpy as np
 from libs.clustering import dbscan_density_clustering
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    from configuration.configuration import SIDES, U_FIBERS_COORD, HEMI_INDEXES, DBSCAN_LABELS
+    from configuration.configuration import (
+        SIDES,
+        U_FIBERS_COORD,
+        HEMI_INDEXES,
+        DBSCAN_LABELS,
+    )
 
-    data = np.load(U_FIBERS_COORD['global_mean'])
+    data = np.load(U_FIBERS_COORD["global_mean"])
     hemisphere_index = np.load(HEMI_INDEXES)
     side_index = np.mod(hemisphere_index, 2)
     global_labels = np.zeros_like(hemisphere_index)

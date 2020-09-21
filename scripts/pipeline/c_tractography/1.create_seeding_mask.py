@@ -1,7 +1,7 @@
 import numpy as np
 from soma import aims
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from configuration.configuration import SUBJ_LIST, TTVIS, SEED_MASK
 
     for i, subject in enumerate(SUBJ_LIST):

@@ -16,8 +16,15 @@ def reencode_index(streamlines_mesh_index, gyrus_index):
     return streamlines_gyri_index
 
 
-def get_streamline_coord_on_gyri(s_vertex, e_vertex, precentral_vertex, postcentral_vertex,
-                                 distance_precentral, distance_postcentral, mesh):
+def get_streamline_coord_on_gyri(
+    s_vertex,
+    e_vertex,
+    precentral_vertex,
+    postcentral_vertex,
+    distance_precentral,
+    distance_postcentral,
+    mesh,
+):
     # instanciating Geodesic PAth class
     g = aims.GeodesicPath(mesh, 0, 0)
     # use precomputed distance maps
@@ -69,13 +76,15 @@ def get_streamline_coord_on_gyri(s_vertex, e_vertex, precentral_vertex, postcent
 
     # rencode the index so that it correspond to the index among the gyral line not the whole wm mesh
     precentral_index = reencode_index(precentral_mesh_index, precentral_vertex.tolist())
-    postcentral_index = reencode_index(postcentral_mesh_index, postcentral_vertex.tolist())
+    postcentral_index = reencode_index(
+        postcentral_mesh_index, postcentral_vertex.tolist()
+    )
 
     return precentral_index, postcentral_index
 
 
 def unnormalized_kernel(points, factor=10):
-    '''
+    """
     Modify the behavior of the gaussian_kde object to
     enforce a fixed size kernel (spherical gaussian)
     This kernel is not normalized for the number of points
@@ -84,7 +93,7 @@ def unnormalized_kernel(points, factor=10):
     estimated using this kernel can be compared between each other
     :param points: (N,D) ndarray, N the number of points and D the dimension of the space
     :return: A kernel object
-    '''
+    """
     kernel = gaussian_kde(points.T, bw_method=1)
     # random spherical gaussian no prior
     kernel._data_covariance = factor * np.eye(points.T.shape[0])
@@ -98,12 +107,12 @@ def unnormalized_kernel(points, factor=10):
 
 
 def estimate_pseudo_density(points, grid_size=101, factor=10):
-    '''
+    """
     Estimate the (unormalized connectivity_profiles with fixed kernel size)
     :param points:
     :param grid_size:
     :return:
-    '''
+    """
     kernel = unnormalized_kernel(points, factor)
     # creation of a grid to display the function
     x = y = np.linspace(0, 100, num=grid_size)
@@ -113,7 +122,9 @@ def estimate_pseudo_density(points, grid_size=101, factor=10):
     return X, Y, Z
 
 
-def compute_pseudo_density(path_points, path_density, grid_size=101, factor=10, path_X=None, path_Y=None):
+def compute_pseudo_density(
+    path_points, path_density, grid_size=101, factor=10, path_X=None, path_Y=None
+):
     points = np.load(path_points)
     X, Y, Z = estimate_pseudo_density(points, grid_size, factor)
     np.save(path_density, Z)
@@ -124,5 +135,5 @@ def compute_pseudo_density(path_points, path_density, grid_size=101, factor=10, 
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

@@ -22,7 +22,7 @@ def vertices_and_faces_to_mesh(vertices, faces):
     v = mesh.vertex()
     p = mesh.polygon()
     v.assign([aims.Point3df(x) for x in vertices])
-    p.assign([aims.AimsVector(x, dtype='U32', dim=poly_type) for x in faces])
+    p.assign([aims.AimsVector(x, dtype="U32", dim=poly_type) for x in faces])
     # recompute normals, not mandatory but to have coherent mesh
     # rem does not work for 2D meshes normals need to be added manually (works like a texture)
     mesh.updateNormals()
@@ -70,10 +70,10 @@ def build_2D_line(n):
 
 
 def vertices_to_2d_line(vertices):
-    '''
+    """
     :param vertices: a Nx3 ndarray
     :return: mesh
-    '''
+    """
     if len(vertices) == 0:
         mesh = aims.TimeSurface()
     else:
@@ -83,12 +83,12 @@ def vertices_to_2d_line(vertices):
 
 
 def indexMerge(mesh_list):
-    '''
+    """
     :param list of mesh to be fusionned
     :return: AimsTimeTexture
     aims.meshMerge "concatenate the two meshes", this function create an index texture
     to keep trace of origin mesh. Useful for example for left and right hemisphere
-    '''
+    """
     # TO DO : remplace mesh list by *args
     sizes = np.array([len(np.array(m.vertex())) for m in mesh_list], dtype=int)
     tot = np.sum(sizes)
@@ -98,7 +98,7 @@ def indexMerge(mesh_list):
         if i == 0:
             continue
         else:
-            t[c[i - 1]:c[i]] = i
+            t[c[i - 1] : c[i]] = i
     texture = aims.TimeTexture(t)
     return texture
 
@@ -114,8 +114,12 @@ def mesh_normals_as_arrows(mesh):
     normals = np.array(mesh.normal())
     start_point = vertices
     end_point = vertices + normals
-    arrows = [aims.SurfaceGenerator.arrow(end_point[i].tolist(), start_point[i].tolist(), 1.1, 0.1, 4, 1) for i, s in
-              enumerate(start_point)]
+    arrows = [
+        aims.SurfaceGenerator.arrow(
+            end_point[i].tolist(), start_point[i].tolist(), 1.1, 0.1, 4, 1
+        )
+        for i, s in enumerate(start_point)
+    ]
 
     for i, arrow in enumerate(arrows):
         if i == 0:

@@ -5,17 +5,19 @@ from matplotlib import pyplot as plt
 from configuration import DIR_OUT
 from scipy.stats import shapiro, mannwhitneyu, levene, ttest_1samp, ttest_ind, ttest_rel
 
-if __name__ == '__main__':
-    df = pd.read_csv(os.path.join(DIR_OUT, 'ppfm', 'tables', 'pp_manual_drawing_coord_sulcus.csv'))
-    df = df[['Subject', 'Hemisphere', 'PP_CS_Coord_Iso', 'Drawer']]
+if __name__ == "__main__":
+    df = pd.read_csv(
+        os.path.join(DIR_OUT, "ppfm", "tables", "pp_manual_drawing_coord_sulcus.csv")
+    )
+    df = df[["Subject", "Hemisphere", "PP_CS_Coord_Iso", "Drawer"]]
     df = df.dropna()
     # Test normality of the different distributions
     # Whole distribution
-    W, p = shapiro(df['PP_CS_Coord_Iso'].values)
+    W, p = shapiro(df["PP_CS_Coord_Iso"].values)
     # Left Distribution
-    A = df.loc[df['Drawer'] == 'Alex', 'PP_CS_Coord_Iso'].values
+    A = df.loc[df["Drawer"] == "Alex", "PP_CS_Coord_Iso"].values
     W_a, p_a = shapiro(A)
-    O = df.loc[df['Drawer'] == 'Olivier', 'PP_CS_Coord_Iso'].values
+    O = df.loc[df["Drawer"] == "Olivier", "PP_CS_Coord_Iso"].values
     W_o, p_o = shapiro(O)
 
     print

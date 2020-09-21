@@ -17,13 +17,13 @@ def modify_template_bvproc(path_template_bv_proc, old, subject, path_bvproc_subj
     """
     template_bvproc = ET.parse(path_template_bv_proc)
     template_root = template_bvproc.getroot()
-    for tag in template_root.iter('*'):
+    for tag in template_root.iter("*"):
         init_value = tag.text
         # sometimes tag.text is empty (None) or different type
         if type(init_value) is str:
             new_value = init_value.replace(old, subject)
             tag.text = new_value
-    template_bvproc.write(path_bvproc_subject, encoding='utf-8', xml_declaration=True)
+    template_bvproc.write(path_bvproc_subject, encoding="utf-8", xml_declaration=True)
     pass
 
 
@@ -33,12 +33,22 @@ def compute_surfacic_curvature(path_mesh, path_curvature_tex, bv_instance=BRAINV
     :param path_curvature_tex:
     :return:
     """
-    cmd = bv_instance + '/bin/AimsMeshCurvature ' + ' -i ' + path_mesh + ' -o ' + path_curvature_tex + ' -m fem'
+    cmd = (
+        bv_instance
+        + "/bin/AimsMeshCurvature "
+        + " -i "
+        + path_mesh
+        + " -o "
+        + path_curvature_tex
+        + " -m fem"
+    )
     subprocess.run(cmd)
     pass
 
 
-def compute_geodesic_distance(path_mesh, path_texture, path_distance, bv_instance=BRAINVISA):
+def compute_geodesic_distance(
+    path_mesh, path_texture, path_distance, bv_instance=BRAINVISA
+):
     """
     Wrapper for the Aims geodesic distance command
     :param path_mesh: path of the mesh
@@ -46,13 +56,23 @@ def compute_geodesic_distance(path_mesh, path_texture, path_distance, bv_instanc
     :param path_distance: path of the geodesic distance texture
     :return: None
     """
-    cmd = bv_instance + '/bin/AimsMeshDistance' + ' -i ' + path_mesh + ' -o ' + path_distance + ' -t ' + path_texture
+    cmd = (
+        bv_instance
+        + "/bin/AimsMeshDistance"
+        + " -i "
+        + path_mesh
+        + " -o "
+        + path_distance
+        + " -t "
+        + path_texture
+    )
     subprocess.run(cmd)
     pass
 
 
-def launch_subject_bvproc(subject_bvproc, subject, dir_cluster, python=BRAINVISA_PYTHON,
-                          core=1):
+def launch_subject_bvproc(
+    subject_bvproc, subject, dir_cluster, python=BRAINVISA_PYTHON, core=1
+):
     """
     Launch a set of processings summed-up in a .bvproc file in a passive way in the INT cluster
     :param subject_bvproc: path to the bvproc associated to the subject
@@ -63,6 +83,6 @@ def launch_subject_bvproc(subject_bvproc, subject, dir_cluster, python=BRAINVISA
     :return: None
     """
 
-    cmd = python + ' -m   brainvisa.axon.runprocess  --enabledb ' + subject_bvproc
+    cmd = python + " -m   brainvisa.axon.runprocess  --enabledb " + subject_bvproc
     launch_subject_cmd(cmd, subject, dir_cluster, core)
     pass

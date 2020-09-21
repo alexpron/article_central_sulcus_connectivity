@@ -9,12 +9,12 @@ import seaborn as sns
 import statsmodels.formula.api as smf
 from variables import DIR_OUT
 
-if __name__ == '__main__':
-    path_df = os.path.join(DIR_OUT, 'derived_tables', 'nb_streamlines_label_level.csv')
+if __name__ == "__main__":
+    path_df = os.path.join(DIR_OUT, "derived_tables", "nb_streamlines_label_level.csv")
     df = pd.read_csv(path_df)
-    new_df = df.loc[(df['Hemisphere'] == 'L') & (df['Label'] != -1)]
-    labels = np.unique(df['Label'].values)
-    sns.lmplot(x='PP_CS_Coord_Iso', y='Nb_Streamlines_Label', hue='Label', data=new_df)
+    new_df = df.loc[(df["Hemisphere"] == "L") & (df["Label"] != -1)]
+    labels = np.unique(df["Label"].values)
+    sns.lmplot(x="PP_CS_Coord_Iso", y="Nb_Streamlines_Label", hue="Label", data=new_df)
     plt.show()
     # for l in labels:
     # #    nb_stream = new_df.loc[new_df['Label']==l,'Nb_Streamlines_Label'].values

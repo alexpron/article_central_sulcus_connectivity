@@ -3,7 +3,9 @@ from soma import aims
 import nibabel as nib
 
 
-def select_association_streamline(path_mask, path_affine_dwi_to_t1, path_tractogram, path_association_streamlines):
+def select_association_streamline(
+    path_mask, path_affine_dwi_to_t1, path_tractogram, path_association_streamlines
+):
     """
     :param path_mask:
     :param path_affine_dwi_to_t1:
@@ -14,7 +16,7 @@ def select_association_streamline(path_mask, path_affine_dwi_to_t1, path_tractog
     mask_vol = aims.read(path_mask)
     mask = np.array(mask_vol)[..., 0]
     mask = mask.astype(bool)
-    scaling = np.diag(mask_vol.header()['voxel_size'] + [1])
+    scaling = np.diag(mask_vol.header()["voxel_size"] + [1])
     inv_scaling = np.linalg.inv(scaling)
     dwi_2_t1 = np.array(aims.read(path_affine_dwi_to_t1).toMatrix())
     affine = np.dot(inv_scaling, dwi_2_t1)
@@ -32,13 +34,24 @@ def select_association_streamline(path_mask, path_affine_dwi_to_t1, path_tractog
     np.save(path_association_streamlines, association_streamlines)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    from configuration.configuration import SUBJ_LIST, SIDES, DWI_2_T1, TISSUE_MASKS, TRACTS, ASSOCIATION_TRACTS
+    from configuration.configuration import (
+        SUBJ_LIST,
+        SIDES,
+        DWI_2_T1,
+        TISSUE_MASKS,
+        TRACTS,
+        ASSOCIATION_TRACTS,
+    )
 
     for subject in SUBJ_LIST:
         for side in SIDES.keys():
-            select_association_streamline(TISSUE_MASKS[(subject, side)], DWI_2_T1[subject],
-                                          TRACTS[(subject, 'trk', 'filtered')], ASSOCIATION_TRACTS[(subject, side)])
+            select_association_streamline(
+                TISSUE_MASKS[(subject, side)],
+                DWI_2_T1[subject],
+                TRACTS[(subject, "trk", "filtered")],
+                ASSOCIATION_TRACTS[(subject, side)],
+            )
 
 #

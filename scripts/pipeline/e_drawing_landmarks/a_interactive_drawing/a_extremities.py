@@ -14,10 +14,10 @@ path_mesh = MESHES[(subject, side)]
 path_dpf = DPFS[(subject, side)]
 
 a = anatomist.Anatomist()
-w = a.createWindow('3D')
+w = a.createWindow("3D")
 mesh = a.loadObject(path_mesh)
 dpf = a.loadObject(path_dpf)
-mesh.setMaterial(polygon_mode='outline')
-dpf.setPalette('Purple-Red + Stripes', minVal=0, maxVal=-1.6, absoluteMode=True)
-fusion = a.fusionObjects(objects=[mesh, dpf], method='FusionTexSurfMethod')
+mesh.setMaterial(polygon_mode="outline")
+dpf.setPalette("Purple-Red + Stripes", minVal=0, maxVal=-1.6, absoluteMode=True)
+fusion = a.fusionObjects(objects=[mesh, dpf], method="FusionTexSurfMethod")
 w.addObjects(fusion)
