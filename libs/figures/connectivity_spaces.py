@@ -4,6 +4,9 @@ additionnal information such as PPFM position
 """
 
 import numpy as np
+from skimage.feature import (
+    peak_local_max,
+)  # not wonderful mixes computation and display
 from matplotlib import pyplot as plt
 from matplotlib.patches import Ellipse
 from matplotlib import colors
@@ -75,12 +78,14 @@ clustering_color_map = {
 def connectivity_space(
     path_fig=None,
     title=None,
+    background_color=None,
     font=BSFONT,
     fontsize=TEXTFONTSIZE,
     format=FORMAT,
     dpi=DPI,
     xlabel=XLABEL,
     ylabel=YLABEL,
+
 ):
     """
     Canvas to plot connectivity profile that respects Brain Structure and Function
@@ -94,6 +99,8 @@ def connectivity_space(
     # general figure setting
     fig, ax = plt.subplots()
     fig.set_size_inches(10, 10)
+    if background_color is not None:
+        ax.set_facecolor('grey')
     if title is not None:
         plt.title(title, fontsize=20)
     else:
@@ -101,11 +108,14 @@ def connectivity_space(
     # Label and dimensions of the axes
     plt.xlabel(xlabel, fontsize=fontsize, fontname=font)
     plt.ylabel(ylabel, fontsize=fontsize, fontname=font)
+    plt.xticks(np.arange(0, 110, 10), np.arange(0, 110, 10))
+    plt.yticks(np.arange(0, 110, 10), np.arange(0, 110, 10))
     plt.xlim([0, 100])
     plt.ylim([0, 100])
-    plt.text(-20, -7, "Ventral", fontsize=15, weight="bold", fontname=font)
-    plt.text(100, -7, "Dorsal", fontsize=15, weight="bold", fontname=font)
-    plt.text(-20, 100, "Dorsal", fontsize=15, weight="bold", fontname=font)
+    plt.text(-15, -7, "Ventral", fontsize=fontsize, weight="bold", fontname=font)
+    plt.text(92, -7, "Dorsal", fontsize=fontsize, weight="bold", fontname=font)
+    plt.text(-15, 98, "Dorsal", fontsize=fontsize, weight="bold", fontname=font)
+
     # Draw the diagonal of the space
     x = np.linspace(0, 100, 1000)
     plt.plot(x, x, color="grey")
@@ -184,6 +194,7 @@ def density_display(
     vmin=None,
     vmax=None,
     colorbar=True,
+    colorbar_ticks_step=500,
 ):
     """
     Default U-fibres density display
@@ -204,12 +215,53 @@ def density_display(
             m = plt.cm.ScalarMappable(cmap=cmap)
             m.set_array(density)
             m.set_clim(vmin, vmax)
-            plt.colorbar(m, boundaries=np.linspace(vmin, vmax, nb_levels + 1))
+            colorbar = plt.colorbar(
+                m, boundaries=np.linspace(vmin, vmax, nb_levels + 1)
+            )
+            colorbar.set_ticks(
+                np.arange(vmin, vmax + colorbar_ticks_step, colorbar_ticks_step)
+            )
+            colorbar.set_ticklabels(
+                np.arange(vmin, vmax + colorbar_ticks_step, colorbar_ticks_step)
+            )
     else:
         dens = ax.contourf(X, Y, density, nb_levels, cmap=cmap)
         if colorbar:
             figure.colorbar(dens, ax=ax)
     pass
+
+
+def scatter_display(
+    points, labels, figure, cmap="default", path_fig=None, title=None, alpha=1
+):
+    """
+    :param points: the b_coordinates of the streamlines in the 2D space (a Nx2 ndarray)
+    :param labels: labels assigned to each point after clustering. a (N,) nddarray
+    :param pli_passage: the b_coordinates of the knob a (2,) ndarray
+    :param path_fig: the path to save the figure, the type of the figure will be determined from the path
+    :param title: the title of the figure
+    :return: None
+    """
+    # figure setting
+    ax = figure.get_axes()[0]
+    # display the points as dots
+    if labels is not None:
+        cmap, norm = clustering_color_map[cmap]
+        label_values = np.unique(labels)
+        for i, l in enumerate(label_values):
+            p = points[labels == l]
+            new_l = labels[labels == l]
+            ax.scatter(p[:, 0], p[:, 1], c=new_l, cmap=cmap, norm=norm, alpha=alpha)
+    else:
+        ax.scatter(points[:, 0], points[:, 1])
+
+    if path_fig is not None:
+        plt.savefig(
+            path_fig, dpi=300, format="tif", bbox_inches="tight", pad_inches=0.0
+        )
+        plt.close(figure)
+    else:
+        pass
 
 
 def ppfm_display(
@@ -243,7 +295,7 @@ def ppfm_display(
         alpha=1,
     )
     coords = ppfm_coords_2_str(ppfm)
-    final_label = label + coords
+    final_label = label + " " + coords
     ax.scatter(
         [ppfm[0]],
         [ppfm[1]],
@@ -256,7 +308,19 @@ def ppfm_display(
 
 
 def density_maxima_display(figure, density):
+    """
 
+    :param figure:
+    :param density:
+    :return:
+    """
+    peaks_indexes = peak_local_max(
+        density,
+        3,
+        threshold_rel=0.30,
+        threshold_abs=threshold_abs,
+        exclude_border=False,
+    )
     pass
 
 
@@ -270,6 +334,7 @@ def connectivity_profile(
     vmin=None,
     vmax=None,
     colorbar=True,
+    colorbar_tiks_step=500,
     ppfm=None,
     ppfm_label=None,
 ):
@@ -349,22 +414,7 @@ def connectivity_profile_with_maxima(
     # add ppfm position as blue cross
     if ppfm is not None:
         ppfm_display(figure, ppfm, ppfm_label)
-    # add maxima extraction and display
-    peaks_indexes = peak_local_max(
-        density,
-        3,
-        threshold_rel=0.30,
-        threshold_abs=threshold_abs,
-        exclude_border=False,
-    )
-    ax.plot(
-        peaks_indexes[:, 1],
-        peaks_indexes[:, 0],
-        "g+",
-        markersize=15,
-        mew=2,
-        label="Density`s Local Maxima",
-    )
+
     plt.grid()
     plt.legend()
     if path_fig is not None:
@@ -406,18 +456,20 @@ def draw_ellipse(ax, mu, sigma, color="k", linewidth=4, marker="+", markersize=1
 
 
 def clusters_as_ellipses_display(
-    figure,
-    means,
-    covariances,
-    path_fig=None,
-    title=None,
+    figure, means, covariances, colors=clustering_colors, path_fig=None, title=None,
 ):
-
-
+    """
+    :param figure:
+    :param means:
+    :param covariances:
+    :param colors:
+    :param path_fig:
+    :param title:
+    :return:
+    """
+    ax = figure.get_axes()[0]
     for i, m in enumerate(means):
-        # print i,  m
-        # print i, covariances[i]
-        plot_ellipse(ax, m, covariances[i], color=colors[i])
+        draw_ellipse(ax, m, covariances[i], color=colors[i])
 
     # plt.legend()
     if path_fig is not None:
@@ -428,3 +480,23 @@ def clusters_as_ellipses_display(
     else:
         plt.show()
     pass
+
+
+def clusters_as_dots(
+    dots, labels, path_fig=None, ppfm=None, ppfm_label=None, title=None
+):
+    # figure setting
+    figure, ax = connectivity_space(title=title)
+    ax.set_facecolor('grey')
+    scatter_display(dots, labels, figure)
+    if ppfm is not None:
+        ppfm_display(figure, ppfm, ppfm_label)
+    plt.grid()
+    plt.legend()
+    if path_fig is not None:
+        plt.savefig(
+            path_fig, dpi=DPI, format=FORMAT, bbox_inches="tight", pad_inches=0.0
+        )
+        plt.close(figure)
+    else:
+        pass

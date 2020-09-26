@@ -30,7 +30,7 @@ TABLES = [
     "draw_attribution",
     "mesh_index",
     "cs_coord",
-    "gyri_index",
+    "index_gyri",
     "gyri_coord",
     "final",
 ]  # tables related to PPFM
@@ -47,7 +47,8 @@ BRAINVISA_PYTHON = os.path.join(BRAINVISA, "bin", "python")
 
 # ---------------------------------- Project structure ----------------------------------------------------------------#
 # TO DO : find a way to remove the absolute path inside the script directories
-DIR_PROJECT = "/hpc/meca/users/pron.a/projects/article_central_sulcus_connectivity"
+# DIR_PROJECT = "/hpc/meca/users/pron.a/projects/article_central_sulcus_connectivity"
+DIR_PROJECT = r"C:\Users\Alex\PycharmProjects\article_central_sulcus_connectivity"
 # selected subject list is included in this git repo for the sake of completness
 PATH_SUBJ_LIST = os.path.join(DIR_PROJECT, "configuration", "subjects_list.txt")
 SUBJ_LIST = read_subjects_list(PATH_SUBJ_LIST)
@@ -208,7 +209,8 @@ AREA_TABLES = {
 }
 # --------------------------------- Data (output directory outside of BrainVISA database)
 
-DATA = "/hpc/meca/users/pron.a/data"
+# DATA = "/hpc/meca/users/pron.a/data"
+DATA = r"D:\thesis\data"
 DIR_CLUSTER = "/hpc/meca/users/pron.a/cluster"  # Only useful in the INT context
 DIR_SUBJECTS = os.path.join(DATA, "subjects")
 DIR_MESHES = os.path.join(DATA, "meshes_and_textures")
@@ -392,7 +394,8 @@ FUNDI_PARAMETRISATIONS = {
 LINE_PARAMETRISATIONS = merge_dicts(GYRAL_PARAMETRISATIONS, FUNDI_PARAMETRISATIONS)
 
 PPFM_TABLES = {
-    t: os.path.join(DIR_LANDMARKS, "ppfm", "ppfm" + "_" + t + ".csv") for t in TABLES
+    t: os.path.join(DIR_LANDMARKS, "ppfm", "tables", "ppfm" + "_" + t + ".csv")
+    for t in TABLES
 }
 
 ASSOCIATION_TRACTS = {
@@ -437,22 +440,33 @@ U_FIBERS_INDEXES = os.path.join(
     DATA, "connectivity_space", "U_fibers_indexes_on_gyri.npy"
 )
 HEMI_INDEXES = os.path.join(DATA, "connectivity_space", "hemispheres_indexes.npy")
+HEMI_INDEXES_FILT = os.path.join(
+    DATA, "sulci", "CS", "connectivity", "indexes", "hemispheres_index_filtered.npy"
+)
 
 U_FIBERS_COORD = {
     p: os.path.join(
-        DATA, "connectivity_space", "U_fibers_coord_on_gyri" + "_" + p + "_param.npy"
+        DATA,
+        "sulci",
+        "CS",
+        "connectivity",
+        "coordinates",
+        "length_filtered",
+        "U_fibers_coord" + "_" + p + ".npy",
     )
     for p in PARAMETRISATIONS
 }
-X_GRID = os.path.join(DATA, "connectivity_space", "profiles", "X.npy")
-Y_GRID = os.path.join(DATA, "connectivity_space", "profiles", "Y.npy")
+X_GRID = os.path.join(DATA, "connectivity_space", "X.npy")
+Y_GRID = os.path.join(DATA, "connectivity_space", "Y.npy")
 U_FIBERS_GROUP_PROFILES = {
     (side, p): os.path.join(
         DATA,
-        "connectivity_space",
+        "sulci",
+        "CS",
+        "connectivity",
         "profiles",
         "group",
-        side + "_" + p + "_" + "param" + "_" + "profile.npy",
+        side + "_" + p + ".npy",
     )
     for side in SIDES.keys()
     for p in PARAMETRISATIONS
@@ -460,10 +474,12 @@ U_FIBERS_GROUP_PROFILES = {
 U_FIBERS_INDIV_PROFILES = {
     (subject, side, p): os.path.join(
         DATA,
-        "connectivity_space",
+        "sulci",
+        "CS",
+        "connectivity",
         "profiles",
-        "individuals",
-        subject + "_" + side + "_" + p + "_" + "param" + "_" + "profile.npy",
+        "subjects",
+        p + "_" + subject + "_" + side + "_" + "filtered_radius_5" + ".npy",
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
@@ -486,9 +502,13 @@ MAX_ITER = 5000
 INIT_METHOD = "kmeans"
 
 CLUSTERING_LABELS = {
-    side: os.path.join(DATA, "connectivity_space", "clustering", "labels.npy")
+    side: os.path.join(
+        DATA, "sulci",
+        "CS", "connectivity", "clustering", "labels" + "_" + side + ".npy"
+    )
     for side in SIDES.keys()
 }
+
 
 # Statistics tables
 ICV_DF = os.path.join(DIR_STATS, "init_tables", "ICV.csv")
@@ -497,7 +517,7 @@ MESH_AREA_DF = os.path.join(DIR_STATS, "init_tables", "mesh_area.csv")
 PPFM_DF = os.path.join(DIR_STATS, "init_tables", "ppfm.csv")
 
 # Figures
-DIR_PROFILES = os.path.join(DIR_FIGURES, "connectivity_profiles")
+DIR_PROFILES = os.path.join(DIR_FIGURES, "connectivity_profiles", "densities")
 FIG_GROUP_PROFILES = {
     side: os.path.join(DIR_PROFILES, "group", side + "_" + "group_profile" + ".tiff")
     for side in SIDES.keys()
@@ -509,12 +529,23 @@ FIG_GROUP_PROFILES_MAXIMA = {
     for side in SIDES.keys()
 }
 FIG_INDIV_PROFILES = {
-    (subject, side, param): os.path.join(
+    (subject, side, param, ppfm): os.path.join(
         DIR_PROFILES,
         "subjects",
-        subject + "_" + side + "_" + param + "_" + "profile.tiff",
+        subject + "_" + side + "_" + param + "_" + ppfm + "_" + "ppfm" + ".tiff",
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
     for param in PARAMETRISATIONS
+    for ppfm in ["group", "individual"]
+}
+
+DIR_CLUSTERS = os.path.join(DIR_FIGURES, "connectivity_profiles", "group_clustering")
+
+FIG_CLUSTERS_INDIV_SPACE = {
+    (subject, side): os.path.join(
+        DIR_CLUSTERS, "subjects_space", subject + "_" + side + ".tiff"
+    )
+    for subject in SUBJ_LIST
+    for side in SIDES.keys()
 }
