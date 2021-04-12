@@ -1,6 +1,6 @@
 import numpy as np
 from soma import aims
-from lines import clean_line, normalized_curv_parametrisation
+from libs.lines import clean_line, normalized_curv_parametrisation
 from libs.tools.aims.meshes.processing import vertices_to_2d_line
 from configuration.configuration import (
     SUBJ_LIST,
@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
-            mesh = aims.read(MESHES[(subject, side)])
+            mesh = aims.read(MESHES[(subject, side, "white")])
             vertices = np.array(mesh.vertex())
             for k, gyrus in enumerate(GYRI):
                 gyrus_tex = aims.read(
