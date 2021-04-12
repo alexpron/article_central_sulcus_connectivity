@@ -8,6 +8,5 @@ for f in wrong_typo_files:
     filename = os.path.basename(f)
     t = filename.replace('Lwhite','L_white')
     s = t.replace('Rwhite','R_white')
-    print(filename)
     gf = os.path.join(dir_meshes, s)
-    os.rename(f, s)
+    os.rename(f, gf)
