@@ -11,7 +11,7 @@ from libs.tools.usual import merge_dicts, read_subjects_list
 
 RELEASE = "07_30_2018_S900_release"  # version of the HCP metadata used
 SIDES = {"L": "Left", "R": "Right"}  # hemispheres
-SULCUS = "CS"  # this study focus on the central sulcus but generic organisation
+SULCUS = "cs"  # this study focus on the central sulcus but generic organisation
 GYRI = ["precentral", "postcentral"]
 ADJACENT_GYRI = {SULCUS: GYRI}
 MESHES_TYPE = ["white", "hemi"]  # white and pial triangular meshes
@@ -47,8 +47,8 @@ BRAINVISA_PYTHON = os.path.join(BRAINVISA, "bin", "python")
 
 # ---------------------------------- Project structure ----------------------------------------------------------------#
 # TO DO : find a way to remove the absolute path inside the script directories
-# DIR_PROJECT = "/hpc/meca/users/pron.a/projects/article_central_sulcus_connectivity"
-DIR_PROJECT = r"C:\Users\Alex\PycharmProjects\article_central_sulcus_connectivity"
+DIR_PROJECT = "/hpc/meca/users/pron.a/code/article"
+#DIR_PROJECT = r"C:\Users\Alex\PycharmProjects\article_central_sulcus_connectivity"
 # selected subject list is included in this git repo for the sake of completness
 PATH_SUBJ_LIST = os.path.join(DIR_PROJECT, "configuration", "subjects_list.txt")
 SUBJ_LIST = read_subjects_list(PATH_SUBJ_LIST)
@@ -209,8 +209,8 @@ AREA_TABLES = {
 }
 # --------------------------------- Data (output directory outside of BrainVISA database)
 
-# DATA = "/hpc/meca/users/pron.a/data"
-DATA = r"D:\thesis\data"
+DATA = "/hpc/meca/users/pron.a/data/U_Fibers"
+#DATA = r"D:\thesis\data"
 DIR_CLUSTER = "/hpc/meca/users/pron.a/cluster"  # Only useful in the INT context
 DIR_SUBJECTS = os.path.join(DATA, "subjects")
 DIR_MESHES = os.path.join(DATA, "meshes_and_textures")
@@ -264,7 +264,7 @@ EXTREMITIES = {
     (subject, side): os.path.join(
         DIR_LANDMARKS,
         "extremities",
-        subject + "_" + side + "_" + SULCUS + "_" + "extremities" ".gii",
+        subject + "_" + side + "_" + SULCUS + "_" + "extremities" + ".gii",
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()

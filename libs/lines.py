@@ -20,7 +20,7 @@ import numpy as np
 from soma import aims
 
 
-def clean_cleaned_line(mesh, draw):
+def clean_line(mesh, draw):
     vert = np.array(mesh.vertex())
     neigh = aims.SurfaceManip.surfaceNeighbours(mesh)
 
