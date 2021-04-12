@@ -1,7 +1,7 @@
 # U-shape short-range extrinsic connectivity organisation around the human central sulcus
 
 This repository regroups the code used to carry out the design, the magnetic resonance imaging (MRI) data processing, the statistical analyses and  figures of the study *U-shape short-range extrinsic connectivity organisation around the human central sulcus*
-. A pre-print  summarizing this study is also available here: (https://www.biorxiv.org/content/10.1101/2020.05.07.082800v1)
+. This study was published in Brain Structure and Function (https://link.springer.com/article/10.1007/s00429-020-02177-5). A pre-print  is also available here: (https://www.biorxiv.org/content/10.1101/2020.05.07.082800v1)
 
 ## Dependencies
 This study was performed relying on:
