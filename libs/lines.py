@@ -87,7 +87,6 @@ def clean_cleaned_line(mesh, draw):
     return cleaned_line
 
 
-
 def normalized_curv_parametrisation(vertices, norm_const=100):
     """
     Compute an intrisic paramaterization of a N-D curve (a set of ordered N-D vertices)

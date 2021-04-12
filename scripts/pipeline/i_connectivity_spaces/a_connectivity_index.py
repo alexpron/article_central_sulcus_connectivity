@@ -29,7 +29,7 @@ if __name__ == "__main__":
             ) and os.path.exists(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "e")]):
                 s = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "s")])
                 e = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "e")])
-                mesh = aims.read(MESHES[(subject, side)])
+                mesh = aims.read(MESHES[(subject, side, "white")])
                 U_fibers = U_FIBERS_MASK[(subject, side)]
                 # selecting the U fibers extremities
                 U_s = s[U_fibers]
