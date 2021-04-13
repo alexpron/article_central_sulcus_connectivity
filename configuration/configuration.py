@@ -240,7 +240,7 @@ MESHES = {
 }
 
 DEPTHS = {
-    (subject, side, "white"): os.path.join(
+    (subject, side): os.path.join(
         DIR_MESHES, subject + "_" + side + "_" + "white_depth.gii"
     )
     for subject in SUBJ_LIST
@@ -248,7 +248,7 @@ DEPTHS = {
 }
 
 DPFS = {
-    (subject, side, "white"): os.path.join(
+    (subject, side): os.path.join(
         DIR_MESHES, subject + "_" + side + "_" + "white_dpf.gii"
     )
     for subject in SUBJ_LIST
@@ -256,7 +256,7 @@ DPFS = {
 }
 
 CURVATURES = {
-    (subject, side, "white"): os.path.join(
+    (subject, side): os.path.join(
         DIR_MESHES, subject + "_" + side + "_" + "white_curvature.gii"
     )
     for subject in SUBJ_LIST
