@@ -272,6 +272,7 @@ GYRAL_CRESTS = {
     (subject, side, gyrus, status, nature): os.path.join(
         DIR_LANDMARKS,
         "adjacent_gyri",
+        status,
         subject + "_" + side + "_" + gyrus + "_" + status + EXTENSIONS[nature],
     )
     for subject in SUBJ_LIST
