@@ -17,7 +17,7 @@ if __name__ == "__main__":
             fundus_index = np.load(
                 SULCUS_FUNDI[(subject, side, SULCUS, "cleaned", "array")]
             )
-            mesh = aims.read(MESHES[(subject, side)])
+            mesh = aims.read(MESHES[(subject, side,'white')])
             vertices = np.array(mesh.vertex())
             fundus = vertices[fundus_index]
             norm_param = normalized_curv_parametrisation(fundus)

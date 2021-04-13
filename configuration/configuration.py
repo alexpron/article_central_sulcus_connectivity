@@ -208,7 +208,7 @@ AREA_TABLES = {
 }
 # ----------------------- Data (output directory outside of BrainVISA database)
 
-DATA = "/hpc/meca/users/pron.a/data/U_Fibers"
+DATA = "/hpc/meca/users/pron.a/data/u_fibers_test"
 DIR_CLUSTER = "/hpc/meca/users/pron.a/cluster"  # Only useful in the INT context
 DIR_SUBJECTS = os.path.join(DATA, "subjects")
 DIR_MESHES = os.path.join(DATA, "meshes_and_textures")

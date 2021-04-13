@@ -1,5 +1,7 @@
 """
-Cleaning and parameterization of cleaned_lines living on 2D triangular meshes
++ Cleaning and parameterization of cleaned_lines living on 2D triangular meshes
++ Extraction of lines of interest (e.g. sulcus fundus, gyral crests) as shortest
+  geodesic path between two points on a mesh.
 
 author: Olivier Coulon (olivier.coulon@univ-amu.fr)
 
@@ -7,17 +9,27 @@ cleaned_lines generated using shortest path algorithm or manual drawing may cont
 when converting them to texture (by default in Anatomist, two closest neighbours
 of a texture are connected). Hereunder is an exemple of such a topological loop:
 
-
 These module allows the user to:
-+ remove most of the loops of a curve
-+ parameterize a curve using normalized curvicleaned_linear abscissa
++ extract anatomical lines of interest
++ clean existing curves
+    + remove most of the loops of a curve
+    + parameterize a curve using normalized curvicleaned_linear abscissa
 
 TO DO: implement a trimesh version of curve cleaning algorithm
 """
 
 
 import numpy as np
-from soma import aims
+from soma import aims, aimsalgo
+
+
+def get_sulcus_fundus_from_extremities(start, end, mesh, dpf):
+    """
+
+    """
+    geo = aims.GeodesicPath(mesh, dpf, 2)
+    fundus = geo.shortestPath_1_1_ind(start, end)
+    return fundus
 
 
 def clean_line(mesh, draw):
