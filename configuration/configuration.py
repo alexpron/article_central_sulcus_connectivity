@@ -238,6 +238,7 @@ MESHES = {
     for side in SIDES.keys()
     for mesh_type in MESHES_TYPE
 }
+
 DEPTHS = {
     (subject, side, "white"): os.path.join(
         DIR_MESHES, subject + "_" + side + "_" + "white_depth.gii"
@@ -245,6 +246,7 @@ DEPTHS = {
     for subject in SUBJ_LIST
     for side in SIDES.keys()
 }
+
 DPFS = {
     (subject, side, "white"): os.path.join(
         DIR_MESHES, subject + "_" + side + "_" + "white_dpf.gii"
@@ -252,6 +254,7 @@ DPFS = {
     for subject in SUBJ_LIST
     for side in SIDES.keys()
 }
+
 CURVATURES = {
     (subject, side, "white"): os.path.join(
         DIR_MESHES, subject + "_" + side + "_" + "white_curvature.gii"
@@ -283,6 +286,7 @@ GYRAL_CRESTS = {
     for status in STATUS
     for nature in EXTENSIONS
 }
+
 SULCUS_FUNDI = {
     (subject, side, SULCUS, status, nature): os.path.join(
         DIR_LANDMARKS,
@@ -295,58 +299,10 @@ SULCUS_FUNDI = {
     for status in STATUS
     for nature in EXTENSIONS
 }
+
 LINES = merge_dicts(GYRAL_CRESTS, SULCUS_FUNDI)
 
-GEO_DISTS = {
-    (subject, side, "white", gyrus): os.path.join(
-        DIR_LANDMARKS,
-        "surf_rois",
-        "geodesic_distances",
-        subject + "_" + side + "_" + gyrus + "_" + "geodesic_distance_map.gii",
-    )
-    for subject in SUBJ_LIST
-    for side in SIDES.keys()
-    for gyrus in ADJACENT_GYRI[SULCUS]
-}
-ROI_DISTANCES = {
-    (subject, side, gyrus): os.path.join(
-        DIR_LANDMARKS,
-        "adjacent_gyri",
-        subject
-        + "_"
-        + side
-        + "_"
-        + gyrus
-        + "_"
-        + "geodesic_distance_threshold"
-        + ".gii",
-    )
-    for subject in SUBJ_LIST
-    for side in SIDES
-    for gyrus in ADJACENT_GYRI[SULCUS]
-}
-PARTITIONS = {
-    (subject, side, gyrus): os.path.join(
-        DIR_LANDMARKS,
-        "adjacent_gyri",
-        subject + "_" + side + "_" + gyrus + "_" + "partition" + ".gii",
-    )
-    for subject in SUBJ_LIST
-    for side in SIDES
-    for gyrus in ADJACENT_GYRI[SULCUS]
-}
-ADJ_GYRI_ROI = {
-    (subject, side, gyrus): os.path.join(
-        DIR_LANDMARKS,
-        "adjacent_gyri",
-        subject + "_" + side + "_" + gyrus + "_" + "surface_roi" + ".gii",
-    )
-    for subject in SUBJ_LIST
-    for side in SIDES
-    for gyrus in ADJACENT_GYRI[SULCUS]
-}
-
-# Lines
+# Line parametrisation
 GYRAL_PARAMETRISATIONS = {
     (subject, side, gyrus, status, nature, param): os.path.join(
         DIR_LANDMARKS,
@@ -371,6 +327,7 @@ GYRAL_PARAMETRISATIONS = {
     for nature in EXTENSIONS
     for param in PARAMETRISATIONS
 }
+
 FUNDI_PARAMETRISATIONS = {
     (subject, side, SULCUS, status, nature, param): os.path.join(
         DIR_LANDMARKS,
@@ -394,7 +351,62 @@ FUNDI_PARAMETRISATIONS = {
     for nature in EXTENSIONS
     for param in PARAMETRISATIONS
 }
+
 LINE_PARAMETRISATIONS = merge_dicts(GYRAL_PARAMETRISATIONS, FUNDI_PARAMETRISATIONS)
+
+GEO_DISTS = {
+    (subject, side, "white", gyrus): os.path.join(
+        DIR_LANDMARKS,
+        "surf_rois",
+        "geodesic_distances",
+        subject + "_" + side + "_" + gyrus + "_" + "geodesic_distance_map.gii",
+    )
+    for subject in SUBJ_LIST
+    for side in SIDES.keys()
+    for gyrus in ADJACENT_GYRI[SULCUS]
+}
+ROI_DISTANCES = {
+    (subject, side, gyrus): os.path.join(
+        DIR_LANDMARKS,
+        "surf_rois",
+        "adaptive_threshold",
+        subject
+        + "_"
+        + side
+        + "_"
+        + gyrus
+        + "_"
+        + "dist_threshold"
+        + ".npy",
+    )
+    for subject in SUBJ_LIST
+    for side in SIDES
+    for gyrus in ADJACENT_GYRI[SULCUS]
+}
+
+PARTITIONS = {
+    (subject, side, gyrus): os.path.join(
+        DIR_LANDMARKS,
+        "surf_rois",
+        "partitions",
+        subject + "_" + side + "_" + gyrus + "_" + "partition" + ".gii",
+    )
+    for subject in SUBJ_LIST
+    for side in SIDES
+    for gyrus in ADJACENT_GYRI[SULCUS]
+}
+
+ADJ_GYRI_ROI = {
+    (subject, side, gyrus): os.path.join(
+        DIR_LANDMARKS,
+        "surf_rois",
+        "rois",
+        subject + "_" + side + "_" + gyrus + "_" + "surface_roi" + ".gii",
+    )
+    for subject in SUBJ_LIST
+    for side in SIDES
+    for gyrus in ADJACENT_GYRI[SULCUS]
+}
 
 PPFM_TABLES = {
     t: os.path.join(DIR_LANDMARKS, "ppfm", "tables", "ppfm" + "_" + t + ".csv")

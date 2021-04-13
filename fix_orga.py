@@ -2,12 +2,11 @@ import os
 import glob
 
 
-dir_meshes = '/hpc/meca/users/pron.a/data/U_Fibers/sulci/cs/landmarks/surf_rois/geodesic_distances'
-wrong_typo_files = glob.glob(os.path.join(dir_meshes, '*.gii'))
+dir_meshes = '/hpc/meca/users/pron.a/data/U_Fibers/sulci/cs/landmarks/surf_rois/adaptive_threshold'
+wrong_typo_files = glob.glob(os.path.join(dir_meshes, '*.npy'))
 for f in wrong_typo_files:
     filename = os.path.basename(f)
-    t = filename.replace('_distance_to','')
-    u = filename.replace('.gii','')
-    v = u + '_' + 'geodesic_distance_map.gii'
-    gf = os.path.join(dir_meshes, v)
+    t = filename.replace('.npy', '')
+    u = t + '"dist_threshold.npy'
+    gf = os.path.join(dir_meshes, u)
     os.rename(f, gf)
