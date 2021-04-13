@@ -1,6 +1,6 @@
 import numpy as np
 from soma import aims
-from lines import normalized_curv_parametrisation
+from libs.lines import normalized_curv_parametrisation
 from configuration.configuration import (
     SUBJ_LIST,
     SIDES,
