@@ -30,8 +30,9 @@ if __name__ == "__main__":
                         ]
                     )
                     coordinates = param[index]
+                    # TO DO : add saving of the coordinates by subject and hemisphere
                     # small hack, for some unknown reason it is not possible to hash a selection
-                    a = group_coordinates[hemispheres_index == (len(SIDES) * i + j)]
-                    a[:, k] = coordinates
-                    group_coordinates[hemispheres_index == (len(SIDES) * i + j)] = a
-        np.save(U_FIBERS_COORD[param], group_coordinates)
+                    #a = group_coordinates[hemispheres_index == (len(SIDES) * i + j)]
+                    #a[:, k] = coordinates
+                    #group_coordinates[hemispheres_index == (len(SIDES) * i + j)] = a
+        #np.save(U_FIBERS_COORD[param], group_coordinates)

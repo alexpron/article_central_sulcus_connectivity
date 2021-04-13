@@ -214,8 +214,10 @@ DIR_SUBJECTS = os.path.join(DATA, "subjects")
 DIR_MESHES = os.path.join(DATA, "meshes_and_textures")
 DIR_SULCUS = os.path.join(DATA, "sulci", SULCUS)
 DIR_LANDMARKS = os.path.join(DIR_SULCUS, "landmarks")
+DIR_CONNECTIVITY = os.path.join(DIR_SULCUS, 'connectivity_space')
 DIR_STATS = os.path.join(DIR_SULCUS, "statistics")
 DIR_FIGURES = os.path.join(DIR_SULCUS, "figures")
+
 
 # Subjects selection related variables
 RESTRICTED = os.path.join(DIR_SUBJECTS, "RESTRICTED" + "_" + RELEASE + ".csv")
@@ -298,7 +300,8 @@ LINES = merge_dicts(GYRAL_CRESTS, SULCUS_FUNDI)
 GEO_DISTS = {
     (subject, side, "white", gyrus): os.path.join(
         DIR_LANDMARKS,
-        "adjacent_gyri",
+        "surf_rois",
+        "geodesic_distances",
         subject + "_" + side + "_" + gyrus + "_" + "geodesic_distance_map.gii",
     )
     for subject in SUBJ_LIST
@@ -348,6 +351,7 @@ GYRAL_PARAMETRISATIONS = {
     (subject, side, gyrus, status, nature, param): os.path.join(
         DIR_LANDMARKS,
         "adjacent_gyri",
+        status,
         subject
         + "_"
         + side
@@ -375,7 +379,7 @@ FUNDI_PARAMETRISATIONS = {
         + "_"
         + side
         + "_"
-        + gyrus
+        + SULCUS
         + "_"
         + status
         + "_"
@@ -397,28 +401,33 @@ PPFM_TABLES = {
     for t in TABLES
 }
 
+TRACTOGRAMS = {
+    subject: os.path.join(DATA, "streamlines", "tractograms", subject + '.npy')
+    for subject in SUBJ_LIST
+}
+
 ASSOCIATION_TRACTS = {
     (subject, side): os.path.join(
-        DATA, "tractograms", "association_tracts", subject + "_" + side + ".npy"
+        DATA, "streamlines", "association_tracts", subject + "_" + side + ".npy"
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
 }
-ASSO_TRACT_EXTREMITIES = {
+STREAM_EXTREMITIES = {
     (subject, side, ext): os.path.join(
         DATA,
-        "tractograms",
-        "association_tracts_ext",
-        subject + "_" + side + "_" + ext + ".npy",
+        "streamlines",
+        "extremities",
+        subject + "_" + side + "_" + ext + '_' + 'points' + ".npy",
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
     for ext in TRACTS_EXTREMITIES
 }
-ASSO_TRACT_NEAREST_VERTEX = {
+NEAREST_VERTEX = {
     (subject, side, ext): os.path.join(
         DATA,
-        "tractograms",
+        "streamlines",
         "nearest_mesh_vertex",
         subject + "_" + side + "_" + ext + "_" + "nearest_vertex.npy",
     )
@@ -426,6 +435,7 @@ ASSO_TRACT_NEAREST_VERTEX = {
     for side in SIDES.keys()
     for ext in TRACTS_EXTREMITIES
 }
+
 U_FIBERS_MASK = {
     (subject, side): os.path.join(
         DATA, "u-fibers", subject + "_" + side + "_" + "mask" + ".npy"
@@ -436,11 +446,11 @@ U_FIBERS_MASK = {
 
 # Connectivity space
 U_FIBERS_INDEXES = os.path.join(
-    DATA, "connectivity_space", "U_fibers_indexes_on_gyri.npy"
+    DIR_SULCUS,  "connectivity_space", 'indexes', "u_fibers_indexes_on_gyri.npy"
 )
-HEMI_INDEXES = os.path.join(DATA, "connectivity_space", "hemispheres_indexes.npy")
+HEMI_INDEXES = os.path.join(DIR_SULCUS, "connectivity_space", 'indexes', "hemispheres_indexes.npy")
 HEMI_INDEXES_FILT = os.path.join(
-    DATA, "sulci", "CS", "connectivity", "indexes", "hemispheres_index_filtered.npy"
+    DIR_SULCUS, "connectivity_space", 'indexes', "hemispheres_index_filtered.npy"
 )
 
 U_FIBERS_COORD = {
