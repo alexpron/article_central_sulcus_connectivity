@@ -35,7 +35,7 @@ def extract_sulcus_fundus_from_extremities(path_mesh, path_dpf, path_extremities
 if __name__ == "__main__":
 
     for i, subject in enumerate(SUBJ_LIST):
-        for j, side in SIDES:
+        for j, side in enumerate(SIDES.keys()):
             path_extremities = EXTREMITIES[subject, side]
             if os.path.exists(path_extremities):
                 path_mesh = MESHES[subject, side, 'white']
