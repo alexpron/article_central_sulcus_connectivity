@@ -289,7 +289,6 @@ SULCUS_FUNDI = {
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
-    for gyrus in ADJACENT_GYRI[SULCUS]
     for status in STATUS
     for nature in EXTENSIONS
 }
