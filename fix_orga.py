@@ -9,5 +9,5 @@ for f in wrong_typo_files:
     t = filename.replace('_distance_to','')
     u = filename.replace('.gii','')
     v = u + '_' + 'geodesic_distance_map.gii'
-    gf = os.path.join(dir_meshes, t)
+    gf = os.path.join(dir_meshes, v)
     os.rename(f, gf)
