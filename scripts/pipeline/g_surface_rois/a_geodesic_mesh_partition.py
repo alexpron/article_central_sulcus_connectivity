@@ -13,14 +13,17 @@ def partition_mesh(line, mesh, roi):
     """
     geo = aims.GeodesicPath(mesh, 0, 0)
     vertices = np.array(mesh.vertex())
-    partition = -1 * np.ones(vertices.shape[0], dtype=int)
+    partition = -1 * np.ones(len(vertices), dtype=int)
+    print(len(partition))
+    print(len(vertices))
     if roi is not None:
         roi_indexes = np.where(roi != 0)[0].tolist()
+        print(len(roi_indexes))
     else:
-        roi_indexes = np.arange(vertices.shape[0], dtype=int).tolist()
-    for i, vertex in enumerate(roi_indexes):
-        index, length = geo.shortestPath_1_N_ind(vertex, line)
-        partition[vertex] = index
+        roi_indexes = np.arange(len(vertices), dtype=int).tolist()
+    for vert_index in roi_indexes:
+        index, length = geo.shortestPath_1_N_ind(vert_index, line)
+        partition[vert_index] = index
     return partition
 
 

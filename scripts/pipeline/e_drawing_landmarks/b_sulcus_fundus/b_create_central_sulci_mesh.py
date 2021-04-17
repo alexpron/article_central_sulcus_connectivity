@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from soma import aims
-from meshes_.processing import vertices_to_2d_line
+from libs.tools.aims.meshes.processing import vertices_to_2d_line
 from configuration.configuration import SUBJ_LIST, SIDES, SULCUS, SULCUS_FUNDI, MESHES
 
 if __name__ == "__main__":
@@ -11,7 +11,7 @@ if __name__ == "__main__":
             path_fundus = SULCUS_FUNDI[(subject, side, SULCUS, "array")]
             if os.path.exists(path_fundus):
                 fundus = np.load(path_fundus)
-                mesh = MESHES[subject, side]
+                mesh = MESHES[subject, side, 'white']
                 vertices = np.array(mesh.vertex())
                 vertices = vertices[fundus]
                 line = vertices_to_2d_line(vertices)
