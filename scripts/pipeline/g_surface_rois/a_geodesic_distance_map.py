@@ -20,5 +20,5 @@ if __name__ == "__main__":
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
             for k, gyrus in enumerate(GYRI):
-                distance_map_to_gyrus(MESHES[subject, side, 'white'], GYRAL_CRESTS[subject, side, gyrus,'texture'], GEO_DISTS[(subject, side, "white", gyrus)])
+                distance_map_to_gyrus(MESHES[subject, side, 'white'], GYRAL_CRESTS[subject, side, gyrus,'cleaned','texture'], GEO_DISTS[(subject, side, "white", gyrus)])
 
