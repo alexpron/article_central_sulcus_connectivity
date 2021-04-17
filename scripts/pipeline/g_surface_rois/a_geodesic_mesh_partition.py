@@ -42,9 +42,12 @@ if __name__ == "__main__":
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
             mesh = aims.read(MESHES[(subject, side, "white")])
+            vertices = np.array(mesh.vertex())
+            print(len(vertices))
             for k, gyrus in enumerate(GYRI):
                 geo_dist_tex = aims.read(GEO_DISTS[(subject, side, "white", gyrus)])
                 geodesic_distance = np.array(geo_dist_tex[0])
+                print(geodesic_distance.shape)
                 roi = np.zeros_like(geodesic_distance)
                 roi[geodesic_distance < 30] = 1  # to reduce computation time
                 gyral_line = np.load(
