@@ -385,15 +385,16 @@ ROI_DISTANCES = {
 }
 
 PARTITIONS = {
-    (subject, side, gyrus): os.path.join(
+    (subject, side, gyrus, ): os.path.join(
         DIR_LANDMARKS,
         "surf_rois",
         "partitions",
-        subject + "_" + side + "_" + gyrus + "_" + "partition" + ".gii",
+        subject + "_" + side + "_" + gyrus + "_" + "partition" + EXTENSIONS[nature],
     )
     for subject in SUBJ_LIST
     for side in SIDES
     for gyrus in ADJACENT_GYRI[SULCUS]
+    for nature in EXTENSIONS
 }
 
 ADJ_GYRI_ROI = {
