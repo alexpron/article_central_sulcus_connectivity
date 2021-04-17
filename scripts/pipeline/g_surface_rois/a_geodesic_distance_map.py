@@ -1,8 +1,8 @@
-import subprocess
+import os
 
 def distance_map_to_gyrus(path_mesh, path_gyral_line, path_distance_map, ):
     cmd = '/hpc/soft/brainvisa/brainvisa_4.6.0/bin/AimsMeshDistance' + ' -i ' + path_mesh + ' -t ' + path_gyral_line + ' -o ' + path_distance_map
-    subprocess.run(cmd)
+    os.system(cmd)
     pass
 
 
