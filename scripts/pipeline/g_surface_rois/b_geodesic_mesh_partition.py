@@ -56,5 +56,5 @@ if __name__ == "__main__":
                 gyral_line = gyral_line.tolist()
                 partition = partition_mesh(gyral_line, mesh, roi)
                 np.save(PARTITIONS[(subject, side, gyrus, "array")], partition)
-                partition_tex = aims.TimeTexture(partition)
-                aims.write(partition_tex, PARTITIONS[(subject, side, gyrus,"texture")])
+                #partition_tex = aims.TimeTexture(partition)
+                #aims.write(partition_tex, PARTITIONS[(subject, side, gyrus,"texture")])
