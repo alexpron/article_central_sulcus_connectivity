@@ -20,7 +20,7 @@ if __name__ == "__main__":
             mesh = aims.read(MESHES[(subject, side, "white")])
             for k, gyrus in enumerate(GYRI):
                 # Gyral line indexes
-                gyral_line = np.load(GYRAL_CRESTS[(subject, side, "cleaned", "array")])
+                gyral_line = np.load(GYRAL_CRESTS[(subject, side,gyrus, "cleaned", "array")])
                 gyral_line = gyral_line.tolist()
                 # Geodesic distance map
                 geo_dist_t = aims.read(GEO_DISTS[(subject, side, "white", gyrus)])
