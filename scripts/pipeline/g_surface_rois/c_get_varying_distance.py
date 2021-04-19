@@ -28,7 +28,7 @@ if __name__ == "__main__":
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES):
             mesh = aims.read(MESHES[(subject, side, "white")])
-            sulcus_fundus = np.load(SULCUS_FUNDI[(subject, side, "cleaned", "array")])
+            sulcus_fundus = np.load(SULCUS_FUNDI[(subject, side, SULCUS, "cleaned", "array")])
             for k, gyrus in enumerate(ADJACENT_GYRI[SULCUS]):
                 gyral_crest = np.load(
                     GYRAL_CRESTS[(subject, side, gyrus, "cleaned", "array")]
