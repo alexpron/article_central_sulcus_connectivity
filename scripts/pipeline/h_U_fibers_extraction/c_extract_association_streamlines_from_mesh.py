@@ -1,6 +1,6 @@
 import numpy as np
 from soma import aims, aimsalgo
-import nibabel as nib
+
 
 
 if __name__ == "__main__":
