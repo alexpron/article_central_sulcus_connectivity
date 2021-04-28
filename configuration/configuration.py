@@ -442,7 +442,7 @@ NEAREST_VERTEX = {
         DATA,
         "streamlines",
         "nearest_mesh_vertex",
-        subject + "_" + side + "_" + ext + "_" + "nearest_vertex.npy",
+        subject + "_" + ext + "_" + "nearest_vertex.npy",
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
