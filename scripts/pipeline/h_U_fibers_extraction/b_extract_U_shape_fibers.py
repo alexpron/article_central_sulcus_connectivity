@@ -12,17 +12,17 @@ if __name__ == "__main__":
         SIDES,
         GYRI,
         ASSO_TRACT_NEAREST_VERTEX,
-        ADJACENT_GYRI_ROI,
+        ADJ_GYRI_ROI,
         U_FIBERS_MASK,
     )
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES.keys()):
             pre_roi = np.array(
-                aims.read(ADJACENT_GYRI_ROI[(subject, side, GYRI[0])])[0]
+                aims.read(ADJ_GYRI_ROI[(subject, side, GYRI[0])])[0]
             )
             post_roi = np.array(
-                aims.read(ADJACENT_GYRI_ROI[(subject, side, GYRI[1])])[0]
+                aims.read(ADJ_GYRI_ROI[(subject, side, GYRI[1])])[0]
             )
             e = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "e")])
             s = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "s")])
