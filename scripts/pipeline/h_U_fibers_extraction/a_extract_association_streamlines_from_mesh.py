@@ -11,7 +11,6 @@ if __name__ == "__main__":
         MESHES,
         TRACTOGRAMS,
         NEAREST_VERTEX,
-        NEAREST_VERTEX_N,
         ASSOCIATION_TRACTS,
         ASSO_TRACT_NEAREST_VERTEX,
     )
