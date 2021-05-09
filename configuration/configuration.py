@@ -447,7 +447,7 @@ NEAREST_VERTEX = {
     for subject in SUBJ_LIST
     for ext in TRACTS_EXTREMITIES
 }
-NEAREST_VERTEX_N = {
+ASSO_TRACT_NEAREST_VERTEX_N = {
     (subject, side, ext): os.path.join(
         DATA,
         "streamlines",
