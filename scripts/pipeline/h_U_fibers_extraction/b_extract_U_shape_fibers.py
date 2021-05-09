@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     for i, subject in enumerate(SUBJ_LIST):
         for j, side in enumerate(SIDES.keys()):
+            print(subject, side)
             pre_roi = np.array(
                 aims.read(ADJ_GYRI_ROI[(subject, side, GYRI[0])])
             )[0]
