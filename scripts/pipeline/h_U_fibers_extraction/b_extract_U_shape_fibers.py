@@ -24,9 +24,11 @@ if __name__ == "__main__":
             post_roi = np.array(
                 aims.read(ADJ_GYRI_ROI[(subject, side, GYRI[1])])
             )
+            print(pre_roi.shape)
+            print(post_roi.shape)
             e = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "e")])
             s = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "s")])
             print(e.shape)
             print(s.shape)
-            U_fibers = (pre_roi[e] != 0) * (post_roi[s] != 0) 
+            U_fibers = (pre_roi[e] != 0) * (post_roi[s] != 0)
             np.save(U_FIBERS_MASK[(subject, side)], U_fibers)
