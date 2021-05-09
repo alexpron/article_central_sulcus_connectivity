@@ -23,12 +23,17 @@ if __name__ == "__main__":
             print(l_s, r_s)
             hemi_index = np.zeros(l_s + r_s)
             hemi_index[l_s:] = 1
-            aims.SurfaceManip.meshMerge(l_mesh, r_mesh)
+
             s_nearest = np.load(NEAREST_VERTEX[subject, 's'])
             e_nearest = np.load(NEAREST_VERTEX[subject, 'e'])
+
+            hemi_s = hemi_index[s_nearest]
+            hemi_e = hemi_index[e_nearest]
+
             tractogram = np.load(TRACTOGRAMS[subject])
+
             for j, side in enumerate(SIDES.keys()):
-                association_tracts_filter = (s_nearest != e_nearest)*(hemi_index==j)
+                association_tracts_filter = (hemi_s == hemi_e) * (hemi_s == j)
                 association_tracts = tractogram[association_tracts_filter == True]
                 np.save(ASSOCIATION_TRACTS[subject, side], association_tracts)
                 s_nearest_hemi = s_nearest[association_tracts_filter == True]
