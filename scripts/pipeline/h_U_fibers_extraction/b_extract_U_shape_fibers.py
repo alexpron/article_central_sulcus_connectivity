@@ -30,5 +30,5 @@ if __name__ == "__main__":
             s = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "s")])
             print(e.shape)
             print(s.shape)
-            U_fibers = (pre_roi[e] != 0) * (post_roi[s] != 0)
+            U_fibers = ((pre_roi[e] != 0) * (post_roi[s] != 0)) + (pre_roi[s] != 0)*(post_roi[e] != 0)
             np.save(U_FIBERS_MASK[(subject, side)], U_fibers)
