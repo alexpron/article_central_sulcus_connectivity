@@ -41,8 +41,8 @@ if __name__ == "__main__":
                 if j == 1:
                     s_nearest_hemi -= l_s
                     e_nearest_hemi -= l_s
-                np.save(NEAREST_VERTEX_N(subject, side, 's'), s_nearest_hemi)
-                np.save(NEAREST_VERTEX_N(subject, side, 'e'), e_nearest_hemi)
+                np.save(NEAREST_VERTEX_N[subject, side, 's'], s_nearest_hemi)
+                np.save(NEAREST_VERTEX_N[subject, side, 'e'], e_nearest_hemi)
 
 
 
