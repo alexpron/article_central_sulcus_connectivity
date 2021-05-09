@@ -12,7 +12,8 @@ if __name__ == "__main__":
         TRACTOGRAMS,
         NEAREST_VERTEX,
         NEAREST_VERTEX_N,
-        ASSOCIATION_TRACTS
+        ASSOCIATION_TRACTS,
+        ASSO_TRACT_NEAREST_VERTEX,
     )
 
     for i, subject in enumerate(SUBJ_LIST):
@@ -41,8 +42,8 @@ if __name__ == "__main__":
                 if side == 'R':
                     s_nearest_hemi -= l_s
                     e_nearest_hemi -= l_s
-                np.save(NEAREST_VERTEX_N[subject, side, 's'], s_nearest_hemi)
-                np.save(NEAREST_VERTEX_N[subject, side, 'e'], e_nearest_hemi)
+                np.save(ASSO_TRACT_NEAREST_VERTEX[subject, side, 's'], s_nearest_hemi)
+                np.save(ASSO_TRACT_NEAREST_VERTEX[subject, side, 'e'], e_nearest_hemi)
 
 
 
