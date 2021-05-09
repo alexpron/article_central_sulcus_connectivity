@@ -20,10 +20,10 @@ if __name__ == "__main__":
         for j, side in enumerate(SIDES.keys()):
             pre_roi = np.array(
                 aims.read(ADJ_GYRI_ROI[(subject, side, GYRI[0])])
-            )
+            )[0]
             post_roi = np.array(
                 aims.read(ADJ_GYRI_ROI[(subject, side, GYRI[1])])
-            )
+            )[0]
             print(pre_roi.shape)
             print(post_roi.shape)
             e = np.load(ASSO_TRACT_NEAREST_VERTEX[(subject, side, "e")])
