@@ -38,7 +38,7 @@ if __name__ == "__main__":
                 np.save(ASSOCIATION_TRACTS[subject, side], association_tracts)
                 s_nearest_hemi = s_nearest[association_tracts_filter == True]
                 e_nearest_hemi = e_nearest[association_tracts_filter == True]
-                if j == 1:
+                if side == 'R':
                     s_nearest_hemi -= l_s
                     e_nearest_hemi -= l_s
                 np.save(NEAREST_VERTEX_N[subject, side, 's'], s_nearest_hemi)
