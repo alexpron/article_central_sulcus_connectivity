@@ -11,6 +11,7 @@ if __name__ == "__main__":
         MESHES,
         TRACTOGRAMS,
         NEAREST_VERTEX,
+        NEAREST_VERTEX_N,
         ASSOCIATION_TRACTS
     )
 
@@ -29,7 +30,13 @@ if __name__ == "__main__":
                 association_tracts_filter = (s_nearest != e_nearest)*(hemi_index==j)
                 association_tracts = tractogram[association_tracts_filter == True]
                 np.save(ASSOCIATION_TRACTS[subject, side], association_tracts)
-
+                s_nearest_hemi = s_nearest[association_tracts_filter == True]
+                e_nearest_hemi = e_nearest[association_tracts_filter == True]
+                if j == 1:
+                    s_nearest_hemi -= l_s
+                    e_nearest_hemi -= l_s
+                np.save(NEAREST_VERTEX_N(subject, side, 's'), s_nearest_hemi)
+                np.save(NEAREST_VERTEX_N(subject, side, 'e'), e_nearest_hemi)
 
 
 

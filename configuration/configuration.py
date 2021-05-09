@@ -438,11 +438,21 @@ STREAM_EXTREMITIES = {
     for ext in TRACTS_EXTREMITIES
 }
 NEAREST_VERTEX = {
-    (subject, side, ext): os.path.join(
+    (subject, ext): os.path.join(
         DATA,
         "streamlines",
         "nearest_mesh_vertex",
         subject + "_" + ext + "_" + "nearest_vertex.npy",
+    )
+    for subject in SUBJ_LIST
+    for ext in TRACTS_EXTREMITIES
+}
+NEAREST_VERTEX_N = {
+    (subject, side, ext): os.path.join(
+        DATA,
+        "streamlines",
+        "nearest_mesh_vertex",
+        subject + "_" + side + "_" + ext + "_" + "nearest_vertex.npy",
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
