@@ -17,9 +17,9 @@ if __name__ == "__main__":
 
     for i, subject in enumerate(SUBJ_LIST):
             l_mesh = aims.read(MESHES[subject, 'L', 'white'])
-            l_s = l_mesh.size()
+            l_s = len(np.array(l_mesh.vertex()))
             r_mesh = aims.read(MESHES[subject, 'R', "white"])
-            r_s = r_mesh.size()
+            r_s = len(np.array(r_mesh.vertex()))
             print(l_s, r_s)
             hemi_index = np.zeros(l_s + r_s)
             hemi_index[l_s:] = 1
