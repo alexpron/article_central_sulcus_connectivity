@@ -461,7 +461,7 @@ ASSO_TRACT_NEAREST_VERTEX= {
 
 U_FIBERS_MASK = {
     (subject, side): os.path.join(
-        DATA, "u-fibers", subject + "_" + side + "_" + "mask" + ".npy"
+        DATA, 'sulci', SULCUS, "u_fibers", subject + "_" + side + "_" + "mask" + ".npy"
     )
     for subject in SUBJ_LIST
     for side in SIDES.keys()
